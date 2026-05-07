@@ -209,9 +209,9 @@ function Problem() {
 
 function Solution() {
   const items = [
-    { icon: "📘", t: "Concept Learning", d: "Understand deeply instead of memorising. We teach the why before the what." },
-    { icon: "🧠", t: "AI Companion", d: "Personalised practice and 24/7 doubt-solving tuned to your child's pace." },
-    { icon: "🗣", t: "Confidence Studio", d: "Weekly speaking labs that turn shy learners into clear communicators." },
+    { t: "Concept Learning", d: "Understand deeply instead of memorising. We teach the why before the what." },
+    { t: "AI Companion", d: "Personalised practice and 24/7 doubt-solving tuned to your child's pace." },
+    { t: "Confidence Studio", d: "Weekly speaking labs that turn shy learners into clear communicators." },
   ];
   return (
     <section id="programs" className="bg-primary py-24 text-primary-foreground">
@@ -234,8 +234,7 @@ function Solution() {
               <div className="absolute right-6 top-6 font-display text-5xl opacity-20">
                 0{i + 1}
               </div>
-              <div className="text-4xl">{it.icon}</div>
-              <h3 className="mt-6 font-display text-2xl">{it.t}</h3>
+              <h3 className="mt-10 font-display text-2xl">{it.t}</h3>
               <p className="mt-3 text-sm text-primary-foreground/70">{it.d}</p>
             </div>
           ))}
@@ -448,8 +447,11 @@ function FinalCTA() {
               Book a 30-minute demo this week. We'll assess, advise, and show you the
               path forward — no obligation.
             </p>
-            <a href="#" className="btn-ink mt-6 inline-flex rounded-full px-7 py-4 text-sm font-semibold">
+            <a href="mailto:futureminds.academy26@gmail.com?subject=Book%20Free%20Demo" className="btn-ink mt-6 inline-flex rounded-full px-7 py-4 text-sm font-semibold">
               Book Free Demo →
+            </a>
+            <a href="tel:+447553886303" className="mt-3 inline-flex text-sm font-semibold text-accent-foreground underline underline-offset-4">
+              Or call 07553 886303
             </a>
           </div>
         </div>
@@ -471,8 +473,8 @@ function Footer() {
         </div>
         <div>
           <div className="text-xs uppercase tracking-widest text-primary-foreground/50">Contact</div>
-          <p className="mt-3 text-sm">hello@futureminds.in</p>
-          <p className="text-sm">+91 98765 43210</p>
+          <p className="mt-3 text-sm"><a href="mailto:futureminds.academy26@gmail.com" className="hover:text-accent">futureminds.academy26@gmail.com</a></p>
+          <p className="text-sm"><a href="tel:+447553886303" className="hover:text-accent">07553 886303</a></p>
         </div>
         <div>
           <div className="text-xs uppercase tracking-widest text-primary-foreground/50">Explore</div>
