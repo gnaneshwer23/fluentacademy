@@ -9,38 +9,209 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BookDemoRouteImport } from './routes/book-demo'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AuthDashboardRouteImport } from './routes/_auth.dashboard'
+import { Route as AuthDashboardTutorRouteImport } from './routes/_auth.dashboard.tutor'
+import { Route as AuthDashboardStudentRouteImport } from './routes/_auth.dashboard.student'
+import { Route as AuthDashboardParentRouteImport } from './routes/_auth.dashboard.parent'
+import { Route as AuthDashboardAdminRouteImport } from './routes/_auth.dashboard.admin'
 
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookDemoRoute = BookDemoRouteImport.update({
+  id: '/book-demo',
+  path: '/book-demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
+const AuthDashboardRoute = AuthDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthDashboardTutorRoute = AuthDashboardTutorRouteImport.update({
+  id: '/tutor',
+  path: '/tutor',
+  getParentRoute: () => AuthDashboardRoute,
+} as any)
+const AuthDashboardStudentRoute = AuthDashboardStudentRouteImport.update({
+  id: '/student',
+  path: '/student',
+  getParentRoute: () => AuthDashboardRoute,
+} as any)
+const AuthDashboardParentRoute = AuthDashboardParentRouteImport.update({
+  id: '/parent',
+  path: '/parent',
+  getParentRoute: () => AuthDashboardRoute,
+} as any)
+const AuthDashboardAdminRoute = AuthDashboardAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthDashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/blog': typeof BlogRouteWithChildren
+  '/book-demo': typeof BookDemoRoute
+  '/contact': typeof ContactRoute
+  '/dashboard': typeof AuthDashboardRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/dashboard/admin': typeof AuthDashboardAdminRoute
+  '/dashboard/parent': typeof AuthDashboardParentRoute
+  '/dashboard/student': typeof AuthDashboardStudentRoute
+  '/dashboard/tutor': typeof AuthDashboardTutorRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/blog': typeof BlogRouteWithChildren
+  '/book-demo': typeof BookDemoRoute
+  '/contact': typeof ContactRoute
+  '/dashboard': typeof AuthDashboardRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/dashboard/admin': typeof AuthDashboardAdminRoute
+  '/dashboard/parent': typeof AuthDashboardParentRoute
+  '/dashboard/student': typeof AuthDashboardStudentRoute
+  '/dashboard/tutor': typeof AuthDashboardTutorRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/blog': typeof BlogRouteWithChildren
+  '/book-demo': typeof BookDemoRoute
+  '/contact': typeof ContactRoute
+  '/_auth/dashboard': typeof AuthDashboardRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/_auth/dashboard/admin': typeof AuthDashboardAdminRoute
+  '/_auth/dashboard/parent': typeof AuthDashboardParentRoute
+  '/_auth/dashboard/student': typeof AuthDashboardStudentRoute
+  '/_auth/dashboard/tutor': typeof AuthDashboardTutorRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/blog'
+    | '/book-demo'
+    | '/contact'
+    | '/dashboard'
+    | '/blog/$slug'
+    | '/dashboard/admin'
+    | '/dashboard/parent'
+    | '/dashboard/student'
+    | '/dashboard/tutor'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/blog'
+    | '/book-demo'
+    | '/contact'
+    | '/dashboard'
+    | '/blog/$slug'
+    | '/dashboard/admin'
+    | '/dashboard/parent'
+    | '/dashboard/student'
+    | '/dashboard/tutor'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/auth'
+    | '/blog'
+    | '/book-demo'
+    | '/contact'
+    | '/_auth/dashboard'
+    | '/blog/$slug'
+    | '/_auth/dashboard/admin'
+    | '/_auth/dashboard/parent'
+    | '/_auth/dashboard/student'
+    | '/_auth/dashboard/tutor'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  BlogRoute: typeof BlogRouteWithChildren
+  BookDemoRoute: typeof BookDemoRoute
+  ContactRoute: typeof ContactRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book-demo': {
+      id: '/book-demo'
+      path: '/book-demo'
+      fullPath: '/book-demo'
+      preLoaderRoute: typeof BookDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +219,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/_auth/dashboard': {
+      id: '/_auth/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthDashboardRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/dashboard/tutor': {
+      id: '/_auth/dashboard/tutor'
+      path: '/tutor'
+      fullPath: '/dashboard/tutor'
+      preLoaderRoute: typeof AuthDashboardTutorRouteImport
+      parentRoute: typeof AuthDashboardRoute
+    }
+    '/_auth/dashboard/student': {
+      id: '/_auth/dashboard/student'
+      path: '/student'
+      fullPath: '/dashboard/student'
+      preLoaderRoute: typeof AuthDashboardStudentRouteImport
+      parentRoute: typeof AuthDashboardRoute
+    }
+    '/_auth/dashboard/parent': {
+      id: '/_auth/dashboard/parent'
+      path: '/parent'
+      fullPath: '/dashboard/parent'
+      preLoaderRoute: typeof AuthDashboardParentRouteImport
+      parentRoute: typeof AuthDashboardRoute
+    }
+    '/_auth/dashboard/admin': {
+      id: '/_auth/dashboard/admin'
+      path: '/admin'
+      fullPath: '/dashboard/admin'
+      preLoaderRoute: typeof AuthDashboardAdminRouteImport
+      parentRoute: typeof AuthDashboardRoute
+    }
   }
 }
 
+interface AuthDashboardRouteChildren {
+  AuthDashboardAdminRoute: typeof AuthDashboardAdminRoute
+  AuthDashboardParentRoute: typeof AuthDashboardParentRoute
+  AuthDashboardStudentRoute: typeof AuthDashboardStudentRoute
+  AuthDashboardTutorRoute: typeof AuthDashboardTutorRoute
+}
+
+const AuthDashboardRouteChildren: AuthDashboardRouteChildren = {
+  AuthDashboardAdminRoute: AuthDashboardAdminRoute,
+  AuthDashboardParentRoute: AuthDashboardParentRoute,
+  AuthDashboardStudentRoute: AuthDashboardStudentRoute,
+  AuthDashboardTutorRoute: AuthDashboardTutorRoute,
+}
+
+const AuthDashboardRouteWithChildren = AuthDashboardRoute._addFileChildren(
+  AuthDashboardRouteChildren,
+)
+
+interface AuthRouteChildren {
+  AuthDashboardRoute: typeof AuthDashboardRouteWithChildren
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthDashboardRoute: AuthDashboardRouteWithChildren,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRouteWithChildren,
+  AuthRoute: AuthRoute,
+  BlogRoute: BlogRouteWithChildren,
+  BookDemoRoute: BookDemoRoute,
+  ContactRoute: ContactRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

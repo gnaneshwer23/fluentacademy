@@ -73,12 +73,13 @@ function Nav() {
         <nav className="hidden items-center gap-8 text-sm md:flex">
           <a href="#programs" className="hover:text-accent">Programs</a>
           <a href="#how" className="hover:text-accent">How it works</a>
-          <a href="#results" className="hover:text-accent">Results</a>
-          <a href="#pricing" className="hover:text-accent">Pricing</a>
+          <Link to="/blog" className="hover:text-accent">Resources</Link>
+          <Link to="/contact" className="hover:text-accent">Contact</Link>
+          <Link to="/auth" className="hover:text-accent">Sign in</Link>
         </nav>
-        <a href="#cta" className="btn-gold rounded-full px-5 py-2 text-sm font-semibold">
+        <Link to="/book-demo" className="btn-gold rounded-full px-5 py-2 text-sm font-semibold">
           Book Free Demo
-        </a>
+        </Link>
       </div>
     </header>
   );
@@ -104,9 +105,9 @@ function Hero() {
             with quiet, lasting confidence.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a href="#cta" className="btn-ink rounded-full px-7 py-3.5 text-sm font-semibold">
+            <Link to="/book-demo" className="btn-ink rounded-full px-7 py-3.5 text-sm font-semibold">
               Book Free Demo →
-            </a>
+            </Link>
             <a href="#how" className="rounded-full px-6 py-3.5 text-sm font-semibold underline underline-offset-4 decoration-accent decoration-2">
               Watch how it works
             </a>
@@ -447,9 +448,9 @@ function FinalCTA() {
               Book a 30-minute demo this week. We'll assess, advise, and show you the
               path forward — no obligation.
             </p>
-            <a href="mailto:futureminds.academy26@gmail.com?subject=Book%20Free%20Demo" className="btn-ink mt-6 inline-flex rounded-full px-7 py-4 text-sm font-semibold">
+            <Link to="/book-demo" className="btn-ink mt-6 inline-flex rounded-full px-7 py-4 text-sm font-semibold">
               Book Free Demo →
-            </a>
+            </Link>
             <a href="tel:+447553886303" className="mt-3 inline-flex text-sm font-semibold text-accent-foreground underline underline-offset-4">
               Or call 07553 886303
             </a>
