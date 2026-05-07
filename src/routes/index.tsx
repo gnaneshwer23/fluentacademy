@@ -5,13 +5,13 @@ import confidenceImg from "@/assets/confidence.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Future Minds — From Low Confidence to High Performance" },
+      { title: "Fluent — From Low Confidence to High Performance" },
       {
         name: "description",
         content:
           "British teaching methods, AI-powered practice and weekly accountability — building confident, articulate learners across India.",
       },
-      { property: "og:title", content: "Future Minds — Confidence-First Learning" },
+      { property: "og:title", content: "Fluent — Confidence-First Learning" },
       {
         property: "og:description",
         content:
@@ -64,7 +64,7 @@ function Nav() {
             F
           </div>
           <div className="leading-tight">
-            <div className="font-display text-lg font-semibold">Future Minds</div>
+            <div className="font-display text-lg font-semibold">Fluent</div>
             <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
               Accountable Hindustan
             </div>
@@ -99,7 +99,7 @@ function Hero() {
             <span className="italic font-normal">performance.</span>
           </h1>
           <p className="mt-8 max-w-xl text-lg text-muted-foreground md:text-xl">
-            Future Minds blends British teaching methods with AI-driven practice and
+            Fluent blends British teaching methods with AI-driven practice and
             weekly accountability — so your child learns to think, speak and perform
             with quiet, lasting confidence.
           </p>
@@ -117,7 +117,7 @@ function Hero() {
                 <div key={i} className="h-9 w-9 rounded-full border-2 border-background bg-gradient-to-br from-accent to-primary" />
               ))}
             </div>
-            <p>2,400+ parents trust Future Minds across India.</p>
+            <p>2,400+ parents trust Fluent across India.</p>
           </div>
         </div>
 
@@ -465,7 +465,7 @@ function Footer() {
     <footer className="border-t border-ink/15 bg-primary text-primary-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="font-display text-2xl">Future Minds</div>
+          <div className="font-display text-2xl">Fluent</div>
           <p className="mt-2 text-sm text-primary-foreground/60">
             An Accountable Hindustan initiative. Building India's most confident
             generation, one child at a time.
@@ -486,7 +486,7 @@ function Footer() {
         </div>
       </div>
       <div className="border-t border-primary-foreground/10 px-6 py-5 text-center text-xs text-primary-foreground/50">
-        © 2026 Future Minds · Accountable Hindustan. All rights reserved.
+        © 2026 Fluent · Accountable Hindustan. All rights reserved.
       </div>
     </footer>
   );
