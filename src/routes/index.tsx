@@ -473,8 +473,8 @@ function Footer() {
         </div>
         <div>
           <div className="text-xs uppercase tracking-widest text-primary-foreground/50">Contact</div>
-          <p className="mt-3 text-sm">hello@futureminds.in</p>
-          <p className="text-sm">+91 98765 43210</p>
+          <p className="mt-3 text-sm"><a href="mailto:futureminds.academy26@gmail.com" className="hover:text-accent">futureminds.academy26@gmail.com</a></p>
+          <p className="text-sm"><a href="tel:+447553886303" className="hover:text-accent">07553 886303</a></p>
         </div>
         <div>
           <div className="text-xs uppercase tracking-widest text-primary-foreground/50">Explore</div>
