@@ -447,8 +447,11 @@ function FinalCTA() {
               Book a 30-minute demo this week. We'll assess, advise, and show you the
               path forward — no obligation.
             </p>
-            <a href="#" className="btn-ink mt-6 inline-flex rounded-full px-7 py-4 text-sm font-semibold">
+            <a href="mailto:futureminds.academy26@gmail.com?subject=Book%20Free%20Demo" className="btn-ink mt-6 inline-flex rounded-full px-7 py-4 text-sm font-semibold">
               Book Free Demo →
+            </a>
+            <a href="tel:+447553886303" className="mt-3 inline-flex text-sm font-semibold text-accent-foreground underline underline-offset-4">
+              Or call 07553 886303
             </a>
           </div>
         </div>
