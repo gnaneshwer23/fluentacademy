@@ -209,9 +209,9 @@ function Problem() {
 
 function Solution() {
   const items = [
-    { icon: "📘", t: "Concept Learning", d: "Understand deeply instead of memorising. We teach the why before the what." },
-    { icon: "🧠", t: "AI Companion", d: "Personalised practice and 24/7 doubt-solving tuned to your child's pace." },
-    { icon: "🗣", t: "Confidence Studio", d: "Weekly speaking labs that turn shy learners into clear communicators." },
+    { t: "Concept Learning", d: "Understand deeply instead of memorising. We teach the why before the what." },
+    { t: "AI Companion", d: "Personalised practice and 24/7 doubt-solving tuned to your child's pace." },
+    { t: "Confidence Studio", d: "Weekly speaking labs that turn shy learners into clear communicators." },
   ];
   return (
     <section id="programs" className="bg-primary py-24 text-primary-foreground">
