@@ -234,8 +234,7 @@ function Solution() {
               <div className="absolute right-6 top-6 font-display text-5xl opacity-20">
                 0{i + 1}
               </div>
-              <div className="text-4xl">{it.icon}</div>
-              <h3 className="mt-6 font-display text-2xl">{it.t}</h3>
+              <h3 className="mt-10 font-display text-2xl">{it.t}</h3>
               <p className="mt-3 text-sm text-primary-foreground/70">{it.d}</p>
             </div>
           ))}
