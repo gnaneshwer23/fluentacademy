@@ -12,7 +12,7 @@ export const Route = createFileRoute("/_auth/dashboard/tutor")({
 function TutorDash() {
   const { user, roles } = useAuth();
   const [form, setForm] = useState({ student_id: "", week_of: "", attendance: 100, marks: 0, confidence_score: 0, notes: "" });
-  const [reports, setReports] = useState<{ id: string; week_of: string; student_id: string; marks: number }[]>([]);
+  const [reports, setReports] = useState<{ id: string; week_of: string; student_id: string; marks: number | null }[]>([]);
 
   useEffect(() => {
     if (!user) return;
@@ -37,7 +37,7 @@ function TutorDash() {
       <div className="grid gap-4 md:grid-cols-3">
         <StatCard label="Reports submitted" value={reports.length} />
         <StatCard label="Active students" value={new Set(reports.map(r => r.student_id)).size} />
-        <StatCard label="Avg marks given" value={reports.length ? Math.round(reports.reduce((s, r) => s + r.marks, 0) / reports.length) : 0} />
+        <StatCard label="Avg marks given" value={reports.length ? Math.round(reports.reduce((s, r) => s + (r.marks ?? 0), 0) / reports.length) : 0} />
       </div>
       <h2 className="mt-12 font-display text-2xl">Submit weekly report</h2>
       <form onSubmit={submit} className="mt-4 grid gap-4 md:grid-cols-2 card-ink rounded-3xl bg-card p-6 border border-ink/15">
