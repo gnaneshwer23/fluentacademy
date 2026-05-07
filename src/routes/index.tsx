@@ -105,9 +105,9 @@ function Hero() {
             with quiet, lasting confidence.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a href="#cta" className="btn-ink rounded-full px-7 py-3.5 text-sm font-semibold">
+            <Link to="/book-demo" className="btn-ink rounded-full px-7 py-3.5 text-sm font-semibold">
               Book Free Demo →
-            </a>
+            </Link>
             <a href="#how" className="rounded-full px-6 py-3.5 text-sm font-semibold underline underline-offset-4 decoration-accent decoration-2">
               Watch how it works
             </a>
@@ -448,9 +448,9 @@ function FinalCTA() {
               Book a 30-minute demo this week. We'll assess, advise, and show you the
               path forward — no obligation.
             </p>
-            <a href="mailto:futureminds.academy26@gmail.com?subject=Book%20Free%20Demo" className="btn-ink mt-6 inline-flex rounded-full px-7 py-4 text-sm font-semibold">
+            <Link to="/book-demo" className="btn-ink mt-6 inline-flex rounded-full px-7 py-4 text-sm font-semibold">
               Book Free Demo →
-            </a>
+            </Link>
             <a href="tel:+447553886303" className="mt-3 inline-flex text-sm font-semibold text-accent-foreground underline underline-offset-4">
               Or call 07553 886303
             </a>
