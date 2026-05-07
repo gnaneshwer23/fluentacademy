@@ -73,12 +73,13 @@ function Nav() {
         <nav className="hidden items-center gap-8 text-sm md:flex">
           <a href="#programs" className="hover:text-accent">Programs</a>
           <a href="#how" className="hover:text-accent">How it works</a>
-          <a href="#results" className="hover:text-accent">Results</a>
-          <a href="#pricing" className="hover:text-accent">Pricing</a>
+          <Link to="/blog" className="hover:text-accent">Resources</Link>
+          <Link to="/contact" className="hover:text-accent">Contact</Link>
+          <Link to="/auth" className="hover:text-accent">Sign in</Link>
         </nav>
-        <a href="#cta" className="btn-gold rounded-full px-5 py-2 text-sm font-semibold">
+        <Link to="/book-demo" className="btn-gold rounded-full px-5 py-2 text-sm font-semibold">
           Book Free Demo
-        </a>
+        </Link>
       </div>
     </header>
   );
