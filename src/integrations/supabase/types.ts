@@ -118,27 +118,60 @@ export type Database = {
       }
       profiles: {
         Row: {
+          availability: string | null
+          bio: string | null
+          child_grade: string | null
+          child_name: string | null
           created_at: string
           email: string | null
+          experience_years: number | null
           full_name: string | null
+          goals: string | null
+          grade: string | null
           id: string
+          learning_style: string | null
+          onboarded: boolean
           phone: string | null
+          role: Database["public"]["Enums"]["app_role"] | null
+          subjects: string[] | null
           updated_at: string
         }
         Insert: {
+          availability?: string | null
+          bio?: string | null
+          child_grade?: string | null
+          child_name?: string | null
           created_at?: string
           email?: string | null
+          experience_years?: number | null
           full_name?: string | null
+          goals?: string | null
+          grade?: string | null
           id: string
+          learning_style?: string | null
+          onboarded?: boolean
           phone?: string | null
+          role?: Database["public"]["Enums"]["app_role"] | null
+          subjects?: string[] | null
           updated_at?: string
         }
         Update: {
+          availability?: string | null
+          bio?: string | null
+          child_grade?: string | null
+          child_name?: string | null
           created_at?: string
           email?: string | null
+          experience_years?: number | null
           full_name?: string | null
+          goals?: string | null
+          grade?: string | null
           id?: string
+          learning_style?: string | null
+          onboarded?: boolean
           phone?: string | null
+          role?: Database["public"]["Enums"]["app_role"] | null
+          subjects?: string[] | null
           updated_at?: string
         }
         Relationships: []

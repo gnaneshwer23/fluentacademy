@@ -16,6 +16,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AuthOnboardingRouteImport } from './routes/_auth.onboarding'
 import { Route as AuthDashboardRouteImport } from './routes/_auth.dashboard'
 import { Route as AuthDashboardTutorRouteImport } from './routes/_auth.dashboard.tutor'
 import { Route as AuthDashboardStudentRouteImport } from './routes/_auth.dashboard.student'
@@ -56,6 +57,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogRoute,
 } as any)
+const AuthOnboardingRoute = AuthOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AuthDashboardRoute = AuthDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRouteWithChildren
+  '/onboarding': typeof AuthOnboardingRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/admin': typeof AuthDashboardAdminRoute
   '/dashboard/parent': typeof AuthDashboardParentRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRouteWithChildren
+  '/onboarding': typeof AuthOnboardingRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/admin': typeof AuthDashboardAdminRoute
   '/dashboard/parent': typeof AuthDashboardParentRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
   '/_auth/dashboard': typeof AuthDashboardRouteWithChildren
+  '/_auth/onboarding': typeof AuthOnboardingRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/_auth/dashboard/admin': typeof AuthDashboardAdminRoute
   '/_auth/dashboard/parent': typeof AuthDashboardParentRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/login'
     | '/dashboard'
+    | '/onboarding'
     | '/blog/$slug'
     | '/dashboard/admin'
     | '/dashboard/parent'
@@ -145,6 +155,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/login'
     | '/dashboard'
+    | '/onboarding'
     | '/blog/$slug'
     | '/dashboard/admin'
     | '/dashboard/parent'
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/login'
     | '/_auth/dashboard'
+    | '/_auth/onboarding'
     | '/blog/$slug'
     | '/_auth/dashboard/admin'
     | '/_auth/dashboard/parent'
@@ -226,6 +238,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
     }
+    '/_auth/onboarding': {
+      id: '/_auth/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AuthOnboardingRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/_auth/dashboard': {
       id: '/_auth/dashboard'
       path: '/dashboard'
@@ -284,10 +303,12 @@ const AuthDashboardRouteWithChildren = AuthDashboardRoute._addFileChildren(
 
 interface AuthRouteChildren {
   AuthDashboardRoute: typeof AuthDashboardRouteWithChildren
+  AuthOnboardingRoute: typeof AuthOnboardingRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthDashboardRoute: AuthDashboardRouteWithChildren,
+  AuthOnboardingRoute: AuthOnboardingRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
