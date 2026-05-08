@@ -10,7 +10,7 @@ function Guard() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!loading && !user) navigate({ to: "/auth" });
+    if (!loading && !user) navigate({ to: "/login" });
   }, [user, loading, navigate]);
   if (loading || !user) return <div className="min-h-screen bg-background p-12 text-center text-muted-foreground">Loading…</div>;
   return <Outlet />;

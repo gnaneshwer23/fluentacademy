@@ -9,10 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BookDemoRouteImport } from './routes/book-demo'
 import { Route as BlogRouteImport } from './routes/blog'
-import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -22,6 +22,11 @@ import { Route as AuthDashboardStudentRouteImport } from './routes/_auth.dashboa
 import { Route as AuthDashboardParentRouteImport } from './routes/_auth.dashboard.parent'
 import { Route as AuthDashboardAdminRouteImport } from './routes/_auth.dashboard.admin'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -35,11 +40,6 @@ const BookDemoRoute = BookDemoRouteImport.update({
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -84,10 +84,10 @@ const AuthDashboardAdminRoute = AuthDashboardAdminRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/admin': typeof AuthDashboardAdminRoute
@@ -97,10 +97,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/admin': typeof AuthDashboardAdminRoute
@@ -112,10 +112,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
-  '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/_auth/dashboard': typeof AuthDashboardRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/_auth/dashboard/admin': typeof AuthDashboardAdminRoute
@@ -127,10 +127,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/auth'
     | '/blog'
     | '/book-demo'
     | '/contact'
+    | '/login'
     | '/dashboard'
     | '/blog/$slug'
     | '/dashboard/admin'
@@ -140,10 +140,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/auth'
     | '/blog'
     | '/book-demo'
     | '/contact'
+    | '/login'
     | '/dashboard'
     | '/blog/$slug'
     | '/dashboard/admin'
@@ -154,10 +154,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_auth'
-    | '/auth'
     | '/blog'
     | '/book-demo'
     | '/contact'
+    | '/login'
     | '/_auth/dashboard'
     | '/blog/$slug'
     | '/_auth/dashboard/admin'
@@ -169,14 +169,21 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
-  AuthRoute: typeof AuthRoute
   BlogRoute: typeof BlogRouteWithChildren
   BookDemoRoute: typeof BookDemoRoute
   ContactRoute: typeof ContactRoute
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -196,13 +203,6 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog'
       preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth': {
@@ -305,11 +305,21 @@ const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
-  AuthRoute: AuthRoute,
   BlogRoute: BlogRouteWithChildren,
   BookDemoRoute: BookDemoRoute,
   ContactRoute: ContactRoute,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
