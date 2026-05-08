@@ -1,6 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { DashboardShell, StatCard, Section, Panel } from "@/components/DashboardShell";
 import { useAuth } from "@/lib/auth-context";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect } from "react";
 import { BookOpen, Calendar, TrendingUp, Sparkles, ArrowRight, Users, GraduationCap, Shield } from "lucide-react";
 
 export const Route = createFileRoute("/_auth/dashboard")({
@@ -9,7 +11,16 @@ export const Route = createFileRoute("/_auth/dashboard")({
 
 function Overview() {
   const { user, roles } = useAuth();
+  const navigate = useNavigate();
   const name = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "there";
+
+  useEffect(() => {
+    if (!user) return;
+    supabase.from("profiles").select("onboarded").eq("id", user.id).maybeSingle()
+      .then(({ data }) => {
+        if (data && !data.onboarded) navigate({ to: "/onboarding" });
+      });
+  }, [user, navigate]);
 
   const quickLinks = [
     { to: "/dashboard/parent", title: "Parent view", desc: "Weekly Sunday reports", icon: Users, role: "parent" as const },
