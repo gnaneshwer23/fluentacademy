@@ -73,17 +73,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Lovable App" },
-      { name: "description", content: "Future Minds Academy is an online learning platform that builds confidence and academic success for children." },
+      {
+        name: "description",
+        content:
+          "Future Minds Academy is an online learning platform that builds confidence and academic success for children.",
+      },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Future Minds Academy is an online learning platform that builds confidence and academic success for children." },
+      {
+        property: "og:description",
+        content:
+          "Future Minds Academy is an online learning platform that builds confidence and academic success for children.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Lovable App" },
-      { name: "twitter:description", content: "Future Minds Academy is an online learning platform that builds confidence and academic success for children." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/016f3d3e-52f9-4850-a020-3e1525cf2081/id-preview-969398ec--314dfadf-b0a9-4c4b-a45f-efc95ba92eed.lovable.app-1778152627731.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/016f3d3e-52f9-4850-a020-3e1525cf2081/id-preview-969398ec--314dfadf-b0a9-4c4b-a45f-efc95ba92eed.lovable.app-1778152627731.png" },
+      {
+        name: "twitter:description",
+        content:
+          "Future Minds Academy is an online learning platform that builds confidence and academic success for children.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/016f3d3e-52f9-4850-a020-3e1525cf2081/id-preview-969398ec--314dfadf-b0a9-4c4b-a45f-efc95ba92eed.lovable.app-1778152627731.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/016f3d3e-52f9-4850-a020-3e1525cf2081/id-preview-969398ec--314dfadf-b0a9-4c4b-a45f-efc95ba92eed.lovable.app-1778152627731.png",
+      },
     ],
     links: [
       {

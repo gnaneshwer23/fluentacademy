@@ -12,6 +12,11 @@ function Guard() {
   useEffect(() => {
     if (!loading && !user) navigate({ to: "/login" });
   }, [user, loading, navigate]);
-  if (loading || !user) return <div className="min-h-screen bg-background p-12 text-center text-muted-foreground">Loading…</div>;
+  if (loading || !user)
+    return (
+      <div className="min-h-screen bg-background p-12 text-center text-muted-foreground">
+        Loading…
+      </div>
+    );
   return <Outlet />;
 }

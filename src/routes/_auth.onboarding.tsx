@@ -3,7 +3,15 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { toast } from "sonner";
-import { ArrowRight, ArrowLeft, CheckCircle2, Users, GraduationCap, BookOpen, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowLeft,
+  CheckCircle2,
+  Users,
+  GraduationCap,
+  BookOpen,
+  Sparkles,
+} from "lucide-react";
 
 export const Route = createFileRoute("/_auth/onboarding")({
   head: () => ({ meta: [{ title: "Welcome · Fluent" }] }),
@@ -12,10 +20,25 @@ export const Route = createFileRoute("/_auth/onboarding")({
 
 type Role = "parent" | "student" | "tutor" | "admin";
 
-const ROLE_META: Record<Exclude<Role, "admin">, { icon: typeof Users; title: string; tagline: string }> = {
-  parent: { icon: Users, title: "Welcome, Parent!", tagline: "Help us tailor weekly Sunday reports for your child." },
-  student: { icon: GraduationCap, title: "Hi there, learner!", tagline: "Tell us about you so we can personalise your practice." },
-  tutor: { icon: BookOpen, title: "Welcome, Tutor!", tagline: "A few details so we can match you with the right students." },
+const ROLE_META: Record<
+  Exclude<Role, "admin">,
+  { icon: typeof Users; title: string; tagline: string }
+> = {
+  parent: {
+    icon: Users,
+    title: "Welcome, Parent!",
+    tagline: "Help us tailor weekly Sunday reports for your child.",
+  },
+  student: {
+    icon: GraduationCap,
+    title: "Hi there, learner!",
+    tagline: "Tell us about you so we can personalise your practice.",
+  },
+  tutor: {
+    icon: BookOpen,
+    title: "Welcome, Tutor!",
+    tagline: "A few details so we can match you with the right students.",
+  },
 };
 
 function Onboarding() {
@@ -46,7 +69,11 @@ function Onboarding() {
 
   useEffect(() => {
     if (loading || !user) return;
-    supabase.from("profiles").select("*").eq("id", user.id).maybeSingle()
+    supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .maybeSingle()
       .then(({ data }) => {
         setProfile(data);
         if (data?.onboarded) {
@@ -100,7 +127,11 @@ function Onboarding() {
   };
 
   if (loading || checking) {
-    return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading…</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center text-muted-foreground">
+        Loading…
+      </div>
+    );
   }
 
   const Icon = meta.icon;
@@ -111,7 +142,10 @@ function Onboarding() {
         {/* Progress */}
         <div className="flex items-center gap-2 mb-8">
           {STEPS.map((_, i) => (
-            <div key={i} className={`h-1.5 flex-1 rounded-full transition ${i <= step ? "bg-primary" : "bg-secondary"}`} />
+            <div
+              key={i}
+              className={`h-1.5 flex-1 rounded-full transition ${i <= step ? "bg-primary" : "bg-secondary"}`}
+            />
           ))}
         </div>
 
@@ -125,10 +159,18 @@ function Onboarding() {
               <p className="mt-3 text-muted-foreground">{meta.tagline}</p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2 text-left">
                 <Field label="Your full name">
-                  <input className="input" value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} />
+                  <input
+                    className="input"
+                    value={form.full_name}
+                    onChange={(e) => setForm({ ...form, full_name: e.target.value })}
+                  />
                 </Field>
                 <Field label="Phone (optional)">
-                  <input className="input" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+                  <input
+                    className="input"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  />
                 </Field>
               </div>
             </div>
@@ -140,9 +182,7 @@ function Onboarding() {
           {step > 0 && role === "student" && (
             <StudentSteps step={step} form={form} setForm={setForm} />
           )}
-          {step > 0 && role === "tutor" && (
-            <TutorSteps step={step} form={form} setForm={setForm} />
-          )}
+          {step > 0 && role === "tutor" && <TutorSteps step={step} form={form} setForm={setForm} />}
 
           {/* Nav */}
           <div className="mt-10 flex items-center justify-between">
@@ -153,7 +193,9 @@ function Onboarding() {
             >
               <ArrowLeft className="h-4 w-4" /> Back
             </button>
-            <span className="text-xs text-muted-foreground">Step {step + 1} of {STEPS.length}</span>
+            <span className="text-xs text-muted-foreground">
+              Step {step + 1} of {STEPS.length}
+            </span>
             {last ? (
               <button
                 onClick={finish}
@@ -213,17 +255,38 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-const SUBJECTS = ["Maths", "English", "Science", "Hindi", "Social Studies", "Coding", "Public Speaking"];
+const SUBJECTS = [
+  "Maths",
+  "English",
+  "Science",
+  "Hindi",
+  "Social Studies",
+  "Coding",
+  "Public Speaking",
+];
 const GRADES = ["Grade 1-2", "Grade 3-5", "Grade 6-8", "Grade 9-10", "Grade 11-12"];
 
-function ToggleChips({ values, selected, onChange }: { values: string[]; selected: string[]; onChange: (s: string[]) => void }) {
+function ToggleChips({
+  values,
+  selected,
+  onChange,
+}: {
+  values: string[];
+  selected: string[];
+  onChange: (s: string[]) => void;
+}) {
   return (
     <div className="flex flex-wrap gap-2">
       {values.map((v) => {
         const on = selected.includes(v);
         return (
-          <button key={v} type="button" className="chip" data-active={on}
-            onClick={() => onChange(on ? selected.filter((x) => x !== v) : [...selected, v])}>
+          <button
+            key={v}
+            type="button"
+            className="chip"
+            data-active={on}
+            onClick={() => onChange(on ? selected.filter((x) => x !== v) : [...selected, v])}
+          >
             {v}
           </button>
         );
@@ -233,91 +296,168 @@ function ToggleChips({ values, selected, onChange }: { values: string[]; selecte
 }
 
 function ParentSteps({ step, form, setForm }: any) {
-  if (step === 1) return (
-    <div>
-      <h2 className="font-display text-2xl mb-1">About your child</h2>
-      <p className="text-sm text-muted-foreground mb-6">We'll personalise reports and class recommendations.</p>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Child's name"><input className="input" value={form.child_name} onChange={(e) => setForm({ ...form, child_name: e.target.value })} /></Field>
-        <Field label="Grade">
-          <select className="input" value={form.child_grade} onChange={(e) => setForm({ ...form, child_grade: e.target.value })}>
-            <option value="">Select grade…</option>
-            {GRADES.map((g) => <option key={g} value={g}>{g}</option>)}
-          </select>
-        </Field>
+  if (step === 1)
+    return (
+      <div>
+        <h2 className="font-display text-2xl mb-1">About your child</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          We'll personalise reports and class recommendations.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Child's name">
+            <input
+              className="input"
+              value={form.child_name}
+              onChange={(e) => setForm({ ...form, child_name: e.target.value })}
+            />
+          </Field>
+          <Field label="Grade">
+            <select
+              className="input"
+              value={form.child_grade}
+              onChange={(e) => setForm({ ...form, child_grade: e.target.value })}
+            >
+              <option value="">Select grade…</option>
+              {GRADES.map((g) => (
+                <option key={g} value={g}>
+                  {g}
+                </option>
+              ))}
+            </select>
+          </Field>
+        </div>
       </div>
-    </div>
-  );
+    );
   return (
     <div>
       <h2 className="font-display text-2xl mb-1">What are your goals?</h2>
-      <p className="text-sm text-muted-foreground mb-6">e.g. confidence in English, exam prep, daily reading habit.</p>
+      <p className="text-sm text-muted-foreground mb-6">
+        e.g. confidence in English, exam prep, daily reading habit.
+      </p>
       <Field label="Your goals">
-        <textarea rows={5} className="input resize-none" value={form.goals} onChange={(e) => setForm({ ...form, goals: e.target.value })} />
+        <textarea
+          rows={5}
+          className="input resize-none"
+          value={form.goals}
+          onChange={(e) => setForm({ ...form, goals: e.target.value })}
+        />
       </Field>
     </div>
   );
 }
 
 function StudentSteps({ step, form, setForm }: any) {
-  if (step === 1) return (
-    <div>
-      <h2 className="font-display text-2xl mb-1">What grade are you in?</h2>
-      <p className="text-sm text-muted-foreground mb-6">Pick the closest grade band.</p>
-      <div className="flex flex-wrap gap-2">
-        {GRADES.map((g) => (
-          <button key={g} type="button" className="chip" data-active={form.grade === g}
-            onClick={() => setForm({ ...form, grade: g })}>{g}</button>
-        ))}
+  if (step === 1)
+    return (
+      <div>
+        <h2 className="font-display text-2xl mb-1">What grade are you in?</h2>
+        <p className="text-sm text-muted-foreground mb-6">Pick the closest grade band.</p>
+        <div className="flex flex-wrap gap-2">
+          {GRADES.map((g) => (
+            <button
+              key={g}
+              type="button"
+              className="chip"
+              data-active={form.grade === g}
+              onClick={() => setForm({ ...form, grade: g })}
+            >
+              {g}
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
-  );
-  if (step === 2) return (
-    <div>
-      <h2 className="font-display text-2xl mb-1">Which subjects do you want help with?</h2>
-      <p className="text-sm text-muted-foreground mb-6">Pick as many as you like.</p>
-      <ToggleChips values={SUBJECTS} selected={form.subjects} onChange={(s) => setForm({ ...form, subjects: s })} />
-    </div>
-  );
+    );
+  if (step === 2)
+    return (
+      <div>
+        <h2 className="font-display text-2xl mb-1">Which subjects do you want help with?</h2>
+        <p className="text-sm text-muted-foreground mb-6">Pick as many as you like.</p>
+        <ToggleChips
+          values={SUBJECTS}
+          selected={form.subjects}
+          onChange={(s) => setForm({ ...form, subjects: s })}
+        />
+      </div>
+    );
   return (
     <div>
       <h2 className="font-display text-2xl mb-1">How do you learn best?</h2>
-      <p className="text-sm text-muted-foreground mb-6">We'll match your AI practice style accordingly.</p>
+      <p className="text-sm text-muted-foreground mb-6">
+        We'll match your AI practice style accordingly.
+      </p>
       <div className="grid gap-3 sm:grid-cols-2">
         {["Visual", "Listening", "Doing / hands-on", "Reading & writing"].map((s) => (
-          <button key={s} type="button" className="chip" data-active={form.learning_style === s}
-            onClick={() => setForm({ ...form, learning_style: s })}>{s}</button>
+          <button
+            key={s}
+            type="button"
+            className="chip"
+            data-active={form.learning_style === s}
+            onClick={() => setForm({ ...form, learning_style: s })}
+          >
+            {s}
+          </button>
         ))}
       </div>
       <Field label="Anything else you'd like us to know?">
-        <textarea rows={3} className="input resize-none mt-4" value={form.goals} onChange={(e) => setForm({ ...form, goals: e.target.value })} />
+        <textarea
+          rows={3}
+          className="input resize-none mt-4"
+          value={form.goals}
+          onChange={(e) => setForm({ ...form, goals: e.target.value })}
+        />
       </Field>
     </div>
   );
 }
 
 function TutorSteps({ step, form, setForm }: any) {
-  if (step === 1) return (
-    <div>
-      <h2 className="font-display text-2xl mb-1">Your expertise</h2>
-      <p className="text-sm text-muted-foreground mb-6">Tell us what you teach and your years of experience.</p>
-      <Field label="Subjects you teach">
-        <div className="mt-1"><ToggleChips values={SUBJECTS} selected={form.subjects} onChange={(s) => setForm({ ...form, subjects: s })} /></div>
-      </Field>
-      <Field label="Years of experience">
-        <input type="number" min={0} className="input mt-4" value={form.experience_years} onChange={(e) => setForm({ ...form, experience_years: +e.target.value })} />
-      </Field>
-    </div>
-  );
+  if (step === 1)
+    return (
+      <div>
+        <h2 className="font-display text-2xl mb-1">Your expertise</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          Tell us what you teach and your years of experience.
+        </p>
+        <Field label="Subjects you teach">
+          <div className="mt-1">
+            <ToggleChips
+              values={SUBJECTS}
+              selected={form.subjects}
+              onChange={(s) => setForm({ ...form, subjects: s })}
+            />
+          </div>
+        </Field>
+        <Field label="Years of experience">
+          <input
+            type="number"
+            min={0}
+            className="input mt-4"
+            value={form.experience_years}
+            onChange={(e) => setForm({ ...form, experience_years: +e.target.value })}
+          />
+        </Field>
+      </div>
+    );
   return (
     <div>
       <h2 className="font-display text-2xl mb-1">Availability & bio</h2>
-      <p className="text-sm text-muted-foreground mb-6">Help students and parents get to know you.</p>
+      <p className="text-sm text-muted-foreground mb-6">
+        Help students and parents get to know you.
+      </p>
       <Field label="Short bio">
-        <textarea rows={4} className="input resize-none" value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} />
+        <textarea
+          rows={4}
+          className="input resize-none"
+          value={form.bio}
+          onChange={(e) => setForm({ ...form, bio: e.target.value })}
+        />
       </Field>
       <Field label="Availability (e.g. Mon–Fri, 4–8pm IST)">
-        <input className="input mt-4" value={form.availability} onChange={(e) => setForm({ ...form, availability: e.target.value })} />
+        <input
+          className="input mt-4"
+          value={form.availability}
+          onChange={(e) => setForm({ ...form, availability: e.target.value })}
+        />
       </Field>
     </div>
   );

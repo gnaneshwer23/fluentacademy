@@ -10,7 +10,12 @@ export const Route = createFileRoute("/_auth/dashboard/tutor")({
   component: TutorDash,
 });
 
-interface MiniReport { id: string; week_of: string; student_id: string; marks: number | null }
+interface MiniReport {
+  id: string;
+  week_of: string;
+  student_id: string;
+  marks: number | null;
+}
 
 function TutorDash() {
   const { user, roles } = useAuth();
@@ -36,13 +41,17 @@ function TutorDash() {
       .then(({ data }) => setReports(data ?? []));
   };
 
-  useEffect(() => { load(); /* eslint-disable-next-line */ }, [user]);
+  useEffect(() => {
+    load(); /* eslint-disable-next-line */
+  }, [user]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
     setSubmitting(true);
-    const { error } = await supabase.from("progress_reports").insert({ ...form, tutor_id: user.id });
+    const { error } = await supabase
+      .from("progress_reports")
+      .insert({ ...form, tutor_id: user.id });
     setSubmitting(false);
     if (error) return toast.error(error.message);
     toast.success("Report submitted");
@@ -55,7 +64,8 @@ function TutorDash() {
       <DashboardShell title="Tutor Workspace">
         <Panel>
           <p className="text-sm text-muted-foreground">
-            You need a <code className="px-1.5 py-0.5 rounded bg-secondary">tutor</code> role to access this page.
+            You need a <code className="px-1.5 py-0.5 rounded bg-secondary">tutor</code> role to
+            access this page.
           </p>
         </Panel>
       </DashboardShell>
@@ -73,11 +83,18 @@ function TutorDash() {
     >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard label="Reports submitted" value={reports.length} icon={FileText} />
-        <StatCard label="Active students" value={new Set(reports.map((r) => r.student_id)).size} icon={Users} />
+        <StatCard
+          label="Active students"
+          value={new Set(reports.map((r) => r.student_id)).size}
+          icon={Users}
+        />
         <StatCard label="Avg marks given" value={avgMarks} icon={Award} />
       </div>
 
-      <Section title="Submit weekly report" description="Sunday is publish day — keep it consistent.">
+      <Section
+        title="Submit weekly report"
+        description="Sunday is publish day — keep it consistent."
+      >
         <Panel>
           <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2">
             <Field label="Student user ID" className="sm:col-span-2">
@@ -99,16 +116,34 @@ function TutorDash() {
               />
             </Field>
             <Field label="Attendance %">
-              <input type="number" min={0} max={100} value={form.attendance}
-                onChange={(e) => setForm({ ...form, attendance: +e.target.value })} className="input" />
+              <input
+                type="number"
+                min={0}
+                max={100}
+                value={form.attendance}
+                onChange={(e) => setForm({ ...form, attendance: +e.target.value })}
+                className="input"
+              />
             </Field>
             <Field label="Marks (out of 100)">
-              <input type="number" min={0} max={100} value={form.marks}
-                onChange={(e) => setForm({ ...form, marks: +e.target.value })} className="input" />
+              <input
+                type="number"
+                min={0}
+                max={100}
+                value={form.marks}
+                onChange={(e) => setForm({ ...form, marks: +e.target.value })}
+                className="input"
+              />
             </Field>
             <Field label="Confidence %">
-              <input type="number" min={0} max={100} value={form.confidence_score}
-                onChange={(e) => setForm({ ...form, confidence_score: +e.target.value })} className="input" />
+              <input
+                type="number"
+                min={0}
+                max={100}
+                value={form.confidence_score}
+                onChange={(e) => setForm({ ...form, confidence_score: +e.target.value })}
+                className="input"
+              />
             </Field>
             <Field label="Notes" className="sm:col-span-2">
               <textarea
@@ -133,7 +168,9 @@ function TutorDash() {
 
       <Section title="Recent reports">
         {reports.length === 0 ? (
-          <Panel><p className="text-sm text-muted-foreground">You haven't submitted any reports yet.</p></Panel>
+          <Panel>
+            <p className="text-sm text-muted-foreground">You haven't submitted any reports yet.</p>
+          </Panel>
         ) : (
           <Panel className="p-0 overflow-hidden">
             <table className="w-full text-sm">
@@ -148,7 +185,9 @@ function TutorDash() {
                 {reports.map((r) => (
                   <tr key={r.id} className="border-t border-ink/5">
                     <td className="px-5 py-3">{new Date(r.week_of).toLocaleDateString()}</td>
-                    <td className="px-5 py-3 font-mono text-xs truncate max-w-[200px]">{r.student_id}</td>
+                    <td className="px-5 py-3 font-mono text-xs truncate max-w-[200px]">
+                      {r.student_id}
+                    </td>
                     <td className="px-5 py-3 text-right font-semibold">{r.marks ?? 0}</td>
                   </tr>
                 ))}
@@ -174,7 +213,15 @@ function TutorDash() {
   );
 }
 
-function Field({ label, children, className = "" }: { label: string; children: React.ReactNode; className?: string }) {
+function Field({
+  label,
+  children,
+  className = "",
+}: {
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
     <label className={`block ${className}`}>
       <span className="block text-xs font-medium text-muted-foreground mb-1.5">{label}</span>

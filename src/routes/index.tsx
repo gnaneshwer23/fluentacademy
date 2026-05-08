@@ -71,11 +71,21 @@ function Nav() {
           </div>
         </Link>
         <nav className="hidden items-center gap-8 text-sm md:flex">
-          <a href="#programs" className="hover:text-accent">Programs</a>
-          <a href="#how" className="hover:text-accent">How it works</a>
-          <Link to="/blog" className="hover:text-accent">Resources</Link>
-          <Link to="/contact" className="hover:text-accent">Contact</Link>
-          <Link to="/login" className="hover:text-accent">Sign in</Link>
+          <a href="#programs" className="hover:text-accent">
+            Programs
+          </a>
+          <a href="#how" className="hover:text-accent">
+            How it works
+          </a>
+          <Link to="/blog" className="hover:text-accent">
+            Resources
+          </Link>
+          <Link to="/contact" className="hover:text-accent">
+            Contact
+          </Link>
+          <Link to="/login" className="hover:text-accent">
+            Sign in
+          </Link>
         </nav>
         <Link to="/book-demo" className="btn-gold rounded-full px-5 py-2 text-sm font-semibold">
           Book Free Demo
@@ -95,27 +105,34 @@ function Hero() {
             British curriculum · AI assisted
           </span>
           <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.02] text-balance md:text-7xl lg:text-8xl">
-            From low confidence{" "}
-            <em className="not-italic gold-underline">to high</em>{" "}
+            From low confidence <em className="not-italic gold-underline">to high</em>{" "}
             <span className="italic font-normal">performance.</span>
           </h1>
           <p className="mt-8 max-w-xl text-lg text-muted-foreground md:text-xl">
-            Fluent blends British teaching methods with AI-driven practice and
-            weekly accountability — so your child learns to think, speak and perform
-            with quiet, lasting confidence.
+            Fluent blends British teaching methods with AI-driven practice and weekly accountability
+            — so your child learns to think, speak and perform with quiet, lasting confidence.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link to="/book-demo" className="btn-ink rounded-full px-7 py-3.5 text-sm font-semibold">
+            <Link
+              to="/book-demo"
+              className="btn-ink rounded-full px-7 py-3.5 text-sm font-semibold"
+            >
               Book Free Demo →
             </Link>
-            <a href="#how" className="rounded-full px-6 py-3.5 text-sm font-semibold underline underline-offset-4 decoration-accent decoration-2">
+            <a
+              href="#how"
+              className="rounded-full px-6 py-3.5 text-sm font-semibold underline underline-offset-4 decoration-accent decoration-2"
+            >
               Watch how it works
             </a>
           </div>
           <div className="mt-12 flex items-center gap-6 text-sm text-muted-foreground">
             <div className="flex -space-x-2">
-              {[1,2,3,4].map((i) => (
-                <div key={i} className="h-9 w-9 rounded-full border-2 border-background bg-gradient-to-br from-accent to-primary" />
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="h-9 w-9 rounded-full border-2 border-background bg-gradient-to-br from-accent to-primary"
+                />
               ))}
             </div>
             <p>2,400+ parents trust Fluent across India.</p>
@@ -191,8 +208,8 @@ function Problem() {
             Is your child <em className="italic gold-underline">struggling</em> with confidence?
           </h2>
           <p className="mt-6 text-muted-foreground">
-            Most learning systems chase marks. We've found the missing layer beneath
-            them — the confidence to think, speak and try.
+            Most learning systems chase marks. We've found the missing layer beneath them — the
+            confidence to think, speak and try.
           </p>
         </div>
         <div className="grid gap-4 md:col-span-7 md:grid-cols-2">
@@ -210,9 +227,18 @@ function Problem() {
 
 function Solution() {
   const items = [
-    { t: "Concept Learning", d: "Understand deeply instead of memorising. We teach the why before the what." },
-    { t: "AI Companion", d: "Personalised practice and 24/7 doubt-solving tuned to your child's pace." },
-    { t: "Confidence Studio", d: "Weekly speaking labs that turn shy learners into clear communicators." },
+    {
+      t: "Concept Learning",
+      d: "Understand deeply instead of memorising. We teach the why before the what.",
+    },
+    {
+      t: "AI Companion",
+      d: "Personalised practice and 24/7 doubt-solving tuned to your child's pace.",
+    },
+    {
+      t: "Confidence Studio",
+      d: "Weekly speaking labs that turn shy learners into clear communicators.",
+    },
   ];
   return (
     <section id="programs" className="bg-primary py-24 text-primary-foreground">
@@ -222,8 +248,8 @@ function Solution() {
             A new way of <em className="italic text-accent">learning.</em>
           </h2>
           <p className="max-w-md text-primary-foreground/70">
-            Three pillars working together — built by educators trained in the UK,
-            delivered for the Indian classroom.
+            Three pillars working together — built by educators trained in the UK, delivered for the
+            Indian classroom.
           </p>
         </div>
         <div className="mt-14 grid gap-6 md:grid-cols-3">
@@ -247,9 +273,21 @@ function Solution() {
 
 function USP() {
   const items = [
-    { k: "01", t: "British Teaching Methods", d: "Inquiry-led, interactive lessons that prize understanding over rote." },
-    { k: "02", t: "UK-Based Educators", d: "Mentors with global classroom experience — your child learns from them weekly." },
-    { k: "03", t: "Weekly Accountability", d: "Transparent dashboards and parent reports. Progress, every Sunday." },
+    {
+      k: "01",
+      t: "British Teaching Methods",
+      d: "Inquiry-led, interactive lessons that prize understanding over rote.",
+    },
+    {
+      k: "02",
+      t: "UK-Based Educators",
+      d: "Mentors with global classroom experience — your child learns from them weekly.",
+    },
+    {
+      k: "03",
+      t: "Weekly Accountability",
+      d: "Transparent dashboards and parent reports. Progress, every Sunday.",
+    },
   ];
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
@@ -295,9 +333,7 @@ function Flow() {
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary font-display text-lg text-primary-foreground">
                   {i + 1}
                 </span>
-                {i < steps.length - 1 && (
-                  <span className="text-2xl text-accent">→</span>
-                )}
+                {i < steps.length - 1 && <span className="text-2xl text-accent">→</span>}
               </div>
               <h3 className="mt-6 font-display text-xl">{s.t}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>
@@ -335,14 +371,16 @@ function Confidence() {
           </h2>
           <ul className="mt-8 grid grid-cols-2 gap-3">
             {points.map((p) => (
-              <li key={p} className="rounded-xl border border-ink/15 bg-card px-4 py-3 text-sm font-medium">
+              <li
+                key={p}
+                className="rounded-xl border border-ink/15 bg-card px-4 py-3 text-sm font-medium"
+              >
                 ✓ {p}
               </li>
             ))}
           </ul>
           <blockquote className="mt-10 border-l-4 border-accent pl-5 font-display text-2xl italic leading-snug">
-            “Your child won't just learn — they'll speak, present and lead with
-            confidence.”
+            “Your child won't just learn — they'll speak, present and lead with confidence.”
           </blockquote>
         </div>
       </div>
@@ -352,9 +390,21 @@ function Confidence() {
 
 function Testimonials() {
   const t = [
-    { q: "My child gained real confidence in just four weeks. He now volunteers in class.", a: "Priya M.", c: "Parent · Mumbai" },
-    { q: "Marks improved, but more importantly her thinking is sharper. Worth every rupee.", a: "Rahul K.", c: "Parent · Bengaluru" },
-    { q: "Best decision we made for our daughter's education. The Sunday reports are gold.", a: "Anita S.", c: "Parent · Delhi" },
+    {
+      q: "My child gained real confidence in just four weeks. He now volunteers in class.",
+      a: "Priya M.",
+      c: "Parent · Mumbai",
+    },
+    {
+      q: "Marks improved, but more importantly her thinking is sharper. Worth every rupee.",
+      a: "Rahul K.",
+      c: "Parent · Bengaluru",
+    },
+    {
+      q: "Best decision we made for our daughter's education. The Sunday reports are gold.",
+      a: "Anita S.",
+      c: "Parent · Delhi",
+    },
   ];
   return (
     <section className="bg-primary py-24 text-primary-foreground">
@@ -364,11 +414,12 @@ function Testimonials() {
         </h2>
         <div className="mt-14 grid gap-6 md:grid-cols-3">
           {t.map((x) => (
-            <figure key={x.a} className="rounded-3xl border border-primary-foreground/15 bg-primary-foreground/5 p-8">
+            <figure
+              key={x.a}
+              className="rounded-3xl border border-primary-foreground/15 bg-primary-foreground/5 p-8"
+            >
               <div className="text-accent">★★★★★</div>
-              <blockquote className="mt-5 font-display text-xl leading-snug">
-                “{x.q}”
-              </blockquote>
+              <blockquote className="mt-5 font-display text-xl leading-snug">“{x.q}”</blockquote>
               <figcaption className="mt-6 text-sm">
                 <div className="font-semibold">{x.a}</div>
                 <div className="text-primary-foreground/60">{x.c}</div>
@@ -383,9 +434,28 @@ function Testimonials() {
 
 function Pricing() {
   const tiers = [
-    { name: "Starter", price: "₹2,999", per: "/month", features: ["2 live classes / week", "AI doubt solver", "Monthly report"], cta: "Start" },
-    { name: "Standard", price: "₹3,999", per: "/month", features: ["4 live classes / week", "Confidence studio", "Weekly Sunday report"], cta: "Most chosen", featured: true },
-    { name: "Premium", price: "₹6,000+", per: "/month", features: ["1:1 mentor pairing", "Unlimited AI practice", "Parent strategy calls"], cta: "Talk to us" },
+    {
+      name: "Starter",
+      price: "₹2,999",
+      per: "/month",
+      features: ["2 live classes / week", "AI doubt solver", "Monthly report"],
+      cta: "Start",
+    },
+    {
+      name: "Standard",
+      price: "₹3,999",
+      per: "/month",
+      features: ["4 live classes / week", "Confidence studio", "Weekly Sunday report"],
+      cta: "Most chosen",
+      featured: true,
+    },
+    {
+      name: "Premium",
+      price: "₹6,000+",
+      per: "/month",
+      features: ["1:1 mentor pairing", "Unlimited AI practice", "Parent strategy calls"],
+      cta: "Talk to us",
+    },
   ];
   return (
     <section id="pricing" className="mx-auto max-w-7xl px-6 py-24">
@@ -413,9 +483,13 @@ function Pricing() {
             </div>
             <div className="mt-6 flex items-baseline gap-1">
               <div className="font-display text-5xl">{t.price}</div>
-              <div className={t.featured ? "text-primary-foreground/70" : "text-muted-foreground"}>{t.per}</div>
+              <div className={t.featured ? "text-primary-foreground/70" : "text-muted-foreground"}>
+                {t.per}
+              </div>
             </div>
-            <ul className={`mt-6 space-y-2 text-sm ${t.featured ? "text-primary-foreground/85" : "text-muted-foreground"}`}>
+            <ul
+              className={`mt-6 space-y-2 text-sm ${t.featured ? "text-primary-foreground/85" : "text-muted-foreground"}`}
+            >
               {t.features.map((f) => (
                 <li key={f}>— {f}</li>
               ))}
@@ -445,13 +519,19 @@ function FinalCTA() {
           </h2>
           <div className="md:col-span-4">
             <p className="text-accent-foreground/80">
-              Book a 30-minute demo this week. We'll assess, advise, and show you the
-              path forward — no obligation.
+              Book a 30-minute demo this week. We'll assess, advise, and show you the path forward —
+              no obligation.
             </p>
-            <Link to="/book-demo" className="btn-ink mt-6 inline-flex rounded-full px-7 py-4 text-sm font-semibold">
+            <Link
+              to="/book-demo"
+              className="btn-ink mt-6 inline-flex rounded-full px-7 py-4 text-sm font-semibold"
+            >
               Book Free Demo →
             </Link>
-            <a href="tel:+447553886303" className="mt-3 inline-flex text-sm font-semibold text-accent-foreground underline underline-offset-4">
+            <a
+              href="tel:+447553886303"
+              className="mt-3 inline-flex text-sm font-semibold text-accent-foreground underline underline-offset-4"
+            >
               Or call 07553 886303
             </a>
           </div>
@@ -468,21 +548,45 @@ function Footer() {
         <div className="md:col-span-2">
           <div className="font-display text-2xl">Fluent</div>
           <p className="mt-2 text-sm text-primary-foreground/60">
-            An Accountable Hindustan initiative. Building India's most confident
-            generation, one child at a time.
+            An Accountable Hindustan initiative. Building India's most confident generation, one
+            child at a time.
           </p>
         </div>
         <div>
-          <div className="text-xs uppercase tracking-widest text-primary-foreground/50">Contact</div>
-          <p className="mt-3 text-sm"><a href="mailto:futureminds.academy26@gmail.com" className="hover:text-accent">futureminds.academy26@gmail.com</a></p>
-          <p className="text-sm"><a href="tel:+447553886303" className="hover:text-accent">07553 886303</a></p>
+          <div className="text-xs uppercase tracking-widest text-primary-foreground/50">
+            Contact
+          </div>
+          <p className="mt-3 text-sm">
+            <a href="mailto:futureminds.academy26@gmail.com" className="hover:text-accent">
+              futureminds.academy26@gmail.com
+            </a>
+          </p>
+          <p className="text-sm">
+            <a href="tel:+447553886303" className="hover:text-accent">
+              07553 886303
+            </a>
+          </p>
         </div>
         <div>
-          <div className="text-xs uppercase tracking-widest text-primary-foreground/50">Explore</div>
+          <div className="text-xs uppercase tracking-widest text-primary-foreground/50">
+            Explore
+          </div>
           <ul className="mt-3 space-y-1 text-sm">
-            <li><a href="#programs" className="hover:text-accent">Programs</a></li>
-            <li><a href="#how" className="hover:text-accent">How it works</a></li>
-            <li><a href="#pricing" className="hover:text-accent">Pricing</a></li>
+            <li>
+              <a href="#programs" className="hover:text-accent">
+                Programs
+              </a>
+            </li>
+            <li>
+              <a href="#how" className="hover:text-accent">
+                How it works
+              </a>
+            </li>
+            <li>
+              <a href="#pricing" className="hover:text-accent">
+                Pricing
+              </a>
+            </li>
           </ul>
         </div>
       </div>

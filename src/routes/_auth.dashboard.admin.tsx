@@ -9,8 +9,26 @@ export const Route = createFileRoute("/_auth/dashboard/admin")({
   component: AdminDash,
 });
 
-interface Booking { id: string; parent_name: string; child_name: string; email: string; phone: string; status: string; created_at: string; child_grade?: string | null; preferred_time?: string | null; notes?: string | null; }
-interface Message { id: string; name: string; email: string; subject: string | null; message: string; created_at: string; }
+interface Booking {
+  id: string;
+  parent_name: string;
+  child_name: string;
+  email: string;
+  phone: string;
+  status: string;
+  created_at: string;
+  child_grade?: string | null;
+  preferred_time?: string | null;
+  notes?: string | null;
+}
+interface Message {
+  id: string;
+  name: string;
+  email: string;
+  subject: string | null;
+  message: string;
+  created_at: string;
+}
 
 function AdminDash() {
   const { roles } = useAuth();
@@ -21,9 +39,15 @@ function AdminDash() {
 
   useEffect(() => {
     if (!roles.includes("admin")) return;
-    supabase.from("demo_bookings").select("*").order("created_at", { ascending: false })
+    supabase
+      .from("demo_bookings")
+      .select("*")
+      .order("created_at", { ascending: false })
       .then(({ data }) => setBookings((data ?? []) as Booking[]));
-    supabase.from("contact_messages").select("*").order("created_at", { ascending: false })
+    supabase
+      .from("contact_messages")
+      .select("*")
+      .order("created_at", { ascending: false })
       .then(({ data }) => setMessages((data ?? []) as Message[]));
   }, [roles]);
 
@@ -45,11 +69,21 @@ function AdminDash() {
     if (!error) setBookings((bs) => bs.map((b) => (b.id === id ? { ...b, status } : b)));
   };
 
-  const filteredB = bookings.filter((b) =>
-    !q || [b.parent_name, b.child_name, b.email, b.phone].join(" ").toLowerCase().includes(q.toLowerCase())
+  const filteredB = bookings.filter(
+    (b) =>
+      !q ||
+      [b.parent_name, b.child_name, b.email, b.phone]
+        .join(" ")
+        .toLowerCase()
+        .includes(q.toLowerCase()),
   );
-  const filteredM = messages.filter((m) =>
-    !q || [m.name, m.email, m.subject ?? "", m.message].join(" ").toLowerCase().includes(q.toLowerCase())
+  const filteredM = messages.filter(
+    (m) =>
+      !q ||
+      [m.name, m.email, m.subject ?? "", m.message]
+        .join(" ")
+        .toLowerCase()
+        .includes(q.toLowerCase()),
   );
 
   const pending = bookings.filter((b) => b.status === "pending").length;
@@ -73,7 +107,9 @@ function AdminDash() {
                 key={t}
                 onClick={() => setTab(t)}
                 className={`px-4 py-1.5 text-xs font-semibold rounded-full transition capitalize ${
-                  tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                  tab === t
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {t} ({t === "bookings" ? bookings.length : messages.length})
@@ -94,7 +130,9 @@ function AdminDash() {
         {tab === "bookings" && (
           <div className="space-y-3">
             {filteredB.length === 0 && (
-              <Panel><p className="text-sm text-muted-foreground">No bookings match.</p></Panel>
+              <Panel>
+                <p className="text-sm text-muted-foreground">No bookings match.</p>
+              </Panel>
             )}
             {filteredB.map((b) => (
               <Panel key={b.id}>
@@ -106,20 +144,34 @@ function AdminDash() {
                       {b.child_grade && <> · Grade {b.child_grade}</>}
                     </div>
                     <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                      <span className="inline-flex items-center gap-1"><Mail className="h-3 w-3" />{b.email}</span>
-                      <span className="inline-flex items-center gap-1"><Phone className="h-3 w-3" />{b.phone}</span>
-                      <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{new Date(b.created_at).toLocaleString()}</span>
+                      <span className="inline-flex items-center gap-1">
+                        <Mail className="h-3 w-3" />
+                        {b.email}
+                      </span>
+                      <span className="inline-flex items-center gap-1">
+                        <Phone className="h-3 w-3" />
+                        {b.phone}
+                      </span>
+                      <span className="inline-flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {new Date(b.created_at).toLocaleString()}
+                      </span>
                     </div>
-                    {b.notes && <p className="mt-3 text-sm bg-secondary/60 rounded-lg p-3">{b.notes}</p>}
+                    {b.notes && (
+                      <p className="mt-3 text-sm bg-secondary/60 rounded-lg p-3">{b.notes}</p>
+                    )}
                   </div>
                   <select
                     value={b.status}
                     onChange={(e) => updateStatus(b.id, e.target.value)}
                     className={`text-xs font-semibold rounded-full px-3 py-1.5 border-0 cursor-pointer ${
-                      b.status === "pending" ? "bg-amber-100 text-amber-800"
-                        : b.status === "confirmed" ? "bg-emerald-100 text-emerald-800"
-                        : b.status === "completed" ? "bg-blue-100 text-blue-800"
-                        : "bg-secondary"
+                      b.status === "pending"
+                        ? "bg-amber-100 text-amber-800"
+                        : b.status === "confirmed"
+                          ? "bg-emerald-100 text-emerald-800"
+                          : b.status === "completed"
+                            ? "bg-blue-100 text-blue-800"
+                            : "bg-secondary"
                     }`}
                   >
                     <option value="pending">Pending</option>
@@ -136,7 +188,9 @@ function AdminDash() {
         {tab === "messages" && (
           <div className="space-y-3">
             {filteredM.length === 0 && (
-              <Panel><p className="text-sm text-muted-foreground">No messages match.</p></Panel>
+              <Panel>
+                <p className="text-sm text-muted-foreground">No messages match.</p>
+              </Panel>
             )}
             {filteredM.map((m) => (
               <Panel key={m.id}>
@@ -147,7 +201,10 @@ function AdminDash() {
                   </span>
                 </div>
                 <div className="text-xs text-muted-foreground mb-3">
-                  {m.name} · <a href={`mailto:${m.email}`} className="underline">{m.email}</a>
+                  {m.name} ·{" "}
+                  <a href={`mailto:${m.email}`} className="underline">
+                    {m.email}
+                  </a>
                 </div>
                 <p className="text-sm leading-relaxed whitespace-pre-wrap">{m.message}</p>
               </Panel>

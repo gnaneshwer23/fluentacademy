@@ -13,7 +13,11 @@ interface AuthCtx {
 }
 
 const Ctx = createContext<AuthCtx>({
-  user: null, session: null, roles: [], loading: true, signOut: async () => {},
+  user: null,
+  session: null,
+  roles: [],
+  loading: true,
+  signOut: async () => {},
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -22,11 +26,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_e, s) => {
       setSession(s);
       if (s?.user) {
         setTimeout(async () => {
-          const { data } = await supabase.from("user_roles").select("role").eq("user_id", s.user.id);
+          const { data } = await supabase
+            .from("user_roles")
+            .select("role")
+            .eq("user_id", s.user.id);
           setRoles((data ?? []).map((r: { role: Role }) => r.role));
         }, 0);
       } else {
@@ -45,13 +54,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <Ctx.Provider value={{
-      user: session?.user ?? null,
-      session,
-      roles,
-      loading,
-      signOut: async () => { await supabase.auth.signOut(); },
-    }}>
+    <Ctx.Provider
+      value={{
+        user: session?.user ?? null,
+        session,
+        roles,
+        loading,
+        signOut: async () => {
+          await supabase.auth.signOut();
+        },
+      }}
+    >
       {children}
     </Ctx.Provider>
   );
