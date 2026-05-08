@@ -48,7 +48,9 @@ function ParentDash() {
         <StatCard
           label="Latest attendance"
           value={`${latest?.attendance ?? 0}%`}
-          sub={latest ? `Week of ${new Date(latest.week_of).toLocaleDateString()}` : "No reports yet"}
+          sub={
+            latest ? `Week of ${new Date(latest.week_of).toLocaleDateString()}` : "No reports yet"
+          }
           icon={CalendarCheck}
         />
         <StatCard
@@ -66,9 +68,14 @@ function ParentDash() {
         />
       </div>
 
-      <Section title="Weekly Sunday reports" description="Detailed insights from your tutor each week.">
+      <Section
+        title="Weekly Sunday reports"
+        description="Detailed insights from your tutor each week."
+      >
         {loading ? (
-          <Panel><p className="text-sm text-muted-foreground">Loading reports…</p></Panel>
+          <Panel>
+            <p className="text-sm text-muted-foreground">Loading reports…</p>
+          </Panel>
         ) : reports.length === 0 ? (
           <Panel>
             <div className="text-center py-8">
@@ -86,9 +93,16 @@ function ParentDash() {
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div>
                     <div className="font-display text-lg">
-                      Week of {new Date(r.week_of).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}
+                      Week of{" "}
+                      {new Date(r.week_of).toLocaleDateString(undefined, {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1">Published by your tutor</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      Published by your tutor
+                    </div>
                   </div>
                   <span className="rounded-full bg-accent/30 px-3 py-1 text-xs font-semibold whitespace-nowrap">
                     {r.confidence_score}% confidence
@@ -101,7 +115,9 @@ function ParentDash() {
                 </div>
                 {r.notes && (
                   <div className="mt-4 pt-4 border-t border-ink/10">
-                    <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Tutor notes</div>
+                    <div className="text-xs uppercase tracking-widest text-muted-foreground mb-2">
+                      Tutor notes
+                    </div>
                     <p className="text-sm leading-relaxed">{r.notes}</p>
                   </div>
                 )}

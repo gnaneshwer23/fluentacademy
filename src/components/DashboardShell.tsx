@@ -1,7 +1,16 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useAuth } from "@/lib/auth-context";
 import type { ReactNode } from "react";
-import { LayoutDashboard, Users, GraduationCap, BookOpen, Shield, LogOut, Menu, X } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  GraduationCap,
+  BookOpen,
+  Shield,
+  LogOut,
+  Menu,
+  X,
+} from "lucide-react";
 import { useState } from "react";
 
 type Role = "admin" | "tutor" | "parent" | "student";
@@ -75,7 +84,10 @@ export function DashboardShell({
             <div className="text-sm font-medium truncate">{user?.email}</div>
             <div className="mt-1 flex flex-wrap gap-1">
               {roles.map((r) => (
-                <span key={r} className="text-[10px] uppercase tracking-wider bg-accent/30 px-2 py-0.5 rounded-full">
+                <span
+                  key={r}
+                  className="text-[10px] uppercase tracking-wider bg-accent/30 px-2 py-0.5 rounded-full"
+                >
                   {r}
                 </span>
               ))}
@@ -137,7 +149,11 @@ export function StatCard({
   icon?: typeof LayoutDashboard;
 }) {
   const trendColor =
-    trend === "up" ? "text-emerald-700" : trend === "down" ? "text-destructive" : "text-muted-foreground";
+    trend === "up"
+      ? "text-emerald-700"
+      : trend === "down"
+        ? "text-destructive"
+        : "text-muted-foreground";
   return (
     <div className="rounded-2xl bg-card p-5 border border-ink/10 hover:border-ink/20 transition">
       <div className="flex items-start justify-between">

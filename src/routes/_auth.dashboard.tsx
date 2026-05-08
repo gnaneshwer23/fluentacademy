@@ -3,7 +3,16 @@ import { DashboardShell, StatCard, Section, Panel } from "@/components/Dashboard
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
-import { BookOpen, Calendar, TrendingUp, Sparkles, ArrowRight, Users, GraduationCap, Shield } from "lucide-react";
+import {
+  BookOpen,
+  Calendar,
+  TrendingUp,
+  Sparkles,
+  ArrowRight,
+  Users,
+  GraduationCap,
+  Shield,
+} from "lucide-react";
 
 export const Route = createFileRoute("/_auth/dashboard")({
   component: Overview,
@@ -16,17 +25,45 @@ function Overview() {
 
   useEffect(() => {
     if (!user) return;
-    supabase.from("profiles").select("onboarded").eq("id", user.id).maybeSingle()
+    supabase
+      .from("profiles")
+      .select("onboarded")
+      .eq("id", user.id)
+      .maybeSingle()
       .then(({ data }) => {
         if (data && !data.onboarded) navigate({ to: "/onboarding" });
       });
   }, [user, navigate]);
 
   const quickLinks = [
-    { to: "/dashboard/parent", title: "Parent view", desc: "Weekly Sunday reports", icon: Users, role: "parent" as const },
-    { to: "/dashboard/student", title: "Student view", desc: "Classes, AI practice, streak", icon: GraduationCap, role: "student" as const },
-    { to: "/dashboard/tutor", title: "Tutor view", desc: "Submit weekly reports", icon: BookOpen, role: "tutor" as const },
-    { to: "/dashboard/admin", title: "Admin view", desc: "Bookings & messages", icon: Shield, role: "admin" as const },
+    {
+      to: "/dashboard/parent",
+      title: "Parent view",
+      desc: "Weekly Sunday reports",
+      icon: Users,
+      role: "parent" as const,
+    },
+    {
+      to: "/dashboard/student",
+      title: "Student view",
+      desc: "Classes, AI practice, streak",
+      icon: GraduationCap,
+      role: "student" as const,
+    },
+    {
+      to: "/dashboard/tutor",
+      title: "Tutor view",
+      desc: "Submit weekly reports",
+      icon: BookOpen,
+      role: "tutor" as const,
+    },
+    {
+      to: "/dashboard/admin",
+      title: "Admin view",
+      desc: "Bookings & messages",
+      icon: Shield,
+      role: "admin" as const,
+    },
   ].filter((q) => roles.includes(q.role) || roles.includes("admin"));
 
   return (
@@ -36,8 +73,19 @@ function Overview() {
     >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Active programs" value={2} sub="Concept + Confidence" icon={BookOpen} />
-        <StatCard label="Classes this week" value={4} sub="2 attended · 2 upcoming" icon={Calendar} />
-        <StatCard label="Confidence" value="78%" sub="↑ 12% this month" trend="up" icon={TrendingUp} />
+        <StatCard
+          label="Classes this week"
+          value={4}
+          sub="2 attended · 2 upcoming"
+          icon={Calendar}
+        />
+        <StatCard
+          label="Confidence"
+          value="78%"
+          sub="↑ 12% this month"
+          trend="up"
+          icon={TrendingUp}
+        />
         <StatCard label="AI practice" value={148} sub="questions solved" icon={Sparkles} />
       </div>
 
@@ -68,9 +116,18 @@ function Overview() {
       <Section title="Tips for the week">
         <Panel>
           <ul className="space-y-3 text-sm">
-            <li className="flex gap-3"><span className="text-accent-foreground">•</span> Practice 10 minutes daily — consistency beats intensity.</li>
-            <li className="flex gap-3"><span className="text-accent-foreground">•</span> Review last week's report with your tutor before the next class.</li>
-            <li className="flex gap-3"><span className="text-accent-foreground">•</span> Try one AI speaking prompt before bed to build confidence.</li>
+            <li className="flex gap-3">
+              <span className="text-accent-foreground">•</span> Practice 10 minutes daily —
+              consistency beats intensity.
+            </li>
+            <li className="flex gap-3">
+              <span className="text-accent-foreground">•</span> Review last week's report with your
+              tutor before the next class.
+            </li>
+            <li className="flex gap-3">
+              <span className="text-accent-foreground">•</span> Try one AI speaking prompt before
+              bed to build confidence.
+            </li>
           </ul>
         </Panel>
       </Section>
