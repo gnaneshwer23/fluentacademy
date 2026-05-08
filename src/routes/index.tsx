@@ -75,7 +75,7 @@ function Nav() {
           <a href="#how" className="hover:text-accent">How it works</a>
           <Link to="/blog" className="hover:text-accent">Resources</Link>
           <Link to="/contact" className="hover:text-accent">Contact</Link>
-          <Link to="/auth" className="hover:text-accent">Sign in</Link>
+          <Link to="/login" className="hover:text-accent">Sign in</Link>
         </nav>
         <Link to="/book-demo" className="btn-gold rounded-full px-5 py-2 text-sm font-semibold">
           Book Free Demo
