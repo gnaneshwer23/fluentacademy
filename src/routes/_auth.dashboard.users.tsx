@@ -82,6 +82,7 @@ function UsersAdmin() {
   const filtered = useMemo(() => {
     return profiles.filter((p) => {
       if (role !== "all" && p.role !== role) return false;
+      if (status !== "all" && (p.review_status ?? "new") !== status) return false;
       if (grade !== "all" && p.grade !== grade && p.child_grade !== grade) return false;
       if (onboardedOnly && !p.onboarded) return false;
       if (goalQ && !(p.goals ?? "").toLowerCase().includes(goalQ.toLowerCase())) return false;
@@ -91,7 +92,51 @@ function UsersAdmin() {
       }
       return true;
     });
-  }, [profiles, role, grade, goalQ, q, onboardedOnly]);
+  }, [profiles, role, status, grade, goalQ, q, onboardedOnly]);
+
+  const draftFor = (p: Profile) =>
+    drafts[p.id] ?? { status: p.review_status ?? "new", notes: p.reviewer_notes ?? "" };
+
+  const setDraft = (id: string, patch: Partial<{ status: string; notes: string }>) =>
+    setDrafts((d) => ({ ...d, [id]: { ...(d[id] ?? { status: "new", notes: "" }), ...patch } }));
+
+  const saveReview = async (p: Profile) => {
+    const d = draftFor(p);
+    setSavingId(p.id);
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        review_status: d.status,
+        reviewer_notes: d.notes || null,
+        reviewed_at: new Date().toISOString(),
+        reviewed_by: user?.id ?? null,
+      })
+      .eq("id", p.id);
+    setSavingId(null);
+    if (error) return toast.error(error.message);
+    toast.success("Review saved");
+    setProfiles((ps) =>
+      ps.map((x) =>
+        x.id === p.id
+          ? {
+              ...x,
+              review_status: d.status,
+              reviewer_notes: d.notes,
+              reviewed_at: new Date().toISOString(),
+            }
+          : x,
+      ),
+    );
+    setDrafts((dr) => {
+      const { [p.id]: _, ...rest } = dr;
+      return rest;
+    });
+  };
+
+  const markReviewed = (p: Profile) => {
+    setDraft(p.id, { status: "approved" });
+    setTimeout(() => saveReview({ ...p, review_status: "approved" }), 0);
+  };
 
   if (!roles.includes("admin")) {
     return (
