@@ -48,10 +48,40 @@ function ParentDash() {
 
   const latest = reports[0];
 
+  const nextActions = [
+    !latest && {
+      icon: BookOpen,
+      title: "First report coming soon",
+      desc: `We'll publish ${childName}'s first Sunday report this weekend.`,
+    },
+    latest && latest.attendance < 80 && {
+      icon: CalendarCheck,
+      title: "Attendance dipped below 80%",
+      desc: "Help your child join the next live class — consistency drives results.",
+    },
+    latest && latest.confidence_score < 60 && {
+      icon: Sparkles,
+      title: "Confidence is low this week",
+      desc: "Try one AI speaking prompt together tonight.",
+    },
+    !profile?.goals && {
+      icon: Target,
+      title: "Set learning goals",
+      desc: "Tell us what success looks like so we can tailor reports.",
+      to: "/onboarding",
+    },
+    {
+      icon: Phone,
+      title: "Talk to your tutor",
+      desc: "Book a 1:1 check-in to discuss this week's report.",
+      to: "/contact",
+    },
+  ].filter(Boolean) as { icon: typeof Target; title: string; desc: string; to?: string }[];
+
   return (
     <DashboardShell
-      title="Parent Dashboard"
-      subtitle="Track your child's weekly progress, attendance, and confidence."
+      title={profile?.child_name ? `${profile.child_name}'s progress` : "Parent Dashboard"}
+      subtitle={`Track ${childName}'s weekly progress, attendance, and confidence.`}
     >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
