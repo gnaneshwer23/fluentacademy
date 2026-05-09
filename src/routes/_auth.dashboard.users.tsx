@@ -254,7 +254,14 @@ function UsersAdmin() {
                           <Clock className="h-3 w-3" /> Pending
                         </span>
                       )}
-                    </div>
+                      <span className={`text-xs px-2 py-0.5 rounded-full capitalize ${STATUS_STYLES[p.review_status ?? "new"] ?? "bg-secondary"}`}>
+                        {(p.review_status ?? "new").replace("_", " ")}
+                      </span>
+                      {p.reviewed_at && (
+                        <span className="text-xs text-muted-foreground inline-flex items-center gap-1">
+                          <Eye className="h-3 w-3" /> {new Date(p.reviewed_at).toLocaleDateString()}
+                        </span>
+                      )}
                     <div className="mt-1 text-xs text-muted-foreground">
                       {p.email}{p.phone && <> · {p.phone}</>} · joined {new Date(p.created_at).toLocaleDateString()}
                     </div>
