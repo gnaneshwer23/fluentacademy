@@ -189,6 +189,17 @@ function UsersAdmin() {
                   <option key={g} value={g}>{g === "all" ? "All grades" : g}</option>
                 ))}
               </select>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1.5">Review status</label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value as any)}
+                className="w-full rounded-lg border border-ink/15 bg-card px-3 py-2 text-sm capitalize"
+              >
+                {STATUSES.map((s) => (
+                  <option key={s} value={s}>{s.replace("_", " ")}</option>
+                ))}
+              </select>
             </div>
             <div className="lg:col-span-1">
               <label className="block text-xs font-medium text-muted-foreground mb-1.5">Goals contain</label>
