@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { toast } from "sonner";
-import { FileText, Users, Award, Send } from "lucide-react";
+import { FileText, Users, Award, Send, ArrowRight, AlertCircle, Calendar } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_auth/dashboard/tutor")({
   component: TutorDash,
