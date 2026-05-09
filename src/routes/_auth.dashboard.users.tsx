@@ -309,6 +309,49 @@ function UsersAdmin() {
                         <p className="text-sm bg-secondary/60 rounded-lg p-3 whitespace-pre-wrap">{p.bio}</p>
                       </div>
                     )}
+
+                    <div className="mt-4 pt-4 border-t border-ink/10 grid gap-3 sm:grid-cols-[180px_1fr_auto] sm:items-end">
+                      <label className="block">
+                        <span className="block text-xs font-medium text-muted-foreground mb-1.5">Review status</span>
+                        <select
+                          value={draftFor(p).status}
+                          onChange={(e) => setDraft(p.id, { status: e.target.value })}
+                          className="w-full rounded-lg border border-ink/15 bg-card px-3 py-2 text-sm capitalize"
+                        >
+                          {STATUSES.filter((s) => s !== "all").map((s) => (
+                            <option key={s} value={s}>{s.replace("_", " ")}</option>
+                          ))}
+                        </select>
+                      </label>
+                      <label className="block">
+                        <span className="block text-xs font-medium text-muted-foreground mb-1.5">Reviewer notes</span>
+                        <textarea
+                          rows={2}
+                          placeholder="Add private notes for the team…"
+                          value={draftFor(p).notes}
+                          onChange={(e) => setDraft(p.id, { notes: e.target.value })}
+                          className="w-full rounded-lg border border-ink/15 bg-card px-3 py-2 text-sm resize-none"
+                        />
+                      </label>
+                      <div className="flex flex-col gap-2 sm:items-stretch">
+                        <button
+                          onClick={() => saveReview(p)}
+                          disabled={savingId === p.id}
+                          className="inline-flex items-center justify-center gap-1.5 rounded-full bg-primary text-primary-foreground px-4 py-2 text-xs font-semibold hover:opacity-90 disabled:opacity-60"
+                        >
+                          <Save className="h-3.5 w-3.5" /> {savingId === p.id ? "Saving…" : "Save"}
+                        </button>
+                        {(p.review_status ?? "new") !== "approved" && (
+                          <button
+                            onClick={() => markReviewed(p)}
+                            disabled={savingId === p.id}
+                            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-ink/15 px-4 py-2 text-xs font-semibold hover:bg-secondary disabled:opacity-60"
+                          >
+                            <CheckCircle2 className="h-3.5 w-3.5" /> Mark reviewed
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Panel>
