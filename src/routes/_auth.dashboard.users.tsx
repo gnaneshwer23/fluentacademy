@@ -262,6 +262,7 @@ function UsersAdmin() {
                           <Eye className="h-3 w-3" /> {new Date(p.reviewed_at).toLocaleDateString()}
                         </span>
                       )}
+                    </div>
                     <div className="mt-1 text-xs text-muted-foreground">
                       {p.email}{p.phone && <> · {p.phone}</>} · joined {new Date(p.created_at).toLocaleDateString()}
                     </div>
