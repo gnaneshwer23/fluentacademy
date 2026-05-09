@@ -28,9 +28,19 @@ interface Profile {
   availability: string | null;
   experience_years: number | null;
   created_at: string;
+  review_status: string;
+  reviewer_notes: string | null;
+  reviewed_at: string | null;
 }
 
 const ROLES = ["all", "parent", "student", "tutor", "admin"] as const;
+const STATUSES = ["all", "new", "reviewing", "approved", "follow_up"] as const;
+const STATUS_STYLES: Record<string, string> = {
+  new: "bg-blue-100 text-blue-800",
+  reviewing: "bg-amber-100 text-amber-800",
+  approved: "bg-emerald-100 text-emerald-800",
+  follow_up: "bg-rose-100 text-rose-800",
+};
 
 function UsersAdmin() {
   const { roles } = useAuth();
