@@ -23,6 +23,7 @@ function ParentDash() {
   const { user } = useAuth();
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState<{ child_name: string | null; child_grade: string | null; goals: string | null } | null>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -35,7 +36,15 @@ function ParentDash() {
         setReports((data ?? []) as Report[]);
         setLoading(false);
       });
+    supabase
+      .from("profiles")
+      .select("child_name,child_grade,goals")
+      .eq("id", user.id)
+      .maybeSingle()
+      .then(({ data }) => setProfile(data));
   }, [user]);
+
+  const childName = profile?.child_name || "your child";
 
   const latest = reports[0];
 
