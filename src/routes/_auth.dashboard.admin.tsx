@@ -3,7 +3,8 @@ import { DashboardShell, StatCard, Section, Panel } from "@/components/Dashboard
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
-import { Calendar, MessageSquare, Clock, Mail, Phone, Search } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { Calendar, MessageSquare, Clock, Mail, Phone, Search, Users, ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/_auth/dashboard/admin")({
   component: AdminDash,
