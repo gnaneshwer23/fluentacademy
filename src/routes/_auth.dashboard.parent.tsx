@@ -107,6 +107,33 @@ function ParentDash() {
         />
       </div>
 
+      <Section title="Your next actions" description="Personalised for your family this week.">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {nextActions.map((a, i) => {
+            const Icon = a.icon;
+            const body = (
+              <Panel className="h-full hover:border-primary transition flex flex-col">
+                <div className="h-9 w-9 rounded-lg bg-accent/30 flex items-center justify-center mb-3">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div className="font-display text-base">{a.title}</div>
+                <div className="mt-1 text-sm text-muted-foreground flex-1">{a.desc}</div>
+                {a.to && (
+                  <div className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                    Go <ArrowRight className="h-3.5 w-3.5" />
+                  </div>
+                )}
+              </Panel>
+            );
+            return a.to ? (
+              <Link key={i} to={a.to}>{body}</Link>
+            ) : (
+              <div key={i}>{body}</div>
+            );
+          })}
+        </div>
+      </Section>
+
       <Section
         title="Weekly Sunday reports"
         description="Detailed insights from your tutor each week."
