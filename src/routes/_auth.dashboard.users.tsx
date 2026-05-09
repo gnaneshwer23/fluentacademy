@@ -3,7 +3,8 @@ import { DashboardShell, StatCard, Section, Panel } from "@/components/Dashboard
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
-import { Users, Search, GraduationCap, BookOpen, CheckCircle2, Clock } from "lucide-react";
+import { toast } from "sonner";
+import { Users, Search, GraduationCap, BookOpen, CheckCircle2, Clock, Save, Eye } from "lucide-react";
 
 export const Route = createFileRoute("/_auth/dashboard/users")({
   head: () => ({ meta: [{ title: "Onboarding Responses · Fluent" }] }),
