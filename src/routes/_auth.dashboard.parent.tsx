@@ -1,10 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { DashboardShell, StatCard, Section, Panel } from "@/components/DashboardShell";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { Progress } from "@/components/ui/progress";
-import { CalendarCheck, Award, Sparkles, MessageCircle } from "lucide-react";
+import { CalendarCheck, Award, Sparkles, MessageCircle, Target, ArrowRight, Phone, BookOpen } from "lucide-react";
 
 export const Route = createFileRoute("/_auth/dashboard/parent")({
   component: ParentDash,
