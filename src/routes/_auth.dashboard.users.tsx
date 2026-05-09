@@ -189,6 +189,7 @@ function UsersAdmin() {
                   <option key={g} value={g}>{g === "all" ? "All grades" : g}</option>
                 ))}
               </select>
+            </div>
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1.5">Review status</label>
               <select
