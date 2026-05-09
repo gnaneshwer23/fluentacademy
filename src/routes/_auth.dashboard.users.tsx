@@ -54,7 +54,6 @@ function UsersAdmin() {
   const [status, setStatus] = useState<(typeof STATUSES)[number]>("all");
   const [drafts, setDrafts] = useState<Record<string, { status: string; notes: string }>>({});
   const [savingId, setSavingId] = useState<string | null>(null);
-  const { user } = useAuth();
 
   useEffect(() => {
     if (!roles.includes("admin")) {
