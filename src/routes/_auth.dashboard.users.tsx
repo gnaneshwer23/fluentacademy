@@ -43,7 +43,7 @@ const STATUS_STYLES: Record<string, string> = {
 };
 
 function UsersAdmin() {
-  const { roles } = useAuth();
+  const { roles, user } = useAuth();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState<(typeof ROLES)[number]>("all");
