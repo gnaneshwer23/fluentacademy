@@ -21,6 +21,7 @@ const NAV: { to: string; label: string; icon: typeof LayoutDashboard; role?: Rol
   { to: "/dashboard/student", label: "Student", icon: GraduationCap, role: "student" },
   { to: "/dashboard/tutor", label: "Tutor", icon: BookOpen, role: "tutor" },
   { to: "/dashboard/admin", label: "Admin", icon: Shield, role: "admin" },
+  { to: "/dashboard/users", label: "Onboarding", icon: Users, role: "admin" },
 ];
 
 export function DashboardShell({
