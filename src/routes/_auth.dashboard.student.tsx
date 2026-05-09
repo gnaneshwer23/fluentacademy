@@ -1,12 +1,28 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { DashboardShell, StatCard, Section, Panel } from "@/components/DashboardShell";
-import { Flame, Sparkles, TrendingUp, Calendar, Play, CheckCircle2 } from "lucide-react";
+import { Flame, Sparkles, TrendingUp, Calendar, Play, CheckCircle2, Target, ArrowRight, Mic, BookOpen } from "lucide-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/_auth/dashboard/student")({
   component: StudentDash,
 });
 
 function StudentDash() {
+  const { user } = useAuth();
+  const [profile, setProfile] = useState<{ full_name: string | null; grade: string | null; subjects: string[] | null; learning_style: string | null; goals: string | null } | null>(null);
+
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from("profiles")
+      .select("full_name,grade,subjects,learning_style,goals")
+      .eq("id", user.id)
+      .maybeSingle()
+      .then(({ data }) => setProfile(data));
+  }, [user]);
+  const firstName = (profile?.full_name || user?.email?.split("@")[0] || "there").split(" ")[0];
   const classes = [
     {
       day: "Mon",
