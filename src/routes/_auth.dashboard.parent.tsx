@@ -1,10 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { DashboardShell, StatCard, Section, Panel } from "@/components/DashboardShell";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { Progress } from "@/components/ui/progress";
-import { CalendarCheck, Award, Sparkles, MessageCircle } from "lucide-react";
+import { CalendarCheck, Award, Sparkles, MessageCircle, Target, ArrowRight, Phone, BookOpen } from "lucide-react";
 
 export const Route = createFileRoute("/_auth/dashboard/parent")({
   component: ParentDash,
@@ -23,6 +23,7 @@ function ParentDash() {
   const { user } = useAuth();
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState<{ child_name: string | null; child_grade: string | null; goals: string | null } | null>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -35,14 +36,52 @@ function ParentDash() {
         setReports((data ?? []) as Report[]);
         setLoading(false);
       });
+    supabase
+      .from("profiles")
+      .select("child_name,child_grade,goals")
+      .eq("id", user.id)
+      .maybeSingle()
+      .then(({ data }) => setProfile(data));
   }, [user]);
+
+  const childName = profile?.child_name || "your child";
 
   const latest = reports[0];
 
+  const nextActions = [
+    !latest && {
+      icon: BookOpen,
+      title: "First report coming soon",
+      desc: `We'll publish ${childName}'s first Sunday report this weekend.`,
+    },
+    latest && latest.attendance < 80 && {
+      icon: CalendarCheck,
+      title: "Attendance dipped below 80%",
+      desc: "Help your child join the next live class — consistency drives results.",
+    },
+    latest && latest.confidence_score < 60 && {
+      icon: Sparkles,
+      title: "Confidence is low this week",
+      desc: "Try one AI speaking prompt together tonight.",
+    },
+    !profile?.goals && {
+      icon: Target,
+      title: "Set learning goals",
+      desc: "Tell us what success looks like so we can tailor reports.",
+      to: "/onboarding",
+    },
+    {
+      icon: Phone,
+      title: "Talk to your tutor",
+      desc: "Book a 1:1 check-in to discuss this week's report.",
+      to: "/contact",
+    },
+  ].filter(Boolean) as { icon: typeof Target; title: string; desc: string; to?: string }[];
+
   return (
     <DashboardShell
-      title="Parent Dashboard"
-      subtitle="Track your child's weekly progress, attendance, and confidence."
+      title={profile?.child_name ? `${profile.child_name}'s progress` : "Parent Dashboard"}
+      subtitle={`Track ${childName}'s weekly progress, attendance, and confidence.`}
     >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
@@ -67,6 +106,33 @@ function ParentDash() {
           icon={Sparkles}
         />
       </div>
+
+      <Section title="Your next actions" description="Personalised for your family this week.">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {nextActions.map((a, i) => {
+            const Icon = a.icon;
+            const body = (
+              <Panel className="h-full hover:border-primary transition flex flex-col">
+                <div className="h-9 w-9 rounded-lg bg-accent/30 flex items-center justify-center mb-3">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div className="font-display text-base">{a.title}</div>
+                <div className="mt-1 text-sm text-muted-foreground flex-1">{a.desc}</div>
+                {a.to && (
+                  <div className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                    Go <ArrowRight className="h-3.5 w-3.5" />
+                  </div>
+                )}
+              </Panel>
+            );
+            return a.to ? (
+              <Link key={i} to={a.to}>{body}</Link>
+            ) : (
+              <div key={i}>{body}</div>
+            );
+          })}
+        </div>
+      </Section>
 
       <Section
         title="Weekly Sunday reports"

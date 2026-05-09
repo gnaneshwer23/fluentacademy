@@ -1,12 +1,28 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { DashboardShell, StatCard, Section, Panel } from "@/components/DashboardShell";
-import { Flame, Sparkles, TrendingUp, Calendar, Play, CheckCircle2 } from "lucide-react";
+import { Flame, Sparkles, TrendingUp, Calendar, Play, CheckCircle2, Target, ArrowRight, Mic, BookOpen } from "lucide-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth-context";
 
 export const Route = createFileRoute("/_auth/dashboard/student")({
   component: StudentDash,
 });
 
 function StudentDash() {
+  const { user } = useAuth();
+  const [profile, setProfile] = useState<{ full_name: string | null; grade: string | null; subjects: string[] | null; learning_style: string | null; goals: string | null } | null>(null);
+
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from("profiles")
+      .select("full_name,grade,subjects,learning_style,goals")
+      .eq("id", user.id)
+      .maybeSingle()
+      .then(({ data }) => setProfile(data));
+  }, [user]);
+  const firstName = (profile?.full_name || user?.email?.split("@")[0] || "there").split(" ")[0];
   const classes = [
     {
       day: "Mon",
@@ -37,10 +53,41 @@ function StudentDash() {
     { title: "Speaking prompts", count: "3 prompts", time: "6 min", color: "bg-amber-100" },
   ];
 
+  const styleTip: Record<string, string> = {
+    Visual: "Try diagram-based maths today — it'll click faster.",
+    Listening: "Start with a 5-min audio explainer before drills.",
+    "Doing / hands-on": "Jump into a hands-on practice set first.",
+    "Reading & writing": "Open today's passage and jot 3 takeaways.",
+  };
+
+  const nextActions = [
+    {
+      icon: Mic,
+      title: "Today's speaking warm-up",
+      desc: "2 min · Builds confidence before your next class.",
+    },
+    profile?.learning_style && {
+      icon: Sparkles,
+      title: `Tailored for ${profile.learning_style.toLowerCase()} learners`,
+      desc: styleTip[profile.learning_style] ?? "We've matched your practice to your style.",
+    },
+    profile?.subjects && profile.subjects.length > 0 && {
+      icon: BookOpen,
+      title: `Focus subject: ${profile.subjects[0]}`,
+      desc: "Start a 10-question warm-up for today's topic.",
+    },
+    !profile?.goals && {
+      icon: Target,
+      title: "Set your learning goal",
+      desc: "Tell us what you want to achieve this term.",
+      to: "/onboarding",
+    },
+  ].filter(Boolean) as { icon: typeof Target; title: string; desc: string; to?: string }[];
+
   return (
     <DashboardShell
-      title="My Learning"
-      subtitle="Stay on streak, finish your classes, and practice with AI."
+      title={`Hi ${firstName} 👋`}
+      subtitle={profile?.grade ? `${profile.grade} · keep your streak going.` : "Stay on streak, finish your classes, and practice with AI."}
     >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard label="Practice streak" value="12 days" sub="Keep it going! 🔥" icon={Flame} />
@@ -59,6 +106,29 @@ function StudentDash() {
           icon={TrendingUp}
         />
       </div>
+
+      <Section title="Your next actions" description="Picked for how you learn.">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {nextActions.map((a, i) => {
+            const Icon = a.icon;
+            const body = (
+              <Panel className="h-full hover:border-primary transition flex flex-col">
+                <div className="h-9 w-9 rounded-lg bg-accent/30 flex items-center justify-center mb-3">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div className="font-display text-base">{a.title}</div>
+                <div className="mt-1 text-sm text-muted-foreground flex-1">{a.desc}</div>
+                {a.to && (
+                  <div className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                    Go <ArrowRight className="h-3.5 w-3.5" />
+                  </div>
+                )}
+              </Panel>
+            );
+            return a.to ? <Link key={i} to={a.to}>{body}</Link> : <div key={i}>{body}</div>;
+          })}
+        </div>
+      </Section>
 
       <Section title="This week's classes" description="Your live sessions with tutors.">
         <div className="space-y-3">

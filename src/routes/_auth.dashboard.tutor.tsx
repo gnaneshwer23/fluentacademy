@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { toast } from "sonner";
-import { FileText, Users, Award, Send } from "lucide-react";
+import { FileText, Users, Award, Send, ArrowRight, AlertCircle, Calendar } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_auth/dashboard/tutor")({
   component: TutorDash,
@@ -76,6 +77,43 @@ function TutorDash() {
     ? Math.round(reports.reduce((s, r) => s + (r.marks ?? 0), 0) / reports.length)
     : 0;
 
+  const today = new Date();
+  const isSunday = today.getDay() === 0;
+  const lastReportDate = reports[0] ? new Date(reports[0].week_of) : null;
+  const daysSinceLast = lastReportDate
+    ? Math.floor((today.getTime() - lastReportDate.getTime()) / 86400000)
+    : null;
+  const overdue = daysSinceLast == null || daysSinceLast > 7;
+
+  const nextActions = [
+    isSunday && {
+      icon: Send,
+      title: "It's Sunday — publish reports",
+      desc: "Submit this week's progress reports for each student.",
+    },
+    overdue && reports.length > 0 && {
+      icon: AlertCircle,
+      title: "Reports overdue",
+      desc: `Last submission was ${daysSinceLast} days ago.`,
+    },
+    reports.length === 0 && {
+      icon: FileText,
+      title: "Submit your first report",
+      desc: "Use the form below to get started — students are waiting.",
+    },
+    {
+      icon: Calendar,
+      title: "Review next week's schedule",
+      desc: "Confirm class slots with your students.",
+    },
+    {
+      icon: Users,
+      title: "Open student profiles",
+      desc: "See onboarding goals and learning styles to plan classes.",
+      to: "/dashboard/users",
+    },
+  ].filter(Boolean) as { icon: typeof Send; title: string; desc: string; to?: string }[];
+
   return (
     <DashboardShell
       title="Tutor Workspace"
@@ -90,6 +128,29 @@ function TutorDash() {
         />
         <StatCard label="Avg marks given" value={avgMarks} icon={Award} />
       </div>
+
+      <Section title="Your next actions" description="What needs your attention this week.">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {nextActions.map((a, i) => {
+            const Icon = a.icon;
+            const body = (
+              <Panel className="h-full hover:border-primary transition flex flex-col">
+                <div className="h-9 w-9 rounded-lg bg-accent/30 flex items-center justify-center mb-3">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div className="font-display text-base">{a.title}</div>
+                <div className="mt-1 text-sm text-muted-foreground flex-1">{a.desc}</div>
+                {a.to && (
+                  <div className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                    Open <ArrowRight className="h-3.5 w-3.5" />
+                  </div>
+                )}
+              </Panel>
+            );
+            return a.to ? <Link key={i} to={a.to}>{body}</Link> : <div key={i}>{body}</div>;
+          })}
+        </div>
+      </Section>
 
       <Section
         title="Submit weekly report"

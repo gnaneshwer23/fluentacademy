@@ -3,7 +3,8 @@ import { DashboardShell, StatCard, Section, Panel } from "@/components/Dashboard
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
-import { Users, Search, GraduationCap, BookOpen, CheckCircle2, Clock } from "lucide-react";
+import { toast } from "sonner";
+import { Users, Search, GraduationCap, BookOpen, CheckCircle2, Clock, Save, Eye } from "lucide-react";
 
 export const Route = createFileRoute("/_auth/dashboard/users")({
   head: () => ({ meta: [{ title: "Onboarding Responses · Fluent" }] }),
@@ -27,12 +28,22 @@ interface Profile {
   availability: string | null;
   experience_years: number | null;
   created_at: string;
+  review_status: string;
+  reviewer_notes: string | null;
+  reviewed_at: string | null;
 }
 
 const ROLES = ["all", "parent", "student", "tutor", "admin"] as const;
+const STATUSES = ["all", "new", "reviewing", "approved", "follow_up"] as const;
+const STATUS_STYLES: Record<string, string> = {
+  new: "bg-blue-100 text-blue-800",
+  reviewing: "bg-amber-100 text-amber-800",
+  approved: "bg-emerald-100 text-emerald-800",
+  follow_up: "bg-rose-100 text-rose-800",
+};
 
 function UsersAdmin() {
-  const { roles } = useAuth();
+  const { roles, user } = useAuth();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState<(typeof ROLES)[number]>("all");
@@ -40,6 +51,9 @@ function UsersAdmin() {
   const [goalQ, setGoalQ] = useState("");
   const [q, setQ] = useState("");
   const [onboardedOnly, setOnboardedOnly] = useState(false);
+  const [status, setStatus] = useState<(typeof STATUSES)[number]>("all");
+  const [drafts, setDrafts] = useState<Record<string, { status: string; notes: string }>>({});
+  const [savingId, setSavingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!roles.includes("admin")) {
@@ -68,6 +82,7 @@ function UsersAdmin() {
   const filtered = useMemo(() => {
     return profiles.filter((p) => {
       if (role !== "all" && p.role !== role) return false;
+      if (status !== "all" && (p.review_status ?? "new") !== status) return false;
       if (grade !== "all" && p.grade !== grade && p.child_grade !== grade) return false;
       if (onboardedOnly && !p.onboarded) return false;
       if (goalQ && !(p.goals ?? "").toLowerCase().includes(goalQ.toLowerCase())) return false;
@@ -77,7 +92,51 @@ function UsersAdmin() {
       }
       return true;
     });
-  }, [profiles, role, grade, goalQ, q, onboardedOnly]);
+  }, [profiles, role, status, grade, goalQ, q, onboardedOnly]);
+
+  const draftFor = (p: Profile) =>
+    drafts[p.id] ?? { status: p.review_status ?? "new", notes: p.reviewer_notes ?? "" };
+
+  const setDraft = (id: string, patch: Partial<{ status: string; notes: string }>) =>
+    setDrafts((d) => ({ ...d, [id]: { ...(d[id] ?? { status: "new", notes: "" }), ...patch } }));
+
+  const saveReview = async (p: Profile) => {
+    const d = draftFor(p);
+    setSavingId(p.id);
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        review_status: d.status,
+        reviewer_notes: d.notes || null,
+        reviewed_at: new Date().toISOString(),
+        reviewed_by: user?.id ?? null,
+      })
+      .eq("id", p.id);
+    setSavingId(null);
+    if (error) return toast.error(error.message);
+    toast.success("Review saved");
+    setProfiles((ps) =>
+      ps.map((x) =>
+        x.id === p.id
+          ? {
+              ...x,
+              review_status: d.status,
+              reviewer_notes: d.notes,
+              reviewed_at: new Date().toISOString(),
+            }
+          : x,
+      ),
+    );
+    setDrafts((dr) => {
+      const { [p.id]: _, ...rest } = dr;
+      return rest;
+    });
+  };
+
+  const markReviewed = (p: Profile) => {
+    setDraft(p.id, { status: "approved" });
+    setTimeout(() => saveReview({ ...p, review_status: "approved" }), 0);
+  };
 
   if (!roles.includes("admin")) {
     return (
@@ -128,6 +187,18 @@ function UsersAdmin() {
               >
                 {grades.map((g) => (
                   <option key={g} value={g}>{g === "all" ? "All grades" : g}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-muted-foreground mb-1.5">Review status</label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value as any)}
+                className="w-full rounded-lg border border-ink/15 bg-card px-3 py-2 text-sm capitalize"
+              >
+                {STATUSES.map((s) => (
+                  <option key={s} value={s}>{s.replace("_", " ")}</option>
                 ))}
               </select>
             </div>
@@ -183,6 +254,14 @@ function UsersAdmin() {
                           <Clock className="h-3 w-3" /> Pending
                         </span>
                       )}
+                      <span className={`text-xs px-2 py-0.5 rounded-full capitalize ${STATUS_STYLES[p.review_status ?? "new"] ?? "bg-secondary"}`}>
+                        {(p.review_status ?? "new").replace("_", " ")}
+                      </span>
+                      {p.reviewed_at && (
+                        <span className="text-xs text-muted-foreground inline-flex items-center gap-1">
+                          <Eye className="h-3 w-3" /> {new Date(p.reviewed_at).toLocaleDateString()}
+                        </span>
+                      )}
                     </div>
                     <div className="mt-1 text-xs text-muted-foreground">
                       {p.email}{p.phone && <> · {p.phone}</>} · joined {new Date(p.created_at).toLocaleDateString()}
@@ -230,6 +309,49 @@ function UsersAdmin() {
                         <p className="text-sm bg-secondary/60 rounded-lg p-3 whitespace-pre-wrap">{p.bio}</p>
                       </div>
                     )}
+
+                    <div className="mt-4 pt-4 border-t border-ink/10 grid gap-3 sm:grid-cols-[180px_1fr_auto] sm:items-end">
+                      <label className="block">
+                        <span className="block text-xs font-medium text-muted-foreground mb-1.5">Review status</span>
+                        <select
+                          value={draftFor(p).status}
+                          onChange={(e) => setDraft(p.id, { status: e.target.value })}
+                          className="w-full rounded-lg border border-ink/15 bg-card px-3 py-2 text-sm capitalize"
+                        >
+                          {STATUSES.filter((s) => s !== "all").map((s) => (
+                            <option key={s} value={s}>{s.replace("_", " ")}</option>
+                          ))}
+                        </select>
+                      </label>
+                      <label className="block">
+                        <span className="block text-xs font-medium text-muted-foreground mb-1.5">Reviewer notes</span>
+                        <textarea
+                          rows={2}
+                          placeholder="Add private notes for the team…"
+                          value={draftFor(p).notes}
+                          onChange={(e) => setDraft(p.id, { notes: e.target.value })}
+                          className="w-full rounded-lg border border-ink/15 bg-card px-3 py-2 text-sm resize-none"
+                        />
+                      </label>
+                      <div className="flex flex-col gap-2 sm:items-stretch">
+                        <button
+                          onClick={() => saveReview(p)}
+                          disabled={savingId === p.id}
+                          className="inline-flex items-center justify-center gap-1.5 rounded-full bg-primary text-primary-foreground px-4 py-2 text-xs font-semibold hover:opacity-90 disabled:opacity-60"
+                        >
+                          <Save className="h-3.5 w-3.5" /> {savingId === p.id ? "Saving…" : "Save"}
+                        </button>
+                        {(p.review_status ?? "new") !== "approved" && (
+                          <button
+                            onClick={() => markReviewed(p)}
+                            disabled={savingId === p.id}
+                            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-ink/15 px-4 py-2 text-xs font-semibold hover:bg-secondary disabled:opacity-60"
+                          >
+                            <CheckCircle2 className="h-3.5 w-3.5" /> Mark reviewed
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Panel>
