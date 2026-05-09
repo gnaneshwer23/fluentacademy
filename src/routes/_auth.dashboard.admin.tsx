@@ -101,11 +101,39 @@ function AdminDash() {
       title="Admin Console"
       subtitle="Manage demo bookings and inquiries from one place."
     >
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Total bookings" value={bookings.length} icon={Calendar} />
         <StatCard label="Pending bookings" value={pending} sub="Need follow-up" icon={Clock} />
         <StatCard label="Inbox messages" value={messages.length} icon={MessageSquare} />
+        <StatCard label="Onboarding to review" value={pendingReviews} sub="Awaiting approval" icon={Users} />
       </div>
+
+      {(pending > 0 || pendingReviews > 0) && (
+        <Section title="Your next actions" description="Items that need attention now.">
+          <div className="grid gap-3 sm:grid-cols-2">
+            {pendingReviews > 0 && (
+              <Link to="/dashboard/users">
+                <Panel className="hover:border-primary transition flex items-center justify-between gap-3">
+                  <div>
+                    <div className="font-display text-base">Review {pendingReviews} onboarding {pendingReviews === 1 ? "response" : "responses"}</div>
+                    <div className="text-sm text-muted-foreground mt-1">Approve, flag for follow-up, or add notes.</div>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-primary shrink-0" />
+                </Panel>
+              </Link>
+            )}
+            {pending > 0 && (
+              <Panel className="flex items-center justify-between gap-3">
+                <div>
+                  <div className="font-display text-base">Confirm {pending} pending demo {pending === 1 ? "booking" : "bookings"}</div>
+                  <div className="text-sm text-muted-foreground mt-1">Reach out to families and schedule a demo.</div>
+                </div>
+                <ArrowRight className="h-4 w-4 text-primary shrink-0" />
+              </Panel>
+            )}
+          </div>
+        </Section>
+      )}
 
       <Section title="Inbox">
         <div className="flex flex-col sm:flex-row gap-3 mb-4">
