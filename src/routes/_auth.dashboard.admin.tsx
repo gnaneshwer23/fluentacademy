@@ -37,6 +37,7 @@ function AdminDash() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [tab, setTab] = useState<"bookings" | "messages">("bookings");
   const [q, setQ] = useState("");
+  const [pendingReviews, setPendingReviews] = useState(0);
 
   useEffect(() => {
     if (!roles.includes("admin")) return;
@@ -50,6 +51,12 @@ function AdminDash() {
       .select("*")
       .order("created_at", { ascending: false })
       .then(({ data }) => setMessages((data ?? []) as Message[]));
+    supabase
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .neq("review_status", "approved")
+      .eq("onboarded", true)
+      .then(({ count }) => setPendingReviews(count ?? 0));
   }, [roles]);
 
   if (!roles.includes("admin")) {
