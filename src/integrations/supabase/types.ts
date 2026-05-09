@@ -132,6 +132,10 @@ export type Database = {
           learning_style: string | null
           onboarded: boolean
           phone: string | null
+          review_status: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          reviewer_notes: string | null
           role: Database["public"]["Enums"]["app_role"] | null
           subjects: string[] | null
           updated_at: string
@@ -151,6 +155,10 @@ export type Database = {
           learning_style?: string | null
           onboarded?: boolean
           phone?: string | null
+          review_status?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          reviewer_notes?: string | null
           role?: Database["public"]["Enums"]["app_role"] | null
           subjects?: string[] | null
           updated_at?: string
@@ -170,6 +178,10 @@ export type Database = {
           learning_style?: string | null
           onboarded?: boolean
           phone?: string | null
+          review_status?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          reviewer_notes?: string | null
           role?: Database["public"]["Enums"]["app_role"] | null
           subjects?: string[] | null
           updated_at?: string
