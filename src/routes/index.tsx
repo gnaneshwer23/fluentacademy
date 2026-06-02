@@ -1,21 +1,34 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import heroImg from "@/assets/hero-student.jpg";
-import confidenceImg from "@/assets/confidence.jpg";
+import {
+  GraduationCap,
+  Users,
+  Heart,
+  Building2,
+  BookOpen,
+  Brain,
+  BarChart3,
+  Sparkles,
+  ArrowRight,
+  TrendingUp,
+  TrendingDown,
+  CheckCircle2,
+} from "lucide-react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Fluent — From Low Confidence to High Performance" },
+      { title: "Fluent — Learning Intelligence Platform for Schools" },
       {
         name: "description",
         content:
-          "British teaching methods, AI-powered practice and weekly accountability — building confident, articulate learners across India.",
+          "Fluent is a School Transformation Platform that makes learning measurable, visible and actionable — for teachers, students, parents and leaders.",
       },
-      { property: "og:title", content: "Fluent — Confidence-First Learning" },
+      { property: "og:title", content: "Fluent — School Transformation Platform" },
       {
         property: "og:description",
         content:
-          "Concept-based learning with UK-trained educators. Watch your child speak, think and perform with confidence.",
+          "Improve teaching, build fluency, drive decisions. The unified learning intelligence platform for forward-thinking schools.",
       },
     ],
   }),
@@ -28,14 +41,15 @@ function Index() {
       <FontLink />
       <Nav />
       <Hero />
-      <Marquee />
+      <TrustStrip />
       <Problem />
       <Solution />
-      <USP />
-      <Flow />
-      <Confidence />
-      <Testimonials />
-      <Pricing />
+      <HowItWorks />
+      <Pillars />
+      <ProductPreview />
+      <AISection />
+      <Impact />
+      <TargetSchools />
       <FinalCTA />
       <Footer />
     </div>
@@ -66,29 +80,20 @@ function Nav() {
           <div className="leading-tight">
             <div className="font-display text-lg font-semibold">Fluent</div>
             <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              Accountable Hindustan
+              Learning Intelligence
             </div>
           </div>
         </Link>
         <nav className="hidden items-center gap-8 text-sm md:flex">
-          <a href="#programs" className="hover:text-accent">
-            Programs
-          </a>
-          <a href="#how" className="hover:text-accent">
-            How it works
-          </a>
-          <Link to="/blog" className="hover:text-accent">
-            Resources
-          </Link>
-          <Link to="/contact" className="hover:text-accent">
-            Contact
-          </Link>
-          <Link to="/login" className="hover:text-accent">
-            Sign in
-          </Link>
+          <a href="#platform" className="hover:text-accent">Platform</a>
+          <a href="#how" className="hover:text-accent">How it works</a>
+          <a href="#pillars" className="hover:text-accent">Pillars</a>
+          <Link to="/blog" className="hover:text-accent">Resources</Link>
+          <Link to="/contact" className="hover:text-accent">Contact</Link>
+          <Link to="/login" className="hover:text-accent">Sign in</Link>
         </nav>
         <Link to="/book-demo" className="btn-gold rounded-full px-5 py-2 text-sm font-semibold">
-          Book Free Demo
+          Book a Demo
         </Link>
       </div>
     </header>
@@ -102,62 +107,42 @@ function Hero() {
         <div className="md:col-span-7">
           <span className="inline-flex items-center gap-2 rounded-full border border-ink/20 bg-card px-4 py-1.5 text-xs uppercase tracking-[0.2em]">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-            British curriculum · AI assisted
+            School Transformation Platform
           </span>
-          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.02] text-balance md:text-7xl lg:text-8xl">
-            From low confidence <em className="not-italic gold-underline">to high</em>{" "}
-            <span className="italic font-normal">performance.</span>
+          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.02] text-balance md:text-7xl">
+            Transform your school with{" "}
+            <em className="not-italic gold-underline">learning intelligence.</em>
           </h1>
           <p className="mt-8 max-w-xl text-lg text-muted-foreground md:text-xl">
-            Fluent blends British teaching methods with AI-driven practice and weekly accountability
-            — so your child learns to think, speak and perform with quiet, lasting confidence.
+            Fluent is a unified platform that makes learning measurable, visible and actionable —
+            equipping teachers, students, parents and leaders with the insight to act.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link
-              to="/book-demo"
-              className="btn-ink rounded-full px-7 py-3.5 text-sm font-semibold"
-            >
-              Book Free Demo →
+            <Link to="/book-demo" className="btn-ink rounded-full px-7 py-3.5 text-sm font-semibold">
+              Book a Demo →
             </Link>
-            <a
-              href="#how"
-              className="rounded-full px-6 py-3.5 text-sm font-semibold underline underline-offset-4 decoration-accent decoration-2"
-            >
-              Watch how it works
-            </a>
+            <Link to="/contact" className="rounded-full border border-ink px-7 py-3.5 text-sm font-semibold hover:bg-ink hover:text-cream transition">
+              Partner with Fluent
+            </Link>
           </div>
-          <div className="mt-12 flex items-center gap-6 text-sm text-muted-foreground">
-            <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="h-9 w-9 rounded-full border-2 border-background bg-gradient-to-br from-accent to-primary"
-                />
-              ))}
-            </div>
-            <p>2,400+ parents trust Fluent across India.</p>
-          </div>
+          <p className="mt-8 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            Trusted by forward-thinking schools
+          </p>
         </div>
 
         <div className="relative md:col-span-5">
           <div className="absolute -left-6 -top-6 hidden h-full w-full rounded-3xl border border-ink md:block" />
-          <div className="relative overflow-hidden rounded-3xl border border-ink bg-card">
-            <img
-              src={heroImg}
-              alt="Confident young student smiling while studying"
-              width={1280}
-              height={1280}
-              className="h-full w-full object-cover"
-            />
+          <div className="relative overflow-hidden rounded-3xl border border-ink bg-card p-6">
+            <DashboardMock />
           </div>
           <div className="absolute -bottom-6 -left-6 max-w-[220px] rounded-2xl bg-primary p-5 text-primary-foreground card-ink">
             <div className="font-display text-3xl">+38%</div>
             <div className="text-xs uppercase tracking-widest opacity-80">
-              Avg. marks improvement in 90 days
+              Avg. fluency growth, term one
             </div>
           </div>
           <div className="absolute -right-4 top-8 rounded-2xl bg-accent px-4 py-3 text-sm font-semibold text-accent-foreground card-ink">
-            🇬🇧 UK-trained tutors
+            Live · School-wide
           </div>
         </div>
       </div>
@@ -165,19 +150,58 @@ function Hero() {
   );
 }
 
-function Marquee() {
+function DashboardMock() {
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="font-display text-sm font-semibold">School Intelligence</div>
+        <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Term 2 · Week 6</div>
+      </div>
+      <div className="grid grid-cols-3 gap-3">
+        {[
+          { l: "Fluency", v: "82%", t: "up" },
+          { l: "Engagement", v: "91%", t: "up" },
+          { l: "Workload", v: "−24%", t: "down" },
+        ].map((m) => (
+          <div key={m.l} className="rounded-xl border border-ink/15 bg-background p-3">
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{m.l}</div>
+            <div className="mt-1 font-display text-xl">{m.v}</div>
+          </div>
+        ))}
+      </div>
+      <div className="rounded-xl border border-ink/15 bg-background p-4">
+        <div className="text-xs font-semibold">Year 6 · Confidence</div>
+        <div className="mt-3 flex h-24 items-end gap-1.5">
+          {[40, 55, 48, 62, 58, 70, 68, 76, 72, 81, 78, 86].map((h, i) => (
+            <div
+              key={i}
+              className="flex-1 rounded-t bg-gradient-to-t from-primary to-accent"
+              style={{ height: `${h}%` }}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="flex items-center gap-2 rounded-xl bg-accent/15 p-3 text-xs">
+        <Sparkles className="h-4 w-4 text-accent-foreground" />
+        <span><strong>Recommended:</strong> Intervene with 4 students in 7C — fluency dipping.</span>
+      </div>
+    </div>
+  );
+}
+
+function TrustStrip() {
   const items = [
-    "British Curriculum",
-    "AI Doubt Solver",
-    "Weekly Parent Reports",
-    "Live UK Educators",
     "Concept Mastery",
-    "Confidence Coaching",
+    "Teacher CPD",
+    "Parent Visibility",
+    "AI Co-pilot",
+    "School Analytics",
+    "Live Dashboards",
   ];
   return (
     <div className="border-y border-ink/15 bg-primary py-5 text-primary-foreground">
       <div className="marquee-fade overflow-hidden">
-        <div className="flex animate-[marquee_30s_linear_infinite] gap-12 whitespace-nowrap">
+        <div className="flex animate-[marquee_35s_linear_infinite] gap-12 whitespace-nowrap">
           {[...items, ...items, ...items].map((it, i) => (
             <span key={i} className="font-display text-2xl">
               {it} <span className="text-accent">✦</span>
@@ -191,317 +215,48 @@ function Marquee() {
 }
 
 function Problem() {
-  const items = [
-    { t: "Afraid to answer in class", d: "Knows the answer but won't raise a hand." },
-    { t: "Quiet confidence dip", d: "Withdrawn during oral exams or presentations." },
-    { t: "Marks have plateaued", d: "Hours of effort, no visible improvement." },
-    { t: "Memorises, doesn't understand", d: "Fragile knowledge that breaks under pressure." },
+  const measured = ["Grades", "Exams", "Completion"];
+  const missing = ["Understanding", "Confidence", "Communication", "Critical thinking"];
+  const groups = [
+    { icon: GraduationCap, t: "Students", d: "Low confidence, fragile understanding, unseen struggles." },
+    { icon: Users, t: "Teachers", d: "Heavy workload, limited time to personalise instruction." },
+    { icon: Heart, t: "Parents", d: "No visibility into real learning beyond report cards." },
+    { icon: Building2, t: "Leaders", d: "Lagging insights, no system-wide intelligence layer." },
   ];
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
       <div className="grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
-          <p className="text-xs uppercase tracking-[0.25em] text-accent-foreground/70">
-            The quiet problem
-          </p>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The gap</p>
           <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
-            Is your child <em className="italic gold-underline">struggling</em> with confidence?
+            Schools are working hard. But learning <em className="italic gold-underline">isn't fully visible.</em>
           </h2>
-          <p className="mt-6 text-muted-foreground">
-            Most learning systems chase marks. We've found the missing layer beneath them — the
-            confidence to think, speak and try.
-          </p>
         </div>
-        <div className="grid gap-4 md:col-span-7 md:grid-cols-2">
-          {items.map((it) => (
-            <div key={it.t} className="card-ink rounded-2xl bg-card p-6">
-              <div className="font-display text-xl font-semibold">{it.t}</div>
-              <p className="mt-2 text-sm text-muted-foreground">{it.d}</p>
+        <div className="md:col-span-7 space-y-6">
+          <div className="rounded-2xl border border-ink/15 bg-card p-6">
+            <div className="text-xs uppercase tracking-widest text-muted-foreground">Schools measure</div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {measured.map((m) => (
+                <span key={m} className="rounded-full bg-secondary px-4 py-1.5 text-sm font-medium">{m}</span>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Solution() {
-  const items = [
-    {
-      t: "Concept Learning",
-      d: "Understand deeply instead of memorising. We teach the why before the what.",
-    },
-    {
-      t: "AI Companion",
-      d: "Personalised practice and 24/7 doubt-solving tuned to your child's pace.",
-    },
-    {
-      t: "Confidence Studio",
-      d: "Weekly speaking labs that turn shy learners into clear communicators.",
-    },
-  ];
-  return (
-    <section id="programs" className="bg-primary py-24 text-primary-foreground">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <h2 className="max-w-2xl font-display text-4xl font-semibold leading-tight md:text-6xl">
-            A new way of <em className="italic text-accent">learning.</em>
-          </h2>
-          <p className="max-w-md text-primary-foreground/70">
-            Three pillars working together — built by educators trained in the UK, delivered for the
-            Indian classroom.
-          </p>
-        </div>
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {items.map((it, i) => (
-            <div
-              key={it.t}
-              className="group relative overflow-hidden rounded-3xl border border-primary-foreground/15 bg-primary-foreground/5 p-8 transition hover:bg-primary-foreground/10"
-            >
-              <div className="absolute right-6 top-6 font-display text-5xl opacity-20">
-                0{i + 1}
-              </div>
-              <h3 className="mt-10 font-display text-2xl">{it.t}</h3>
-              <p className="mt-3 text-sm text-primary-foreground/70">{it.d}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function USP() {
-  const items = [
-    {
-      k: "01",
-      t: "British Teaching Methods",
-      d: "Inquiry-led, interactive lessons that prize understanding over rote.",
-    },
-    {
-      k: "02",
-      t: "UK-Based Educators",
-      d: "Mentors with global classroom experience — your child learns from them weekly.",
-    },
-    {
-      k: "03",
-      t: "Weekly Accountability",
-      d: "Transparent dashboards and parent reports. Progress, every Sunday.",
-    },
-  ];
-  return (
-    <section className="mx-auto max-w-7xl px-6 py-24">
-      <div className="border-t border-ink/20 pt-12">
-        <div className="grid gap-10 md:grid-cols-12">
-          <h2 className="font-display text-4xl font-semibold leading-tight md:col-span-5 md:text-5xl">
-            What makes us <em className="italic">different.</em>
-          </h2>
-          <div className="md:col-span-7">
-            <div className="divide-y divide-ink/15">
-              {items.map((it) => (
-                <div key={it.k} className="grid grid-cols-[auto_1fr] gap-8 py-8">
-                  <div className="font-display text-2xl text-accent">{it.k}</div>
-                  <div>
-                    <h3 className="font-display text-2xl">{it.t}</h3>
-                    <p className="mt-2 text-muted-foreground">{it.d}</p>
-                  </div>
-                </div>
+          </div>
+          <div className="rounded-2xl border border-ink bg-primary p-6 text-primary-foreground">
+            <div className="text-xs uppercase tracking-widest text-accent">But struggle to measure</div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {missing.map((m) => (
+                <span key={m} className="rounded-full border border-accent/40 bg-accent/15 px-4 py-1.5 text-sm font-medium text-accent">{m}</span>
               ))}
             </div>
           </div>
         </div>
       </div>
-    </section>
-  );
-}
-
-function Flow() {
-  const steps = [
-    { t: "Learn", d: "Concept-first lessons with UK educators." },
-    { t: "Practice", d: "AI tutor adapts daily to your child's level." },
-    { t: "Test", d: "Weekly assessments — written and oral." },
-    { t: "Report", d: "Parents receive a Sunday progress brief." },
-  ];
-  return (
-    <section id="how" className="bg-secondary py-24">
-      <div className="mx-auto max-w-7xl px-6">
-        <h2 className="font-display text-4xl font-semibold md:text-5xl">How it works</h2>
-        <div className="mt-12 grid gap-6 md:grid-cols-4">
-          {steps.map((s, i) => (
-            <div key={s.t} className="card-ink relative rounded-2xl bg-card p-6">
-              <div className="flex items-center justify-between">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary font-display text-lg text-primary-foreground">
-                  {i + 1}
-                </span>
-                {i < steps.length - 1 && <span className="text-2xl text-accent">→</span>}
-              </div>
-              <h3 className="mt-6 font-display text-xl">{s.t}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Confidence() {
-  const points = ["Answer confidently", "Speak clearly", "Present ideas", "Think independently"];
-  return (
-    <section id="results" className="mx-auto max-w-7xl px-6 py-24">
-      <div className="grid items-center gap-12 md:grid-cols-2">
-        <div className="relative">
-          <img
-            src={confidenceImg}
-            alt="Confident students raising hands in classroom"
-            width={1280}
-            height={1024}
-            loading="lazy"
-            className="rounded-3xl border border-ink object-cover"
-          />
-          <div className="absolute -bottom-6 -right-6 hidden rounded-2xl bg-accent px-5 py-4 text-accent-foreground card-ink md:block">
-            <div className="font-display text-2xl">94%</div>
-            <div className="text-xs uppercase tracking-widest">Speak up in class</div>
-          </div>
-        </div>
-        <div>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The outcome</p>
-          <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
-            We build <em className="italic gold-underline">confidence</em> — not just marks.
-          </h2>
-          <ul className="mt-8 grid grid-cols-2 gap-3">
-            {points.map((p) => (
-              <li
-                key={p}
-                className="rounded-xl border border-ink/15 bg-card px-4 py-3 text-sm font-medium"
-              >
-                ✓ {p}
-              </li>
-            ))}
-          </ul>
-          <blockquote className="mt-10 border-l-4 border-accent pl-5 font-display text-2xl italic leading-snug">
-            “Your child won't just learn — they'll speak, present and lead with confidence.”
-          </blockquote>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Testimonials() {
-  const t = [
-    {
-      q: "My child gained real confidence in just four weeks. He now volunteers in class.",
-      a: "Priya M.",
-      c: "Parent · Mumbai",
-    },
-    {
-      q: "Marks improved, but more importantly her thinking is sharper. Worth every rupee.",
-      a: "Rahul K.",
-      c: "Parent · Bengaluru",
-    },
-    {
-      q: "Best decision we made for our daughter's education. The Sunday reports are gold.",
-      a: "Anita S.",
-      c: "Parent · Delhi",
-    },
-  ];
-  return (
-    <section className="bg-primary py-24 text-primary-foreground">
-      <div className="mx-auto max-w-7xl px-6">
-        <h2 className="font-display text-4xl font-semibold md:text-5xl">
-          What parents <em className="italic text-accent">say.</em>
-        </h2>
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {t.map((x) => (
-            <figure
-              key={x.a}
-              className="rounded-3xl border border-primary-foreground/15 bg-primary-foreground/5 p-8"
-            >
-              <div className="text-accent">★★★★★</div>
-              <blockquote className="mt-5 font-display text-xl leading-snug">“{x.q}”</blockquote>
-              <figcaption className="mt-6 text-sm">
-                <div className="font-semibold">{x.a}</div>
-                <div className="text-primary-foreground/60">{x.c}</div>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Pricing() {
-  const tiers = [
-    {
-      name: "Starter",
-      price: "₹2,999",
-      per: "/month",
-      features: ["2 live classes / week", "AI doubt solver", "Monthly report"],
-      cta: "Start",
-    },
-    {
-      name: "Standard",
-      price: "₹3,999",
-      per: "/month",
-      features: ["4 live classes / week", "Confidence studio", "Weekly Sunday report"],
-      cta: "Most chosen",
-      featured: true,
-    },
-    {
-      name: "Premium",
-      price: "₹6,000+",
-      per: "/month",
-      features: ["1:1 mentor pairing", "Unlimited AI practice", "Parent strategy calls"],
-      cta: "Talk to us",
-    },
-  ];
-  return (
-    <section id="pricing" className="mx-auto max-w-7xl px-6 py-24">
-      <div className="flex flex-wrap items-end justify-between gap-6">
-        <h2 className="font-display text-4xl font-semibold md:text-5xl">
-          Simple, honest <em className="italic">pricing.</em>
-        </h2>
-        <p className="max-w-md text-muted-foreground">
-          One free demo. Cancel any time. No hidden fees — ever.
-        </p>
-      </div>
-      <div className="mt-14 grid gap-6 md:grid-cols-3">
-        {tiers.map((t) => (
-          <div
-            key={t.name}
-            className={`card-ink rounded-3xl p-8 ${t.featured ? "bg-primary text-primary-foreground" : "bg-card"}`}
-          >
-            <div className="flex items-center justify-between">
-              <h3 className="font-display text-2xl">{t.name}</h3>
-              {t.featured && (
-                <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
-                  Popular
-                </span>
-              )}
-            </div>
-            <div className="mt-6 flex items-baseline gap-1">
-              <div className="font-display text-5xl">{t.price}</div>
-              <div className={t.featured ? "text-primary-foreground/70" : "text-muted-foreground"}>
-                {t.per}
-              </div>
-            </div>
-            <ul
-              className={`mt-6 space-y-2 text-sm ${t.featured ? "text-primary-foreground/85" : "text-muted-foreground"}`}
-            >
-              {t.features.map((f) => (
-                <li key={f}>— {f}</li>
-              ))}
-            </ul>
-            <a
-              href="#cta"
-              className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-semibold ${
-                t.featured ? "bg-accent text-accent-foreground" : "btn-ink"
-              }`}
-            >
-              {t.cta} →
-            </a>
+      <div className="mt-12 grid gap-5 md:grid-cols-4">
+        {groups.map((g) => (
+          <div key={g.t} className="card-ink rounded-2xl bg-card p-6">
+            <g.icon className="h-7 w-7 text-accent-foreground" />
+            <div className="mt-4 font-display text-xl font-semibold">{g.t}</div>
+            <p className="mt-2 text-sm text-muted-foreground">{g.d}</p>
           </div>
         ))}
       </div>
@@ -509,31 +264,318 @@ function Pricing() {
   );
 }
 
+function Solution() {
+  const cols = [
+    { t: "Improve Teaching", d: "CPD and AI co-pilot tools that elevate every classroom." },
+    { t: "Build Fluency", d: "Concept-level mastery, confidence and communication — measured." },
+    { t: "Drive Decisions", d: "Real-time analytics that turn data into school-wide action." },
+  ];
+  return (
+    <section className="bg-primary py-24 text-primary-foreground">
+      <div className="mx-auto max-w-7xl px-6">
+        <p className="text-xs uppercase tracking-[0.25em] text-accent">Introducing Fluent</p>
+        <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight md:text-6xl">
+          The Learning Intelligence <em className="italic text-accent">Platform.</em>
+        </h2>
+        <p className="mt-6 max-w-2xl text-primary-foreground/70 text-lg">
+          Fluent makes learning measurable, visible and actionable — across teachers, students, parents and leaders.
+        </p>
+        <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-primary-foreground/20 bg-primary-foreground/10 md:grid-cols-3">
+          {cols.map((c, i) => (
+            <div key={c.t} className="bg-primary p-8">
+              <div className="font-display text-5xl text-accent/40">0{i + 1}</div>
+              <h3 className="mt-6 font-display text-2xl">{c.t}</h3>
+              <p className="mt-3 text-sm text-primary-foreground/70">{c.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HowItWorks() {
+  const steps = [
+    { t: "Teacher", d: "Plans and delivers." },
+    { t: "Learning", d: "Captured in motion." },
+    { t: "Data", d: "Structured signals." },
+    { t: "Intelligence", d: "Pattern recognition." },
+    { t: "Intervention", d: "Right action, right time." },
+    { t: "Outcomes", d: "Measurable growth." },
+  ];
+  return (
+    <section id="how" className="mx-auto max-w-7xl px-6 py-24">
+      <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The system</p>
+      <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight md:text-5xl">
+        How Fluent transforms your <em className="italic">school.</em>
+      </h2>
+      <div className="mt-14 grid gap-3 md:grid-cols-6">
+        {steps.map((s, i) => (
+          <div key={s.t} className="relative">
+            <div className="card-ink rounded-2xl bg-card p-5">
+              <div className="text-xs font-mono text-accent-foreground">0{i + 1}</div>
+              <div className="mt-3 font-display text-lg">{s.t}</div>
+              <p className="mt-1 text-xs text-muted-foreground">{s.d}</p>
+            </div>
+            {i < steps.length - 1 && (
+              <ArrowRight className="absolute -right-2 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-accent md:block" />
+            )}
+          </div>
+        ))}
+      </div>
+      <p className="mt-10 max-w-2xl text-muted-foreground">
+        We focus on the learning process — not just the outcome. Each step is instrumented, so the next is informed.
+      </p>
+    </section>
+  );
+}
+
+function Pillars() {
+  const pillars = [
+    {
+      icon: Users,
+      t: "Teacher Excellence",
+      items: ["Embedded CPD", "AI lesson co-pilot", "Workload reduction"],
+      tone: "card",
+    },
+    {
+      icon: GraduationCap,
+      t: "Student Fluency",
+      items: ["Concept accuracy", "Confidence building", "Articulation"],
+      tone: "accent",
+    },
+    {
+      icon: Heart,
+      t: "Parent Partnership",
+      items: ["Weekly dashboards", "Honest updates", "Home strategies"],
+      tone: "accent",
+    },
+    {
+      icon: BarChart3,
+      t: "School Intelligence",
+      items: ["School-wide analytics", "Predictive insights", "Leadership reports"],
+      tone: "card",
+    },
+  ];
+  return (
+    <section id="pillars" className="bg-secondary py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The framework</p>
+        <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
+          The four pillars of <em className="italic gold-underline">Fluent.</em>
+        </h2>
+        <div className="mt-14 grid gap-6 md:grid-cols-2">
+          {pillars.map((p) => (
+            <div
+              key={p.t}
+              className={`card-ink rounded-3xl p-8 ${p.tone === "accent" ? "bg-accent text-accent-foreground" : "bg-card"}`}
+            >
+              <p.icon className="h-8 w-8" />
+              <h3 className="mt-6 font-display text-2xl font-semibold">{p.t}</h3>
+              <ul className="mt-4 space-y-2 text-sm">
+                {p.items.map((it) => (
+                  <li key={it} className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4" /> {it}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProductPreview() {
+  const tabs = [
+    { id: "teacher", label: "Teacher", desc: "Plan faster, mark smarter, and see every learner in one view.", mock: ["Lesson Planner", "Auto-marking", "Cohort heatmap"] },
+    { id: "student", label: "Student", desc: "Personalised practice and on-demand explanations that build fluency.", mock: ["Practice tray", "Confidence meter", "AI tutor"] },
+    { id: "parent", label: "Parent", desc: "Honest weekly updates and clear next-steps for home support.", mock: ["Sunday report", "Strengths & gaps", "Home plays"] },
+    { id: "school", label: "School", desc: "Live intelligence for principals — every grade, every cohort, every week.", mock: ["KPI overview", "Attendance risk", "Intervention queue"] },
+    { id: "ai", label: "AI", desc: "Calm, contextual AI that supports people — not replaces them.", mock: ["Lesson suggestions", "Doubt-solver", "Pattern alerts"] },
+  ];
+  const [active, setActive] = useState(tabs[0].id);
+  const current = tabs.find((t) => t.id === active)!;
+  return (
+    <section id="platform" className="mx-auto max-w-7xl px-6 py-24">
+      <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The product</p>
+      <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
+        A unified platform for your <em className="italic">whole school.</em>
+      </h2>
+      <div className="mt-10 flex flex-wrap gap-2">
+        {tabs.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => setActive(t.id)}
+            className={`rounded-full border px-5 py-2 text-sm font-semibold transition ${
+              active === t.id
+                ? "border-ink bg-ink text-cream"
+                : "border-ink/20 bg-card hover:border-ink"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <div className="mt-8 grid gap-8 md:grid-cols-12">
+        <div className="card-ink md:col-span-8 rounded-3xl bg-card p-6">
+          <div className="flex items-center gap-2 border-b border-ink/10 pb-3">
+            <span className="h-3 w-3 rounded-full bg-destructive/60" />
+            <span className="h-3 w-3 rounded-full bg-accent" />
+            <span className="h-3 w-3 rounded-full bg-primary/30" />
+            <span className="ml-3 text-xs text-muted-foreground">fluent.app / {current.label.toLowerCase()}</span>
+          </div>
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {current.mock.map((m) => (
+              <div key={m} className="rounded-2xl border border-ink/10 bg-background p-5">
+                <div className="text-xs uppercase tracking-widest text-muted-foreground">Module</div>
+                <div className="mt-2 font-display text-lg">{m}</div>
+                <div className="mt-4 h-20 rounded-lg bg-gradient-to-br from-primary/10 via-accent/20 to-primary/5" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="md:col-span-4">
+          <h3 className="font-display text-2xl">{current.label} view</h3>
+          <p className="mt-3 text-muted-foreground">{current.desc}</p>
+          <Link to="/book-demo" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4 decoration-accent decoration-2">
+            See it live <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AISection() {
+  const cols = [
+    { icon: Users, t: "Teachers", items: ["Lesson planning", "Auto-marking", "Differentiation"] },
+    { icon: GraduationCap, t: "Students", items: ["Explanations", "Practice", "Doubt support"] },
+    { icon: Heart, t: "Parents", items: ["Home guides", "Progress summaries", "Q&A"] },
+    { icon: Building2, t: "Leaders", items: ["Insights", "Predictions", "Reports"] },
+  ];
+  return (
+    <section className="bg-primary py-24 text-primary-foreground">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex items-end justify-between flex-wrap gap-6">
+          <div>
+            <p className="text-xs uppercase tracking-[0.25em] text-accent">Calm intelligence</p>
+            <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
+              AI that supports <em className="italic text-accent">people.</em>
+            </h2>
+          </div>
+          <p className="max-w-sm text-primary-foreground/70">
+            Built to assist, never replace. Every output is reviewable, contextual and aligned to your school.
+          </p>
+        </div>
+        <div className="mt-14 grid gap-5 md:grid-cols-4">
+          {cols.map((c) => (
+            <div key={c.t} className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-6">
+              <c.icon className="h-6 w-6 text-accent" />
+              <div className="mt-4 font-display text-xl">{c.t}</div>
+              <ul className="mt-3 space-y-1.5 text-sm text-primary-foreground/75">
+                {c.items.map((it) => (
+                  <li key={it}>— {it}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <blockquote className="mt-14 border-l-4 border-accent pl-5 font-display text-3xl italic">
+          “AI assists. Teachers lead.”
+        </blockquote>
+      </div>
+    </section>
+  );
+}
+
+function Impact() {
+  const metrics = [
+    { icon: TrendingUp, l: "Confidence", t: "up" },
+    { icon: TrendingDown, l: "Workload", t: "down" },
+    { icon: TrendingUp, l: "Engagement", t: "up" },
+    { icon: TrendingUp, l: "Outcomes", t: "up" },
+  ];
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-24">
+      <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The impact</p>
+      <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
+        Real impact you can <em className="italic gold-underline">measure.</em>
+      </h2>
+      <div className="mt-14 grid gap-5 md:grid-cols-4">
+        {metrics.map((m) => (
+          <div key={m.l} className="card-ink rounded-2xl bg-card p-6">
+            <m.icon className={`h-7 w-7 ${m.t === "up" ? "text-accent-foreground" : "text-destructive"}`} />
+            <div className="mt-4 flex items-baseline gap-2">
+              <span className={`font-display text-2xl ${m.t === "up" ? "text-primary" : "text-destructive"}`}>
+                {m.t === "up" ? "↑" : "↓"}
+              </span>
+              <span className="font-display text-2xl">{m.l}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <figure className="mt-14 rounded-3xl border border-ink bg-primary p-10 text-primary-foreground card-ink">
+        <div className="text-accent">★★★★★</div>
+        <blockquote className="mt-5 max-w-3xl font-display text-2xl italic leading-snug md:text-3xl">
+          “Fluent gave our leadership team the first honest view of learning we've ever had — and it gave our teachers their afternoons back.”
+        </blockquote>
+        <figcaption className="mt-6 text-sm text-primary-foreground/70">
+          Head of School · Partner institution
+        </figcaption>
+      </figure>
+    </section>
+  );
+}
+
+function TargetSchools() {
+  const types = [
+    { icon: BookOpen, t: "K–12" },
+    { icon: Building2, t: "International" },
+    { icon: Sparkles, t: "Premium" },
+    { icon: Brain, t: "Innovative" },
+  ];
+  return (
+    <section className="bg-secondary py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <h2 className="font-display text-4xl font-semibold leading-tight md:text-5xl">
+          Built for forward-thinking <em className="italic">schools.</em>
+        </h2>
+        <div className="mt-12 grid gap-4 md:grid-cols-4">
+          {types.map((t) => (
+            <div key={t.t} className="flex items-center gap-4 rounded-2xl border border-ink/15 bg-card p-6">
+              <t.icon className="h-8 w-8 text-accent-foreground" />
+              <span className="font-display text-xl">{t.t}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalCTA() {
   return (
-    <section id="cta" className="px-6 pb-24">
-      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-ink bg-accent p-10 md:p-16 grain">
+    <section id="cta" className="px-6 py-24">
+      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-ink bg-primary p-10 text-primary-foreground md:p-16 grain">
         <div className="grid items-center gap-10 md:grid-cols-12">
-          <h2 className="md:col-span-8 font-display text-4xl font-semibold leading-[1.05] text-accent-foreground md:text-6xl">
-            Give your child <em className="italic">confidence</em> for life.
-          </h2>
-          <div className="md:col-span-4">
-            <p className="text-accent-foreground/80">
-              Book a 30-minute demo this week. We'll assess, advise, and show you the path forward —
-              no obligation.
+          <div className="md:col-span-8">
+            <p className="text-xs uppercase tracking-[0.25em] text-accent">Take the next step</p>
+            <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.05] md:text-6xl">
+              Start your school <em className="italic text-accent">transformation.</em>
+            </h2>
+            <p className="mt-6 max-w-xl text-primary-foreground/75">
+              Book a demo and see Fluent in action — tailored to your school's grade, context and goals.
             </p>
-            <Link
-              to="/book-demo"
-              className="btn-ink mt-6 inline-flex rounded-full px-7 py-4 text-sm font-semibold"
-            >
-              Book Free Demo →
+          </div>
+          <div className="md:col-span-4 flex flex-col gap-3">
+            <Link to="/book-demo" className="btn-gold rounded-full px-7 py-4 text-center text-sm font-semibold">
+              Book a Demo →
             </Link>
-            <a
-              href="tel:+447553886303"
-              className="mt-3 inline-flex text-sm font-semibold text-accent-foreground underline underline-offset-4"
-            >
-              Or call 07553 886303
-            </a>
+            <Link to="/contact" className="rounded-full border border-primary-foreground/40 px-7 py-4 text-center text-sm font-semibold hover:bg-primary-foreground/10 transition">
+              Talk to Us
+            </Link>
           </div>
         </div>
       </div>
@@ -543,55 +585,40 @@ function FinalCTA() {
 
 function Footer() {
   return (
-    <footer className="border-t border-ink/15 bg-primary text-primary-foreground">
+    <footer className="border-t border-ink/15 bg-background">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="font-display text-2xl">Fluent</div>
-          <p className="mt-2 text-sm text-primary-foreground/60">
-            An Accountable Hindustan initiative. Building India's most confident generation, one
-            child at a time.
+          <div className="flex items-center gap-2">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground font-display text-lg">
+              F
+            </div>
+            <div className="font-display text-2xl">Fluent</div>
+          </div>
+          <p className="mt-3 max-w-sm text-sm text-muted-foreground">
+            The Learning Intelligence Platform for forward-thinking schools.
           </p>
         </div>
         <div>
-          <div className="text-xs uppercase tracking-widest text-primary-foreground/50">
-            Contact
-          </div>
-          <p className="mt-3 text-sm">
-            <a href="mailto:futureminds.academy26@gmail.com" className="hover:text-accent">
-              futureminds.academy26@gmail.com
-            </a>
-          </p>
-          <p className="text-sm">
-            <a href="tel:+447553886303" className="hover:text-accent">
-              07553 886303
-            </a>
-          </p>
-        </div>
-        <div>
-          <div className="text-xs uppercase tracking-widest text-primary-foreground/50">
-            Explore
-          </div>
-          <ul className="mt-3 space-y-1 text-sm">
-            <li>
-              <a href="#programs" className="hover:text-accent">
-                Programs
-              </a>
-            </li>
-            <li>
-              <a href="#how" className="hover:text-accent">
-                How it works
-              </a>
-            </li>
-            <li>
-              <a href="#pricing" className="hover:text-accent">
-                Pricing
-              </a>
-            </li>
+          <div className="text-xs uppercase tracking-widest text-muted-foreground">Company</div>
+          <ul className="mt-3 space-y-1.5 text-sm">
+            <li><a href="#" className="hover:text-accent-foreground">About</a></li>
+            <li><Link to="/contact" className="hover:text-accent-foreground">Contact</Link></li>
+            <li><a href="#" className="hover:text-accent-foreground">Careers</a></li>
+            <li><a href="#" className="hover:text-accent-foreground">Privacy</a></li>
           </ul>
         </div>
+        <div>
+          <div className="text-xs uppercase tracking-widest text-muted-foreground">Offices</div>
+          <p className="mt-3 text-sm">London · Bengaluru</p>
+          <p className="mt-2 text-sm">
+            <a href="mailto:info@fluent.academy" className="hover:text-accent-foreground">
+              info@fluent.academy
+            </a>
+          </p>
+        </div>
       </div>
-      <div className="border-t border-primary-foreground/10 px-6 py-5 text-center text-xs text-primary-foreground/50">
-        © 2026 Fluent · Accountable Hindustan. All rights reserved.
+      <div className="border-t border-ink/10 px-6 py-5 text-center text-xs text-muted-foreground">
+        © 2026 Fluent · Learning Intelligence Platform. All rights reserved.
       </div>
     </footer>
   );
