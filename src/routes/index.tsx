@@ -41,6 +41,7 @@ function Index() {
       <FontLink />
       <Nav />
       <Hero />
+      <HowCanWeHelp />
       <TrustStrip />
       <Problem />
       <Solution />
@@ -71,29 +72,20 @@ function FontLink() {
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-40 border-b border-ink/10 bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground font-display text-lg">
-            F
-          </div>
-          <div className="leading-tight">
-            <div className="font-display text-lg font-semibold">Fluent</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              Learning Intelligence
-            </div>
-          </div>
+        <Link to="/" className="text-xl font-bold tracking-tight">
+          Fluent<span className="text-primary">.</span>
         </Link>
-        <nav className="hidden items-center gap-8 text-sm md:flex">
-          <a href="#platform" className="hover:text-accent">Platform</a>
-          <a href="#how" className="hover:text-accent">How it works</a>
-          <a href="#pillars" className="hover:text-accent">Pillars</a>
-          <Link to="/blog" className="hover:text-accent">Resources</Link>
-          <Link to="/contact" className="hover:text-accent">Contact</Link>
-          <Link to="/login" className="hover:text-accent">Sign in</Link>
+        <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
+          <a href="#help" className="text-muted-foreground hover:text-primary">How we help</a>
+          <a href="#platform" className="text-muted-foreground hover:text-primary">Platform</a>
+          <a href="#how" className="text-muted-foreground hover:text-primary">How it works</a>
+          <Link to="/blog" className="text-muted-foreground hover:text-primary">Resources</Link>
+          <Link to="/login" className="text-muted-foreground hover:text-primary">Sign in</Link>
         </nav>
-        <Link to="/book-demo" className="btn-gold rounded-full px-5 py-2 text-sm font-semibold">
-          Book a Demo
+        <Link to="/book-demo" className="btn-connectd text-sm">
+          Book a demo
         </Link>
       </div>
     </header>
@@ -102,48 +94,72 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-12 md:py-28">
+    <section className="relative overflow-hidden hero-connectd">
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-12 md:py-24">
         <div className="md:col-span-7">
-          <span className="inline-flex items-center gap-2 rounded-full border border-ink/20 bg-card px-4 py-1.5 text-xs uppercase tracking-[0.2em]">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-            School Transformation Platform
-          </span>
-          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.02] text-balance md:text-7xl">
-            Transform your school with{" "}
-            <em className="not-italic gold-underline">learning intelligence.</em>
+          <span className="pill">School transformation platform</span>
+          <h1 className="mt-6 text-5xl font-bold leading-[1.08] text-balance md:text-6xl">
+            Connecting schools and families with{" "}
+            <span className="text-primary">learning intelligence.</span>
           </h1>
-          <p className="mt-8 max-w-xl text-lg text-muted-foreground md:text-xl">
-            Fluent is a unified platform that makes learning measurable, visible and actionable —
-            equipping teachers, students, parents and leaders with the insight to act.
+          <p className="mt-8 max-w-xl text-lg text-muted-foreground md:text-xl leading-relaxed">
+            Fluent makes learning measurable, visible, and actionable — for teachers, scholars,
+            parents, and school leaders in one connected platform.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link to="/book-demo" className="btn-ink rounded-full px-7 py-3.5 text-sm font-semibold">
-              Book a Demo →
+            <Link to="/book-demo" className="btn-connectd">
+              Book a demo
             </Link>
-            <Link to="/contact" className="rounded-full border border-ink px-7 py-3.5 text-sm font-semibold hover:bg-ink hover:text-cream transition">
-              Partner with Fluent
+            <Link to="/login" className="btn-connectd-outline">
+              Sign in to the app
             </Link>
           </div>
-          <p className="mt-8 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            Trusted by forward-thinking schools
-          </p>
         </div>
 
         <div className="relative md:col-span-5">
-          <div className="absolute -left-6 -top-6 hidden h-full w-full rounded-3xl border border-ink md:block" />
-          <div className="relative overflow-hidden rounded-3xl border border-ink bg-card p-6">
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-lg card-connectd">
             <DashboardMock />
           </div>
-          <div className="absolute -bottom-6 -left-6 max-w-[220px] rounded-2xl bg-primary p-5 text-primary-foreground card-ink">
-            <div className="font-display text-3xl">+38%</div>
-            <div className="text-xs uppercase tracking-widest opacity-80">
-              Avg. fluency growth, term one
-            </div>
+          <div className="absolute -bottom-4 -left-4 max-w-[200px] rounded-2xl bg-primary p-5 text-primary-foreground shadow-lg">
+            <div className="text-3xl font-bold">+38%</div>
+            <div className="text-xs font-medium opacity-90">Avg. fluency growth, term one</div>
           </div>
-          <div className="absolute -right-4 top-8 rounded-2xl bg-accent px-4 py-3 text-sm font-semibold text-accent-foreground card-ink">
-            Live · School-wide
-          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HowCanWeHelp() {
+  return (
+    <section id="help" className="section-muted py-20">
+      <div className="mx-auto max-w-7xl px-6">
+        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-center mb-12">
+          How can we help?
+        </h2>
+        <div className="grid gap-6 md:grid-cols-2">
+          <article className="help-card-school rounded-2xl border border-border p-8 card-connectd">
+            <p className="text-sm font-semibold text-primary mb-2">Transform your institution.</p>
+            <h3 className="text-2xl font-bold mb-3">Partner with Fluent as a school</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              AI teaching tools, British faculty, CPD, and a School Intelligence Dashboard — from
+              pilot cohort to full-school rollout.
+            </p>
+            <Link to="/book-demo" className="inline-block mt-6 text-sm font-semibold text-primary hover:underline">
+              School programmes →
+            </Link>
+          </article>
+          <article className="help-card-family rounded-2xl border border-border p-8 card-connectd">
+            <p className="text-sm font-semibold text-[#c9963a] mb-2">Support your scholar.</p>
+            <h3 className="text-2xl font-bold mb-3">Enrol with Fluent as a family</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Scholar Studio, Guardian Portal, and optional live faculty — from AI-guided revision
+              to mastery cohorts.
+            </p>
+            <Link to="/contact" className="inline-block mt-6 text-sm font-semibold text-primary hover:underline">
+              Family programmes →
+            </Link>
+          </article>
         </div>
       </div>
     </section>
@@ -154,7 +170,7 @@ function DashboardMock() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <div className="font-display text-sm font-semibold">School Intelligence</div>
+        <div className="font-bold text-sm font-semibold">School Intelligence</div>
         <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Term 2 · Week 6</div>
       </div>
       <div className="grid grid-cols-3 gap-3">
@@ -163,13 +179,13 @@ function DashboardMock() {
           { l: "Engagement", v: "91%", t: "up" },
           { l: "Workload", v: "−24%", t: "down" },
         ].map((m) => (
-          <div key={m.l} className="rounded-xl border border-ink/15 bg-background p-3">
+          <div key={m.l} className="rounded-xl border border-border/15 bg-background p-3">
             <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{m.l}</div>
-            <div className="mt-1 font-display text-xl">{m.v}</div>
+            <div className="mt-1 font-bold text-xl">{m.v}</div>
           </div>
         ))}
       </div>
-      <div className="rounded-xl border border-ink/15 bg-background p-4">
+      <div className="rounded-xl border border-border/15 bg-background p-4">
         <div className="text-xs font-semibold">Year 6 · Confidence</div>
         <div className="mt-3 flex h-24 items-end gap-1.5">
           {[40, 55, 48, 62, 58, 70, 68, 76, 72, 81, 78, 86].map((h, i) => (
@@ -190,26 +206,22 @@ function DashboardMock() {
 }
 
 function TrustStrip() {
-  const items = [
-    "Concept Mastery",
-    "Teacher CPD",
-    "Parent Visibility",
-    "AI Co-pilot",
-    "School Analytics",
-    "Live Dashboards",
+  const stats = [
+    { n: "4", l: "Connected portals" },
+    { n: "50%+", l: "Less admin time" },
+    { n: "24/7", l: "AI study support" },
+    { n: "CBSE", l: "ICSE aligned" },
   ];
   return (
-    <div className="border-y border-ink/15 bg-primary py-5 text-primary-foreground">
-      <div className="marquee-fade overflow-hidden">
-        <div className="flex animate-[marquee_35s_linear_infinite] gap-12 whitespace-nowrap">
-          {[...items, ...items, ...items].map((it, i) => (
-            <span key={i} className="font-display text-2xl">
-              {it} <span className="text-accent">✦</span>
-            </span>
-          ))}
-        </div>
+    <div className="stats-dark py-10">
+      <div className="mx-auto max-w-7xl px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        {stats.map((s) => (
+          <div key={s.l}>
+            <div className="text-3xl font-bold">{s.n}</div>
+            <div className="text-sm text-white/65 mt-1 font-medium">{s.l}</div>
+          </div>
+        ))}
       </div>
-      <style>{`@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }`}</style>
     </div>
   );
 }
@@ -228,12 +240,12 @@ function Problem() {
       <div className="grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
           <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The gap</p>
-          <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
-            Schools are working hard. But learning <em className="italic gold-underline">isn't fully visible.</em>
+          <h2 className="mt-4 font-bold text-4xl font-semibold leading-tight md:text-5xl">
+            Schools are working hard. But learning <em className="italic text-primary underline decoration-primary/40 underline-offset-4">isn't fully visible.</em>
           </h2>
         </div>
         <div className="md:col-span-7 space-y-6">
-          <div className="rounded-2xl border border-ink/15 bg-card p-6">
+          <div className="rounded-2xl border border-border/15 bg-card p-6">
             <div className="text-xs uppercase tracking-widest text-muted-foreground">Schools measure</div>
             <div className="mt-3 flex flex-wrap gap-2">
               {measured.map((m) => (
@@ -241,7 +253,7 @@ function Problem() {
               ))}
             </div>
           </div>
-          <div className="rounded-2xl border border-ink bg-primary p-6 text-primary-foreground">
+          <div className="rounded-2xl border border-border bg-primary p-6 text-primary-foreground">
             <div className="text-xs uppercase tracking-widest text-accent">But struggle to measure</div>
             <div className="mt-3 flex flex-wrap gap-2">
               {missing.map((m) => (
@@ -253,9 +265,9 @@ function Problem() {
       </div>
       <div className="mt-12 grid gap-5 md:grid-cols-4">
         {groups.map((g) => (
-          <div key={g.t} className="card-ink rounded-2xl bg-card p-6">
+          <div key={g.t} className="card-connectd rounded-2xl bg-card p-6">
             <g.icon className="h-7 w-7 text-accent-foreground" />
-            <div className="mt-4 font-display text-xl font-semibold">{g.t}</div>
+            <div className="mt-4 font-bold text-xl font-semibold">{g.t}</div>
             <p className="mt-2 text-sm text-muted-foreground">{g.d}</p>
           </div>
         ))}
@@ -274,7 +286,7 @@ function Solution() {
     <section className="bg-primary py-24 text-primary-foreground">
       <div className="mx-auto max-w-7xl px-6">
         <p className="text-xs uppercase tracking-[0.25em] text-accent">Introducing Fluent</p>
-        <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight md:text-6xl">
+        <h2 className="mt-4 max-w-3xl font-bold text-4xl font-semibold leading-tight md:text-6xl">
           The Learning Intelligence <em className="italic text-accent">Platform.</em>
         </h2>
         <p className="mt-6 max-w-2xl text-primary-foreground/70 text-lg">
@@ -283,8 +295,8 @@ function Solution() {
         <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-primary-foreground/20 bg-primary-foreground/10 md:grid-cols-3">
           {cols.map((c, i) => (
             <div key={c.t} className="bg-primary p-8">
-              <div className="font-display text-5xl text-accent/40">0{i + 1}</div>
-              <h3 className="mt-6 font-display text-2xl">{c.t}</h3>
+              <div className="font-bold text-5xl text-accent/40">0{i + 1}</div>
+              <h3 className="mt-6 font-bold text-2xl">{c.t}</h3>
               <p className="mt-3 text-sm text-primary-foreground/70">{c.d}</p>
             </div>
           ))}
@@ -306,15 +318,15 @@ function HowItWorks() {
   return (
     <section id="how" className="mx-auto max-w-7xl px-6 py-24">
       <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The system</p>
-      <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight md:text-5xl">
+      <h2 className="mt-4 max-w-3xl font-bold text-4xl font-semibold leading-tight md:text-5xl">
         How Fluent transforms your <em className="italic">school.</em>
       </h2>
       <div className="mt-14 grid gap-3 md:grid-cols-6">
         {steps.map((s, i) => (
           <div key={s.t} className="relative">
-            <div className="card-ink rounded-2xl bg-card p-5">
+            <div className="card-connectd rounded-2xl bg-card p-5">
               <div className="text-xs font-mono text-accent-foreground">0{i + 1}</div>
-              <div className="mt-3 font-display text-lg">{s.t}</div>
+              <div className="mt-3 font-bold text-lg">{s.t}</div>
               <p className="mt-1 text-xs text-muted-foreground">{s.d}</p>
             </div>
             {i < steps.length - 1 && (
@@ -361,17 +373,17 @@ function Pillars() {
     <section id="pillars" className="bg-secondary py-24">
       <div className="mx-auto max-w-7xl px-6">
         <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The framework</p>
-        <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
-          The four pillars of <em className="italic gold-underline">Fluent.</em>
+        <h2 className="mt-4 font-bold text-4xl font-semibold leading-tight md:text-5xl">
+          The four pillars of <em className="italic text-primary underline decoration-primary/40 underline-offset-4">Fluent.</em>
         </h2>
         <div className="mt-14 grid gap-6 md:grid-cols-2">
           {pillars.map((p) => (
             <div
               key={p.t}
-              className={`card-ink rounded-3xl p-8 ${p.tone === "accent" ? "bg-accent text-accent-foreground" : "bg-card"}`}
+              className={`card-connectd rounded-3xl p-8 ${p.tone === "accent" ? "bg-accent text-accent-foreground" : "bg-card"}`}
             >
               <p.icon className="h-8 w-8" />
-              <h3 className="mt-6 font-display text-2xl font-semibold">{p.t}</h3>
+              <h3 className="mt-6 font-bold text-2xl font-semibold">{p.t}</h3>
               <ul className="mt-4 space-y-2 text-sm">
                 {p.items.map((it) => (
                   <li key={it} className="flex items-center gap-2">
@@ -400,7 +412,7 @@ function ProductPreview() {
   return (
     <section id="platform" className="mx-auto max-w-7xl px-6 py-24">
       <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The product</p>
-      <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
+      <h2 className="mt-4 font-bold text-4xl font-semibold leading-tight md:text-5xl">
         A unified platform for your <em className="italic">whole school.</em>
       </h2>
       <div className="mt-10 flex flex-wrap gap-2">
@@ -410,8 +422,8 @@ function ProductPreview() {
             onClick={() => setActive(t.id)}
             className={`rounded-full border px-5 py-2 text-sm font-semibold transition ${
               active === t.id
-                ? "border-ink bg-ink text-cream"
-                : "border-ink/20 bg-card hover:border-ink"
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border/20 bg-card hover:border-border"
             }`}
           >
             {t.label}
@@ -419,8 +431,8 @@ function ProductPreview() {
         ))}
       </div>
       <div className="mt-8 grid gap-8 md:grid-cols-12">
-        <div className="card-ink md:col-span-8 rounded-3xl bg-card p-6">
-          <div className="flex items-center gap-2 border-b border-ink/10 pb-3">
+        <div className="card-connectd md:col-span-8 rounded-3xl bg-card p-6">
+          <div className="flex items-center gap-2 border-b border-border/10 pb-3">
             <span className="h-3 w-3 rounded-full bg-destructive/60" />
             <span className="h-3 w-3 rounded-full bg-accent" />
             <span className="h-3 w-3 rounded-full bg-primary/30" />
@@ -428,16 +440,16 @@ function ProductPreview() {
           </div>
           <div className="mt-5 grid gap-4 md:grid-cols-3">
             {current.mock.map((m) => (
-              <div key={m} className="rounded-2xl border border-ink/10 bg-background p-5">
+              <div key={m} className="rounded-2xl border border-border/10 bg-background p-5">
                 <div className="text-xs uppercase tracking-widest text-muted-foreground">Module</div>
-                <div className="mt-2 font-display text-lg">{m}</div>
+                <div className="mt-2 font-bold text-lg">{m}</div>
                 <div className="mt-4 h-20 rounded-lg bg-gradient-to-br from-primary/10 via-accent/20 to-primary/5" />
               </div>
             ))}
           </div>
         </div>
         <div className="md:col-span-4">
-          <h3 className="font-display text-2xl">{current.label} view</h3>
+          <h3 className="font-bold text-2xl">{current.label} view</h3>
           <p className="mt-3 text-muted-foreground">{current.desc}</p>
           <Link to="/book-demo" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4 decoration-accent decoration-2">
             See it live <ArrowRight className="h-4 w-4" />
@@ -461,7 +473,7 @@ function AISection() {
         <div className="flex items-end justify-between flex-wrap gap-6">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-accent">Calm intelligence</p>
-            <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
+            <h2 className="mt-4 font-bold text-4xl font-semibold leading-tight md:text-5xl">
               AI that supports <em className="italic text-accent">people.</em>
             </h2>
           </div>
@@ -473,7 +485,7 @@ function AISection() {
           {cols.map((c) => (
             <div key={c.t} className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-6">
               <c.icon className="h-6 w-6 text-accent" />
-              <div className="mt-4 font-display text-xl">{c.t}</div>
+              <div className="mt-4 font-bold text-xl">{c.t}</div>
               <ul className="mt-3 space-y-1.5 text-sm text-primary-foreground/75">
                 {c.items.map((it) => (
                   <li key={it}>— {it}</li>
@@ -482,7 +494,7 @@ function AISection() {
             </div>
           ))}
         </div>
-        <blockquote className="mt-14 border-l-4 border-accent pl-5 font-display text-3xl italic">
+        <blockquote className="mt-14 border-l-4 border-accent pl-5 font-bold text-3xl italic">
           “AI assists. Teachers lead.”
         </blockquote>
       </div>
@@ -500,25 +512,25 @@ function Impact() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
       <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The impact</p>
-      <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
-        Real impact you can <em className="italic gold-underline">measure.</em>
+      <h2 className="mt-4 font-bold text-4xl font-semibold leading-tight md:text-5xl">
+        Real impact you can <em className="italic text-primary underline decoration-primary/40 underline-offset-4">measure.</em>
       </h2>
       <div className="mt-14 grid gap-5 md:grid-cols-4">
         {metrics.map((m) => (
-          <div key={m.l} className="card-ink rounded-2xl bg-card p-6">
+          <div key={m.l} className="card-connectd rounded-2xl bg-card p-6">
             <m.icon className={`h-7 w-7 ${m.t === "up" ? "text-accent-foreground" : "text-destructive"}`} />
             <div className="mt-4 flex items-baseline gap-2">
-              <span className={`font-display text-2xl ${m.t === "up" ? "text-primary" : "text-destructive"}`}>
+              <span className={`font-bold text-2xl ${m.t === "up" ? "text-primary" : "text-destructive"}`}>
                 {m.t === "up" ? "↑" : "↓"}
               </span>
-              <span className="font-display text-2xl">{m.l}</span>
+              <span className="font-bold text-2xl">{m.l}</span>
             </div>
           </div>
         ))}
       </div>
-      <figure className="mt-14 rounded-3xl border border-ink bg-primary p-10 text-primary-foreground card-ink">
+      <figure className="mt-14 rounded-3xl border border-border bg-primary p-10 text-primary-foreground card-connectd">
         <div className="text-accent">★★★★★</div>
-        <blockquote className="mt-5 max-w-3xl font-display text-2xl italic leading-snug md:text-3xl">
+        <blockquote className="mt-5 max-w-3xl font-bold text-2xl italic leading-snug md:text-3xl">
           “Fluent gave our leadership team the first honest view of learning we've ever had — and it gave our teachers their afternoons back.”
         </blockquote>
         <figcaption className="mt-6 text-sm text-primary-foreground/70">
@@ -539,14 +551,14 @@ function TargetSchools() {
   return (
     <section className="bg-secondary py-24">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="font-display text-4xl font-semibold leading-tight md:text-5xl">
+        <h2 className="font-bold text-4xl font-semibold leading-tight md:text-5xl">
           Built for forward-thinking <em className="italic">schools.</em>
         </h2>
         <div className="mt-12 grid gap-4 md:grid-cols-4">
           {types.map((t) => (
-            <div key={t.t} className="flex items-center gap-4 rounded-2xl border border-ink/15 bg-card p-6">
+            <div key={t.t} className="flex items-center gap-4 rounded-2xl border border-border/15 bg-card p-6">
               <t.icon className="h-8 w-8 text-accent-foreground" />
-              <span className="font-display text-xl">{t.t}</span>
+              <span className="font-bold text-xl">{t.t}</span>
             </div>
           ))}
         </div>
@@ -558,11 +570,11 @@ function TargetSchools() {
 function FinalCTA() {
   return (
     <section id="cta" className="px-6 py-24">
-      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-ink bg-primary p-10 text-primary-foreground md:p-16 grain">
+      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-border bg-primary p-10 text-primary-foreground md:p-16 grain">
         <div className="grid items-center gap-10 md:grid-cols-12">
           <div className="md:col-span-8">
             <p className="text-xs uppercase tracking-[0.25em] text-accent">Take the next step</p>
-            <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.05] md:text-6xl">
+            <h2 className="mt-4 font-bold text-4xl font-semibold leading-[1.05] md:text-6xl">
               Start your school <em className="italic text-accent">transformation.</em>
             </h2>
             <p className="mt-6 max-w-xl text-primary-foreground/75">
@@ -570,11 +582,11 @@ function FinalCTA() {
             </p>
           </div>
           <div className="md:col-span-4 flex flex-col gap-3">
-            <Link to="/book-demo" className="btn-gold rounded-full px-7 py-4 text-center text-sm font-semibold">
-              Book a Demo →
+            <Link to="/book-demo" className="btn-connectd bg-accent text-accent-foreground justify-center">
+              Book a demo
             </Link>
-            <Link to="/contact" className="rounded-full border border-primary-foreground/40 px-7 py-4 text-center text-sm font-semibold hover:bg-primary-foreground/10 transition">
-              Talk to Us
+            <Link to="/contact" className="btn-connectd-outline border-primary-foreground/40 text-primary-foreground justify-center hover:bg-primary-foreground/10">
+              Talk to us
             </Link>
           </div>
         </div>
@@ -585,14 +597,11 @@ function FinalCTA() {
 
 function Footer() {
   return (
-    <footer className="border-t border-ink/15 bg-background">
+    <footer className="border-t border-border/15 bg-background">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground font-display text-lg">
-              F
-            </div>
-            <div className="font-display text-2xl">Fluent</div>
+          <div className="text-xl font-bold">
+            Fluent<span className="text-primary">.</span>
           </div>
           <p className="mt-3 max-w-sm text-sm text-muted-foreground">
             The Learning Intelligence Platform for forward-thinking schools.
@@ -617,7 +626,7 @@ function Footer() {
           </p>
         </div>
       </div>
-      <div className="border-t border-ink/10 px-6 py-5 text-center text-xs text-muted-foreground">
+      <div className="border-t border-border/10 px-6 py-5 text-center text-xs text-muted-foreground">
         © 2026 Fluent · Learning Intelligence Platform. All rights reserved.
       </div>
     </footer>

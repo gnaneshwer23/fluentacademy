@@ -72,27 +72,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
+      { title: "Fluent — Learning Intelligence Platform" },
       {
         name: "description",
         content:
-          "Future Minds Academy is an online learning platform that builds confidence and academic success for children.",
+          "Fluent connects schools and families with learning intelligence — measurable fluency, teacher CPD, parent visibility, and school-wide analytics.",
       },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
+      { name: "author", content: "Fluent Institute" },
+      { property: "og:title", content: "Fluent — Learning Intelligence Platform" },
       {
         property: "og:description",
         content:
-          "Future Minds Academy is an online learning platform that builds confidence and academic success for children.",
+          "Transform your school with learning intelligence. AI teaching tools, scholar studio, guardian portal, and school dashboards.",
       },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Lovable App" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Fluent — Learning Intelligence Platform" },
       {
         name: "twitter:description",
         content:
-          "Future Minds Academy is an online learning platform that builds confidence and academic success for children.",
+          "Transform your school with learning intelligence. AI teaching tools, scholar studio, guardian portal, and school dashboards.",
       },
       {
         property: "og:image",
