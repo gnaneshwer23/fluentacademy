@@ -56,7 +56,7 @@ function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen hero-connectd flex items-center justify-center px-6 py-12">
+    <div className="page-shell hero-connectd flex min-h-screen items-center justify-center px-6 py-12">
       <div className="w-full max-w-md">
         <Link to="/" className="text-sm font-medium text-muted-foreground hover:text-primary">
           ← Back to home
@@ -88,7 +88,7 @@ function AuthPage() {
                           onClick={() => setRole(r.id)}
                           className={`rounded-xl border p-3 text-left transition ${
                             active
-                              ? "border-primary bg-teal-light"
+                              ? "border-primary bg-[var(--teal-light)]"
                               : "border-border hover:border-primary/40"
                           }`}
                         >
