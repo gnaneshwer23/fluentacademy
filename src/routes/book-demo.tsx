@@ -1,11 +1,12 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { MarketingShell } from "@/components/MarketingShell";
 
 export const Route = createFileRoute("/book-demo")({
-  head: () => ({ meta: [{ title: "Book a Free Demo · Fluent" }] }),
+  head: () => ({ meta: [{ title: "Book a Demo · Fluent" }] }),
   component: BookDemo,
 });
 
@@ -50,67 +51,53 @@ function BookDemo() {
   };
 
   return (
-    <div className="min-h-screen bg-background px-6 py-12">
-      <div className="mx-auto max-w-2xl">
-        <Link to="/" className="text-sm text-muted-foreground hover:text-accent">
-          ← Back to home
-        </Link>
-        <h1 className="mt-6 font-display text-5xl font-semibold">Book a free demo</h1>
-        <p className="mt-3 text-muted-foreground">
-          A 30-minute session. We'll assess and advise — no obligation.
-        </p>
-        {done ? (
-          <div className="mt-10 card-ink rounded-3xl bg-accent/20 p-8 border border-accent">
-            <h2 className="font-display text-2xl">Thank you! 🎉</h2>
-            <p className="mt-3 text-sm">
-              Our team will email you within 24 hours to confirm your slot.
-            </p>
-          </div>
-        ) : (
-          <form
-            onSubmit={submit}
-            className="mt-10 space-y-4 card-ink rounded-3xl bg-card p-8 border border-ink/15"
-          >
-            {[
-              { k: "parent_name", l: "Parent name *" },
-              { k: "child_name", l: "Child name *" },
-              { k: "child_grade", l: "Child's grade / age" },
-              { k: "email", l: "Email *", type: "email" },
-              { k: "phone", l: "Phone *", type: "tel" },
-              { k: "preferred_time", l: "Preferred time" },
-            ].map((f) => (
-              <div key={f.k}>
-                <label className="text-xs uppercase tracking-widest text-muted-foreground">
-                  {f.l}
-                </label>
-                <input
-                  type={f.type ?? "text"}
-                  value={(form as never)[f.k]}
-                  onChange={(e) => setForm({ ...form, [f.k]: e.target.value })}
-                  className="mt-1 w-full rounded-xl border border-ink/20 bg-background px-4 py-3 text-sm"
-                />
-              </div>
-            ))}
-            <div>
-              <label className="text-xs uppercase tracking-widest text-muted-foreground">
-                Notes
+    <MarketingShell
+      title="Book a demo"
+      subtitle="A 30-minute session to see Fluent in action — tailored to your school or family. No obligation."
+    >
+      {done ? (
+        <div className="card-connectd rounded-2xl bg-teal-light p-8">
+          <h2 className="text-2xl font-bold">Thank you</h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Our team will email you within 24 hours to confirm your slot.
+          </p>
+        </div>
+      ) : (
+        <form onSubmit={submit} className="marketing-form card-connectd space-y-4 rounded-2xl p-8">
+          {[
+            { k: "parent_name", l: "Your name *" },
+            { k: "child_name", l: "Scholar name *" },
+            { k: "child_grade", l: "Grade / age" },
+            { k: "email", l: "Email *", type: "email" },
+            { k: "phone", l: "Phone *", type: "tel" },
+            { k: "preferred_time", l: "Preferred time" },
+          ].map((f) => (
+            <div key={f.k}>
+              <label className="mb-1.5 block text-xs font-semibold text-muted-foreground">
+                {f.l}
               </label>
-              <textarea
-                value={form.notes}
-                onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                rows={4}
-                className="mt-1 w-full rounded-xl border border-ink/20 bg-background px-4 py-3 text-sm"
+              <input
+                type={f.type ?? "text"}
+                value={(form as Record<string, string>)[f.k]}
+                onChange={(e) => setForm({ ...form, [f.k]: e.target.value })}
               />
             </div>
-            <button
-              disabled={loading}
-              className="btn-ink w-full rounded-full px-6 py-3 text-sm font-semibold"
-            >
-              {loading ? "Sending…" : "Book my demo →"}
-            </button>
-          </form>
-        )}
-      </div>
-    </div>
+          ))}
+          <div>
+            <label className="mb-1.5 block text-xs font-semibold text-muted-foreground">
+              Notes
+            </label>
+            <textarea
+              value={form.notes}
+              onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              rows={4}
+            />
+          </div>
+          <button disabled={loading} className="btn-connectd w-full">
+            {loading ? "Sending…" : "Request demo"}
+          </button>
+        </form>
+      )}
+    </MarketingShell>
   );
 }
