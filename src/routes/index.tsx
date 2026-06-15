@@ -84,14 +84,16 @@ function Nav() {
             </div>
           </div>
         </Link>
-        <nav className="hidden items-center gap-8 text-sm md:flex">
+        <nav className="hidden items-center gap-7 text-sm md:flex">
           <a href="#platform" className="hover:text-accent">Platform</a>
-          <a href="#how" className="hover:text-accent">How it works</a>
-          <a href="#pillars" className="hover:text-accent">Pillars</a>
+          <Link to="/for-leaders" className="hover:text-accent">For Leaders</Link>
+          <Link to="/for-teachers" className="hover:text-accent">For Teachers</Link>
+          <Link to="/for-parents" className="hover:text-accent">For Parents</Link>
           <Link to="/blog" className="hover:text-accent">Resources</Link>
           <Link to="/contact" className="hover:text-accent">Contact</Link>
           <Link to="/login" className="hover:text-accent">Sign in</Link>
         </nav>
+
         <Link to="/book-demo" className="btn-gold rounded-full px-5 py-2 text-sm font-semibold">
           Book a Demo
         </Link>
