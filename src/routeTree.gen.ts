@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForLeadersRouteImport } from './routes/for-leaders'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BookDemoRouteImport } from './routes/book-demo'
 import { Route as BlogRouteImport } from './routes/blog'
@@ -27,6 +28,11 @@ import { Route as AuthDashboardAdminRouteImport } from './routes/_auth.dashboard
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForLeadersRoute = ForLeadersRouteImport.update({
+  id: '/for-leaders',
+  path: '/for-leaders',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRouteWithChildren
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/for-leaders': typeof ForLeadersRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRouteWithChildren
   '/onboarding': typeof AuthOnboardingRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRouteWithChildren
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/for-leaders': typeof ForLeadersRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRouteWithChildren
   '/onboarding': typeof AuthOnboardingRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   '/blog': typeof BlogRouteWithChildren
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/for-leaders': typeof ForLeadersRoute
   '/login': typeof LoginRoute
   '/_auth/dashboard': typeof AuthDashboardRouteWithChildren
   '/_auth/onboarding': typeof AuthOnboardingRoute
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/book-demo'
     | '/contact'
+    | '/for-leaders'
     | '/login'
     | '/dashboard'
     | '/onboarding'
@@ -163,6 +173,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/book-demo'
     | '/contact'
+    | '/for-leaders'
     | '/login'
     | '/dashboard'
     | '/onboarding'
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/book-demo'
     | '/contact'
+    | '/for-leaders'
     | '/login'
     | '/_auth/dashboard'
     | '/_auth/onboarding'
@@ -196,6 +208,7 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRouteWithChildren
   BookDemoRoute: typeof BookDemoRoute
   ContactRoute: typeof ContactRoute
+  ForLeadersRoute: typeof ForLeadersRoute
   LoginRoute: typeof LoginRoute
 }
 
@@ -206,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-leaders': {
+      id: '/for-leaders'
+      path: '/for-leaders'
+      fullPath: '/for-leaders'
+      preLoaderRoute: typeof ForLeadersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -350,6 +370,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRouteWithChildren,
   BookDemoRoute: BookDemoRoute,
   ContactRoute: ContactRoute,
+  ForLeadersRoute: ForLeadersRoute,
   LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
