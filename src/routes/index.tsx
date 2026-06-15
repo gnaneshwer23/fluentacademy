@@ -30,6 +30,18 @@ export const Route = createFileRoute("/")({
         content:
           "Improve teaching, build fluency, drive decisions. The unified learning intelligence platform for forward-thinking schools.",
       },
+      { property: "og:url", content: "https://fluentinstitute.lovable.app/" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Fluent — School Transformation Platform" },
+      {
+        name: "twitter:description",
+        content:
+          "Improve teaching, build fluency, drive decisions. The unified learning intelligence platform for forward-thinking schools.",
+      },
+    ],
+    links: [
+      { rel: "canonical", href: "https://fluentinstitute.lovable.app/" },
     ],
   }),
   component: Index,
