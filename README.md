@@ -2,7 +2,8 @@
 
 School & family **learning intelligence** platform — TanStack Start, Supabase, Vercel.
 
-- **Production:** https://fluentacademy.vercel.app
+- **Production (canonical):** [https://fluent.institute](https://fluent.institute) — Next.js app in [fluentInstitute](https://github.com/gnaneshwer23/fluentInstitute)
+- **This repo (experiment):** https://fluentacademy.vercel.app
 - **Marketing landing (static):** https://fluent-institute-landing.vercel.app
 - **Build plan:** [plans/fluent-v1-blueprint.md](./plans/fluent-v1-blueprint.md)
 - **Progress:** [plans/PROGRESS.md](./plans/PROGRESS.md)
@@ -35,7 +36,8 @@ Copy `.env.example` to `.env` locally. On **Vercel** (Project → Settings → E
 | `VITE_SUPABASE_URL` | Production, Preview, Development |
 | `VITE_SUPABASE_PUBLISHABLE_KEY` | Production, Preview, Development |
 | `VITE_SUPABASE_PROJECT_ID` | Optional |
-| `VITE_SITE_URL` | `https://fluentacademy.vercel.app` in production |
+| `VITE_SITE_URL` | `http://localhost:5173` locally; `https://fluentacademy.vercel.app` for this repo's Vercel deploy only |
+| `VITE_SUPABASE_URL` | Production schema: `https://bzefudyjvgwwtlalmrxk.supabase.co` (see [plans/INFRA_ALIGNMENT.md](./plans/INFRA_ALIGNMENT.md)) |
 | `SUPABASE_URL` | Same as VITE URL (server) |
 | `SUPABASE_PUBLISHABLE_KEY` | Same as VITE key (server) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server only — never expose to client |

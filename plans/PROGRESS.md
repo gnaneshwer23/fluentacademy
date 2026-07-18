@@ -4,8 +4,8 @@ Track each phase: branch → PR → production deploy.
 
 | Phase | Branch | PR | Deploy | Status |
 |-------|--------|-----|--------|--------|
-| 0 — Foundation | `cursor/foundation-prod` | — | [fluentacademy.vercel.app](https://fluentacademy.vercel.app) | ✅ Complete |
-| 1 — Core schema | `cursor/schema-core-v1` | [#4](https://github.com/gnaneshwer23/fluentacademy/pull/4) | [fluentacademy.vercel.app](https://fluentacademy.vercel.app) | ✅ Complete (migration pending) |
+| 0 — Foundation | `cursor/foundation-prod` | — | [fluent.institute](https://fluent.institute) (production) | ✅ Complete (aligned to prod infra) |
+| 1 — Core schema | `cursor/schema-core-v1` | [#4](https://github.com/gnaneshwer23/fluentacademy/pull/4) | [fluent.institute](https://fluent.institute) schema | ✅ Complete (goals met on prod; do not apply local migration) |
 | 2 — Dashboards | `cursor/dashboards-real-data` | — | — | ⏳ Pending |
 | 3 — Fluency | `cursor/fluency-v1` | — | — | ⏳ Pending |
 | 4 — School intel | `cursor/school-intelligence` | — | — | ⏳ Pending |
@@ -31,7 +31,7 @@ Track each phase: branch → PR → production deploy.
 - [x] Admin school setup route (`/dashboard/school`)
 - [x] Onboarding: class join code (student) + guardian invite (parent)
 - [x] Dashboards wired to enrollments, roster, guardian links
-- [ ] Apply migration to Supabase production (`supabase db push` or SQL editor)
+- [x] ~~Apply migration to Supabase production~~ — **N/A**: production uses fluentInstitute schema on `bzefudyjvgwwtlalmrxk` (see [INFRA_ALIGNMENT.md](./INFRA_ALIGNMENT.md))
 - [x] Merge to `main` + production deploy
 
 ## Deploy URLs

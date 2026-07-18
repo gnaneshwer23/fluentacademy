@@ -3,13 +3,16 @@
 **Objective:** Ship a working school & family learning intelligence platform.
 
 **Repo:** `gnaneshwer23/fluentacademy`  
-**Deploy:** Vercel project `fluentacademy` → https://fluentacademy.vercel.app
+**Production:** [fluentInstitute](https://github.com/gnaneshwer23/fluentInstitute) → [https://fluent.institute](https://fluent.institute)  
+**This repo deploy:** Vercel project `fluentacademy` → https://fluentacademy.vercel.app (experiment only)
 
 See [PROGRESS.md](./PROGRESS.md) for live status.
 
 ---
 
-## Phase 0 — Foundation ✅ (this branch)
+## Phase 0 — Foundation ✅ (complete on production infra)
+
+> Aligned to `fluent.institute` + Supabase `bzefudyjvgwwtlalmrxk`. See [INFRA_ALIGNMENT.md](./INFRA_ALIGNMENT.md).
 
 - Merge Connectd UI + Nitro Vercel deploy
 - Clean Lovable branding, add `.env.example`, README
@@ -19,7 +22,9 @@ See [PROGRESS.md](./PROGRESS.md) for live status.
 
 ---
 
-## Phase 1 — Core data model
+## Phase 1 — Core data model ✅ (goals met on production; schema differs)
+
+> **Do not apply** `20260718160000_phase1_core_schema.sql` to production. Equivalent tables/RPCs exist in fluentInstitute.
 
 **Branch:** `cursor/schema-core-v1`
 
