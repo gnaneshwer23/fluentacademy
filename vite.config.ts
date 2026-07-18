@@ -12,4 +12,6 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
+  // Required for Vercel: generates .output with serverless handlers
+  nitro: { preset: "vercel" },
 });

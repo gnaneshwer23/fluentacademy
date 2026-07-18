@@ -1,19 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SITE_URL } from "@/lib/site";
 import {
   GraduationCap,
   Users,
   Heart,
   Building2,
-  BookOpen,
-  Brain,
   BarChart3,
-  Sparkles,
   ArrowRight,
-  TrendingUp,
-  TrendingDown,
   CheckCircle2,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -22,15 +18,15 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Fluent is a School Transformation Platform that makes learning measurable, visible and actionable — for teachers, students, parents and leaders.",
+          "Connecting ambitious schools and families with learning intelligence — measurable fluency, expert faculty, and real-time dashboards.",
       },
       { property: "og:title", content: "Fluent — School Transformation Platform" },
       {
         property: "og:description",
         content:
-          "Improve teaching, build fluency, drive decisions. The unified learning intelligence platform for forward-thinking schools.",
+          "How can we help? Partner as a school or enrol as a family. One platform for teachers, scholars, parents, and leaders.",
       },
-      { property: "og:url", content: "https://fluentinstitute.lovable.app/" },
+      { property: "og:url", content: SITE_URL },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Fluent — School Transformation Platform" },
@@ -40,28 +36,24 @@ export const Route = createFileRoute("/")({
           "Improve teaching, build fluency, drive decisions. The unified learning intelligence platform for forward-thinking schools.",
       },
     ],
-    links: [
-      { rel: "canonical", href: "https://fluentinstitute.lovable.app/" },
-    ],
+    links: [{ rel: "canonical", href: SITE_URL }],
   }),
   component: Index,
 });
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="page-shell">
       <FontLink />
       <Nav />
       <Hero />
+      <HowCanWeHelp />
       <TrustStrip />
-      <Problem />
-      <Solution />
-      <HowItWorks />
-      <Pillars />
-      <ProductPreview />
-      <AISection />
-      <Impact />
-      <TargetSchools />
+      <FluentFor />
+      <Stakeholders />
+      <Journey />
+      <Platform />
+      <Testimonials />
       <FinalCTA />
       <Footer />
     </div>
@@ -74,7 +66,7 @@ function FontLink() {
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
         rel="stylesheet"
       />
     </>
@@ -82,32 +74,36 @@ function FontLink() {
 }
 
 function Nav() {
-  return (
-    <header className="sticky top-0 z-40 border-b border-ink/10 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground font-display text-lg">
-            F
-          </div>
-          <div className="leading-tight">
-            <div className="font-display text-lg font-semibold">Fluent</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              Learning Intelligence
-            </div>
-          </div>
-        </Link>
-        <nav className="hidden items-center gap-7 text-sm md:flex">
-          <a href="#platform" className="hover:text-accent">Platform</a>
-          <Link to="/for-leaders" className="hover:text-accent">For Leaders</Link>
-          <Link to="/for-teachers" className="hover:text-accent">For Teachers</Link>
-          <Link to="/for-parents" className="hover:text-accent">For Parents</Link>
-          <Link to="/blog" className="hover:text-accent">Resources</Link>
-          <Link to="/contact" className="hover:text-accent">Contact</Link>
-          <Link to="/login" className="hover:text-accent">Sign in</Link>
-        </nav>
+  useEffect(() => {
+    const header = document.getElementById("site-header");
+    const onScroll = () => header?.classList.toggle("scrolled", window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-        <Link to="/book-demo" className="btn-gold rounded-full px-5 py-2 text-sm font-semibold">
-          Book a Demo
+  return (
+    <header id="site-header" className="site-header-connectd">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <Link to="/" className="text-xl font-bold tracking-tight">
+          Fluent<span className="text-primary">.</span>
+        </Link>
+        <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
+          <a href="#help" className="text-muted-foreground hover:text-primary">
+            How we help
+          </a>
+          <a href="#offerings" className="text-muted-foreground hover:text-primary">
+            Programmes
+          </a>
+          <a href="#platform" className="text-muted-foreground hover:text-primary">
+            Platform
+          </a>
+          <Link to="/login" className="text-muted-foreground hover:text-primary">
+            Sign in
+          </Link>
+        </nav>
+        <Link to="/book-demo" className="btn-connectd btn-connectd-sm">
+          Book a demo
         </Link>
       </div>
     </header>
@@ -116,191 +112,144 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-12 md:py-28">
-        <div className="md:col-span-7">
-          <span className="inline-flex items-center gap-2 rounded-full border border-ink/20 bg-card px-4 py-1.5 text-xs uppercase tracking-[0.2em]">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-            School Transformation Platform
-          </span>
-          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.02] text-balance md:text-7xl">
-            Transform your school with{" "}
-            <em className="not-italic gold-underline">learning intelligence.</em>
-          </h1>
-          <p className="mt-8 max-w-xl text-lg text-muted-foreground md:text-xl">
-            Fluent is a unified platform that makes learning measurable, visible and actionable —
-            equipping teachers, students, parents and leaders with the insight to act.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link to="/book-demo" className="btn-ink rounded-full px-7 py-3.5 text-sm font-semibold">
-              Book a Demo →
-            </Link>
-            <Link to="/contact" className="rounded-full border border-ink px-7 py-3.5 text-sm font-semibold hover:bg-ink hover:text-cream transition">
-              Partner with Fluent
-            </Link>
-          </div>
-          <p className="mt-8 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            Trusted by forward-thinking schools
-          </p>
-        </div>
-
-        <div className="relative md:col-span-5">
-          <div className="absolute -left-6 -top-6 hidden h-full w-full rounded-3xl border border-ink md:block" />
-          <div className="relative overflow-hidden rounded-3xl border border-ink bg-card p-6">
-            <DashboardMock />
-          </div>
-          <div className="absolute -bottom-6 -left-6 max-w-[220px] rounded-2xl bg-primary p-5 text-primary-foreground card-ink">
-            <div className="font-display text-3xl">+38%</div>
-            <div className="text-xs uppercase tracking-widest opacity-80">
-              Avg. fluency growth, term one
-            </div>
-          </div>
-          <div className="absolute -right-4 top-8 rounded-2xl bg-accent px-4 py-3 text-sm font-semibold text-accent-foreground card-ink">
-            Live · School-wide
-          </div>
+    <section className="hero-connectd text-center">
+      <div className="hero-blob hero-blob-1" aria-hidden />
+      <div className="hero-blob hero-blob-2" aria-hidden />
+      <div className="relative mx-auto max-w-4xl px-6 py-24 md:py-32">
+        <p className="pill mx-auto">School transformation & learning intelligence</p>
+        <h1 className="mt-6 text-4xl font-bold leading-[1.1] text-balance md:text-6xl">
+          Connecting ambitious schools and families with{" "}
+          <span className="text-primary">learning intelligence.</span>
+        </h1>
+        <p className="section-lead mx-auto mt-6">
+          Knowledge drives growth. With British-trained faculty, AI-assisted teaching, and
+          real-time dashboards, you get the insight and support to achieve your ambitions.
+        </p>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <Link to="/book-demo" className="btn-connectd">
+            Book a demo
+          </Link>
+          <a href="#help" className="btn-connectd-outline">
+            See how we help
+          </a>
         </div>
       </div>
     </section>
   );
 }
 
-function DashboardMock() {
+function HowCanWeHelp() {
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="font-display text-sm font-semibold">School Intelligence</div>
-        <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Term 2 · Week 6</div>
-      </div>
-      <div className="grid grid-cols-3 gap-3">
-        {[
-          { l: "Fluency", v: "82%", t: "up" },
-          { l: "Engagement", v: "91%", t: "up" },
-          { l: "Workload", v: "−24%", t: "down" },
-        ].map((m) => (
-          <div key={m.l} className="rounded-xl border border-ink/15 bg-background p-3">
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{m.l}</div>
-            <div className="mt-1 font-display text-xl">{m.v}</div>
-          </div>
-        ))}
-      </div>
-      <div className="rounded-xl border border-ink/15 bg-background p-4">
-        <div className="text-xs font-semibold">Year 6 · Confidence</div>
-        <div className="mt-3 flex h-24 items-end gap-1.5">
-          {[40, 55, 48, 62, 58, 70, 68, 76, 72, 81, 78, 86].map((h, i) => (
-            <div
-              key={i}
-              className="flex-1 rounded-t bg-gradient-to-t from-primary to-accent"
-              style={{ height: `${h}%` }}
-            />
-          ))}
+    <section id="help" className="section-muted py-20 md:py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <h2 className="text-center text-3xl font-bold md:text-4xl">How can we help?</h2>
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          <article className="help-card-school card-connectd rounded-2xl p-8 md:p-10">
+            <p className="help-kicker text-primary">Transform your institution.</p>
+            <h3 className="text-2xl font-bold md:text-[1.65rem]">
+              Partner with Fluent as a school
+            </h3>
+            <p className="mt-4 text-muted-foreground leading-relaxed">
+              Your teachers need time back. By connecting with Fluent, you embed CPD, AI
+              co-pilots, and school-wide intelligence — from pilot cohort to full rollout.
+            </p>
+            <Link to="/book-demo" className="text-link">
+              School programmes <ArrowRight className="h-4 w-4" />
+            </Link>
+          </article>
+          <article className="help-card-family card-connectd rounded-2xl p-8 md:p-10">
+            <p className="help-kicker text-[#b8860b]">Support your scholar at home.</p>
+            <h3 className="text-2xl font-bold md:text-[1.65rem]">Enrol with Fluent as a family</h3>
+            <p className="mt-4 text-muted-foreground leading-relaxed">
+              Scholar Studio and the Guardian Portal give honest progress and home strategies —
+              plus optional live faculty when you want human expertise.
+            </p>
+            <Link to="/contact" className="text-link">
+              Family programmes <ArrowRight className="h-4 w-4" />
+            </Link>
+          </article>
         </div>
       </div>
-      <div className="flex items-center gap-2 rounded-xl bg-accent/15 p-3 text-xs">
-        <Sparkles className="h-4 w-4 text-accent-foreground" />
-        <span><strong>Recommended:</strong> Intervene with 4 students in 7C — fluency dipping.</span>
-      </div>
-    </div>
+    </section>
   );
 }
 
 function TrustStrip() {
-  const items = [
-    "Concept Mastery",
-    "Teacher CPD",
-    "Parent Visibility",
-    "AI Co-pilot",
-    "School Analytics",
-    "Live Dashboards",
+  const stats = [
+    { n: "10,000+", l: "Learning sessions" },
+    { n: "50%+", l: "Less admin time" },
+    { n: "24/7", l: "AI study support" },
+    { n: "4", l: "Connected portals" },
+    { n: "CBSE", l: "ICSE aligned" },
   ];
   return (
-    <div className="border-y border-ink/15 bg-primary py-5 text-primary-foreground">
-      <div className="marquee-fade overflow-hidden">
-        <div className="flex animate-[marquee_35s_linear_infinite] gap-12 whitespace-nowrap">
-          {[...items, ...items, ...items].map((it, i) => (
-            <span key={i} className="font-display text-2xl">
-              {it} <span className="text-accent">✦</span>
-            </span>
-          ))}
-        </div>
+    <div className="stats-dark py-12">
+      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-6 text-center md:grid-cols-5">
+        {stats.map((s) => (
+          <div key={s.l}>
+            <div className="text-2xl font-bold md:text-3xl">{s.n}</div>
+            <div className="mt-1 text-sm font-medium text-white/65">{s.l}</div>
+          </div>
+        ))}
       </div>
-      <style>{`@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }`}</style>
     </div>
   );
 }
 
-function Problem() {
-  const measured = ["Grades", "Exams", "Completion"];
-  const missing = ["Understanding", "Confidence", "Communication", "Critical thinking"];
-  const groups = [
-    { icon: GraduationCap, t: "Students", d: "Low confidence, fragile understanding, unseen struggles." },
-    { icon: Users, t: "Teachers", d: "Heavy workload, limited time to personalise instruction." },
-    { icon: Heart, t: "Parents", d: "No visibility into real learning beyond report cards." },
-    { icon: Building2, t: "Leaders", d: "Lagging insights, no system-wide intelligence layer." },
+function FluentFor() {
+  const offerings = [
+    {
+      icon: Users,
+      title: "Teacher excellence",
+      subtitle: "CPD & AI co-pilot",
+      body: "Embedded professional development and an AI lesson co-pilot that plans, differentiates, and marks — so teachers lead every classroom with less admin.",
+      href: "/book-demo",
+      cta: "For schools",
+    },
+    {
+      icon: GraduationCap,
+      title: "Scholar fluency",
+      subtitle: "Studio & mastery",
+      body: "Concept-level practice, confidence building, and a Mastery Ledger — personalised paths with an AI tutor that hints, never gives answers away.",
+      href: "/contact",
+      cta: "For families",
+    },
+    {
+      icon: BarChart3,
+      title: "School intelligence",
+      subtitle: "Leadership dashboards",
+      body: "Real-time cohort analytics, predictive risk signals, and leadership reports — the first honest view of learning across your institution.",
+      href: "/book-demo",
+      cta: "See dashboards",
+    },
   ];
-  return (
-    <section className="mx-auto max-w-7xl px-6 py-24">
-      <div className="grid gap-12 md:grid-cols-12">
-        <div className="md:col-span-5">
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The gap</p>
-          <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
-            Schools are working hard. But learning <em className="italic gold-underline">isn't fully visible.</em>
-          </h2>
-        </div>
-        <div className="md:col-span-7 space-y-6">
-          <div className="rounded-2xl border border-ink/15 bg-card p-6">
-            <div className="text-xs uppercase tracking-widest text-muted-foreground">Schools measure</div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {measured.map((m) => (
-                <span key={m} className="rounded-full bg-secondary px-4 py-1.5 text-sm font-medium">{m}</span>
-              ))}
-            </div>
-          </div>
-          <div className="rounded-2xl border border-ink bg-primary p-6 text-primary-foreground">
-            <div className="text-xs uppercase tracking-widest text-accent">But struggle to measure</div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {missing.map((m) => (
-                <span key={m} className="rounded-full border border-accent/40 bg-accent/15 px-4 py-1.5 text-sm font-medium text-accent">{m}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="mt-12 grid gap-5 md:grid-cols-4">
-        {groups.map((g) => (
-          <div key={g.t} className="card-ink rounded-2xl bg-card p-6">
-            <g.icon className="h-7 w-7 text-accent-foreground" />
-            <div className="mt-4 font-display text-xl font-semibold">{g.t}</div>
-            <p className="mt-2 text-sm text-muted-foreground">{g.d}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
 
-function Solution() {
-  const cols = [
-    { t: "Improve Teaching", d: "CPD and AI co-pilot tools that elevate every classroom." },
-    { t: "Build Fluency", d: "Concept-level mastery, confidence and communication — measured." },
-    { t: "Drive Decisions", d: "Real-time analytics that turn data into school-wide action." },
-  ];
   return (
-    <section className="bg-primary py-24 text-primary-foreground">
-      <div className="mx-auto max-w-7xl px-6">
-        <p className="text-xs uppercase tracking-[0.25em] text-accent">Introducing Fluent</p>
-        <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight md:text-6xl">
-          The Learning Intelligence <em className="italic text-accent">Platform.</em>
+    <section id="offerings" className="py-20 md:py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <p className="eyebrow text-center">Fluent for schools & families</p>
+        <h2 className="mt-3 text-center text-3xl font-bold md:text-4xl">
+          Build fluency. Drive decisions.
         </h2>
-        <p className="mt-6 max-w-2xl text-primary-foreground/70 text-lg">
-          Fluent makes learning measurable, visible and actionable — across teachers, students, parents and leaders.
+        <p className="section-lead mx-auto mt-4 text-center">
+          Three ways to work with Fluent — each designed for measurable outcomes, not
+          vanity metrics.
         </p>
-        <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-primary-foreground/20 bg-primary-foreground/10 md:grid-cols-3">
-          {cols.map((c, i) => (
-            <div key={c.t} className="bg-primary p-8">
-              <div className="font-display text-5xl text-accent/40">0{i + 1}</div>
-              <h3 className="mt-6 font-display text-2xl">{c.t}</h3>
-              <p className="mt-3 text-sm text-primary-foreground/70">{c.d}</p>
-            </div>
+        <div className="mt-14 grid gap-6 md:grid-cols-3">
+          {offerings.map((o) => (
+            <article key={o.title} className="offering-card card-connectd">
+              <o.icon className="h-8 w-8 text-primary" strokeWidth={1.75} />
+              <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-primary">
+                {o.subtitle}
+              </p>
+              <h3 className="mt-2 text-xl font-bold">{o.title}</h3>
+              <p className="mt-3 flex-1 text-sm text-muted-foreground leading-relaxed">
+                {o.body}
+              </p>
+              <Link to={o.href} className="text-link mt-6">
+                {o.cta} <ArrowRight className="h-4 w-4" />
+              </Link>
+            </article>
           ))}
         </div>
       </div>
@@ -308,153 +257,169 @@ function Solution() {
   );
 }
 
-function HowItWorks() {
-  const steps = [
-    { t: "Teacher", d: "Plans and delivers." },
-    { t: "Learning", d: "Captured in motion." },
-    { t: "Data", d: "Structured signals." },
-    { t: "Intelligence", d: "Pattern recognition." },
-    { t: "Intervention", d: "Right action, right time." },
-    { t: "Outcomes", d: "Measurable growth." },
+function Stakeholders() {
+  const roles = [
+    {
+      icon: Users,
+      title: "Teachers",
+      desc: "AI lesson plans in 60 seconds, bulk marking approval, and CPD pathways.",
+    },
+    {
+      icon: GraduationCap,
+      title: "Scholars",
+      desc: "Personalised paths, 24/7 AI tutor, and a digital portfolio from day one.",
+    },
+    {
+      icon: Heart,
+      title: "Parents",
+      desc: "Weekly dashboards, plain-language updates, and home learning strategies.",
+    },
+    {
+      icon: Building2,
+      title: "School leaders",
+      desc: "Cohort analytics, early risk detection, and measurable improvement.",
+    },
   ];
+
   return (
-    <section id="how" className="mx-auto max-w-7xl px-6 py-24">
-      <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The system</p>
-      <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight md:text-5xl">
-        How Fluent transforms your <em className="italic">school.</em>
-      </h2>
-      <div className="mt-14 grid gap-3 md:grid-cols-6">
-        {steps.map((s, i) => (
-          <div key={s.t} className="relative">
-            <div className="card-ink rounded-2xl bg-card p-5">
-              <div className="text-xs font-mono text-accent-foreground">0{i + 1}</div>
-              <div className="mt-3 font-display text-lg">{s.t}</div>
-              <p className="mt-1 text-xs text-muted-foreground">{s.d}</p>
-            </div>
-            {i < steps.length - 1 && (
-              <ArrowRight className="absolute -right-2 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-accent md:block" />
-            )}
+    <section className="section-alt py-20 md:py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <p className="eyebrow">One platform</p>
+        <h2 className="mt-3 max-w-2xl text-3xl font-bold md:text-4xl">
+          Every stakeholder, connected.
+        </h2>
+        <p className="section-lead mt-4">
+          We architect <strong className="text-foreground">academic fluency</strong> — not
+          just grades. Understanding, explaining, and applying knowledge with confidence.
+        </p>
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {roles.map((r) => (
+            <article key={r.title} className="role-card-connectd">
+              <r.icon className="h-7 w-7 text-primary" strokeWidth={1.75} />
+              <h3 className="mt-4 text-lg font-bold">{r.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
+            </article>
+          ))}
+        </div>
+        <aside className="mt-12 flex flex-col gap-6 rounded-2xl border border-border bg-card p-8 md:flex-row md:items-center md:justify-between card-connectd">
+          <div>
+            <p className="eyebrow">Core metric</p>
+            <h3 className="mt-2 text-2xl font-bold">Academic Fluency Score</h3>
+            <p className="mt-2 max-w-xl text-sm text-muted-foreground">
+              One measure of accuracy, understanding, fluency, and confidence across Science,
+              Maths, and English.
+            </p>
           </div>
-        ))}
+          <Link to="/book-demo" className="btn-connectd shrink-0">
+            Learn more
+          </Link>
+        </aside>
       </div>
-      <p className="mt-10 max-w-2xl text-muted-foreground">
-        We focus on the learning process — not just the outcome. Each step is instrumented, so the next is informed.
-      </p>
     </section>
   );
 }
 
-function Pillars() {
-  const pillars = [
+function Journey() {
+  const steps = [
     {
-      icon: Users,
-      t: "Teacher Excellence",
-      items: ["Embedded CPD", "AI lesson co-pilot", "Workload reduction"],
-      tone: "card",
+      n: "01",
+      title: "Discover & onboard",
+      desc: "Align on goals, configure curriculum and cohorts, launch dashboards on day one.",
     },
     {
-      icon: GraduationCap,
-      t: "Student Fluency",
-      items: ["Concept accuracy", "Confidence building", "Articulation"],
-      tone: "accent",
+      n: "02",
+      title: "Teach & learn",
+      desc: "Live faculty, AI lesson planning, differentiated homework, syllabus-grounded support.",
     },
     {
-      icon: Heart,
-      t: "Parent Partnership",
-      items: ["Weekly dashboards", "Honest updates", "Home strategies"],
-      tone: "accent",
-    },
-    {
-      icon: BarChart3,
-      t: "School Intelligence",
-      items: ["School-wide analytics", "Predictive insights", "Leadership reports"],
-      tone: "card",
+      n: "03",
+      title: "Assess & support",
+      desc: "Smart marking, parent updates, wellbeing signals, and early intervention.",
     },
   ];
+  const benefits = [
+    {
+      title: "Structured CPD",
+      desc: "Self-paced pathways built around the realities of modern teaching — CPD-certified where applicable.",
+    },
+    {
+      title: "Mentor-supported",
+      desc: "British-trained faculty who know your context and how to make rollout smooth.",
+    },
+    {
+      title: "Guaranteed visibility",
+      desc: "Every cohort gets measurable fluency data from week one — not a black box until term end.",
+    },
+  ];
+
   return (
-    <section id="pillars" className="bg-secondary py-24">
-      <div className="mx-auto max-w-7xl px-6">
-        <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The framework</p>
-        <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
-          The four pillars of <em className="italic gold-underline">Fluent.</em>
+    <section id="how" className="py-20 md:py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <p className="eyebrow text-center">Your journey with Fluent</p>
+        <h2 className="mt-3 text-center text-3xl font-bold md:text-4xl">
+          From onboarding to outcomes
         </h2>
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
-          {pillars.map((p) => (
-            <div
-              key={p.t}
-              className={`card-ink rounded-3xl p-8 ${p.tone === "accent" ? "bg-accent text-accent-foreground" : "bg-card"}`}
-            >
-              <p.icon className="h-8 w-8" />
-              <h3 className="mt-6 font-display text-2xl font-semibold">{p.t}</h3>
-              <ul className="mt-4 space-y-2 text-sm">
+        <div className="mt-14 grid gap-6 md:grid-cols-3">
+          {steps.map((s) => (
+            <article key={s.n} className="step-card-connectd">
+              <span className="step-num">{s.n}</span>
+              <h3 className="mt-4 text-xl font-bold">{s.title}</h3>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+            </article>
+          ))}
+        </div>
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {benefits.map((b) => (
+            <article key={b.title} className="benefit-card">
+              <h4 className="font-bold text-primary">{b.title}</h4>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{b.desc}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Platform() {
+  const portals = [
+    { label: "Teacher", items: ["Lesson planner", "Auto-marking", "Cohort heatmap"] },
+    { label: "Scholar", items: ["Practice tray", "AI tutor", "Mastery ledger"] },
+    { label: "Guardian", items: ["Weekly report", "Home plays", "Progress Q&A"] },
+    { label: "School", items: ["KPI overview", "Risk alerts", "Intervention queue"] },
+  ];
+
+  return (
+    <section id="platform" className="section-muted py-20 md:py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <p className="eyebrow text-center">The platform</p>
+        <h2 className="mt-3 text-center text-3xl font-bold md:text-4xl">
+          Four portals. One picture of learning.
+        </h2>
+        <p className="section-lead mx-auto mt-4 text-center">
+          Calm, contextual intelligence that supports people — never replaces them.
+        </p>
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {portals.map((p) => (
+            <div key={p.label} className="card-connectd rounded-2xl bg-card p-6">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-teal-light text-sm font-bold text-primary">
+                {p.label[0]}
+              </div>
+              <h3 className="mt-4 font-bold">{p.label}</h3>
+              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                 {p.items.map((it) => (
                   <li key={it} className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4" /> {it}
+                    <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-primary" />
+                    {it}
                   </li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-
-function ProductPreview() {
-  const tabs = [
-    { id: "teacher", label: "Teacher", desc: "Plan faster, mark smarter, and see every learner in one view.", mock: ["Lesson Planner", "Auto-marking", "Cohort heatmap"] },
-    { id: "student", label: "Student", desc: "Personalised practice and on-demand explanations that build fluency.", mock: ["Practice tray", "Confidence meter", "AI tutor"] },
-    { id: "parent", label: "Parent", desc: "Honest weekly updates and clear next-steps for home support.", mock: ["Sunday report", "Strengths & gaps", "Home plays"] },
-    { id: "school", label: "School", desc: "Live intelligence for principals — every grade, every cohort, every week.", mock: ["KPI overview", "Attendance risk", "Intervention queue"] },
-    { id: "ai", label: "AI", desc: "Calm, contextual AI that supports people — not replaces them.", mock: ["Lesson suggestions", "Doubt-solver", "Pattern alerts"] },
-  ];
-  const [active, setActive] = useState(tabs[0].id);
-  const current = tabs.find((t) => t.id === active)!;
-  return (
-    <section id="platform" className="mx-auto max-w-7xl px-6 py-24">
-      <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The product</p>
-      <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
-        A unified platform for your <em className="italic">whole school.</em>
-      </h2>
-      <div className="mt-10 flex flex-wrap gap-2">
-        {tabs.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => setActive(t.id)}
-            className={`rounded-full border px-5 py-2 text-sm font-semibold transition ${
-              active === t.id
-                ? "border-ink bg-ink text-cream"
-                : "border-ink/20 bg-card hover:border-ink"
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-      <div className="mt-8 grid gap-8 md:grid-cols-12">
-        <div className="card-ink md:col-span-8 rounded-3xl bg-card p-6">
-          <div className="flex items-center gap-2 border-b border-ink/10 pb-3">
-            <span className="h-3 w-3 rounded-full bg-destructive/60" />
-            <span className="h-3 w-3 rounded-full bg-accent" />
-            <span className="h-3 w-3 rounded-full bg-primary/30" />
-            <span className="ml-3 text-xs text-muted-foreground">fluent.app / {current.label.toLowerCase()}</span>
-          </div>
-          <div className="mt-5 grid gap-4 md:grid-cols-3">
-            {current.mock.map((m) => (
-              <div key={m} className="rounded-2xl border border-ink/10 bg-background p-5">
-                <div className="text-xs uppercase tracking-widest text-muted-foreground">Module</div>
-                <div className="mt-2 font-display text-lg">{m}</div>
-                <div className="mt-4 h-20 rounded-lg bg-gradient-to-br from-primary/10 via-accent/20 to-primary/5" />
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="md:col-span-4">
-          <h3 className="font-display text-2xl">{current.label} view</h3>
-          <p className="mt-3 text-muted-foreground">{current.desc}</p>
-          <Link to="/book-demo" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4 decoration-accent decoration-2">
-            See it live <ArrowRight className="h-4 w-4" />
+        <div className="mt-10 flex justify-center">
+          <Link to="/login" className="btn-connectd">
+            Sign in to the app <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </div>
@@ -462,106 +427,58 @@ function ProductPreview() {
   );
 }
 
-function AISection() {
-  const cols = [
-    { icon: Users, t: "Teachers", items: ["Lesson planning", "Auto-marking", "Differentiation"] },
-    { icon: GraduationCap, t: "Students", items: ["Explanations", "Practice", "Doubt support"] },
-    { icon: Heart, t: "Parents", items: ["Home guides", "Progress summaries", "Q&A"] },
-    { icon: Building2, t: "Leaders", items: ["Insights", "Predictions", "Reports"] },
-  ];
-  return (
-    <section className="bg-primary py-24 text-primary-foreground">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="flex items-end justify-between flex-wrap gap-6">
-          <div>
-            <p className="text-xs uppercase tracking-[0.25em] text-accent">Calm intelligence</p>
-            <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
-              AI that supports <em className="italic text-accent">people.</em>
-            </h2>
-          </div>
-          <p className="max-w-sm text-primary-foreground/70">
-            Built to assist, never replace. Every output is reviewable, contextual and aligned to your school.
-          </p>
-        </div>
-        <div className="mt-14 grid gap-5 md:grid-cols-4">
-          {cols.map((c) => (
-            <div key={c.t} className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-6">
-              <c.icon className="h-6 w-6 text-accent" />
-              <div className="mt-4 font-display text-xl">{c.t}</div>
-              <ul className="mt-3 space-y-1.5 text-sm text-primary-foreground/75">
-                {c.items.map((it) => (
-                  <li key={it}>— {it}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <blockquote className="mt-14 border-l-4 border-accent pl-5 font-display text-3xl italic">
-          “AI assists. Teachers lead.”
-        </blockquote>
-      </div>
-    </section>
-  );
-}
+const SCHOOL_QUOTES = [
+  {
+    text: "Fluent gave our leadership team the first honest view of learning we've ever had — and it gave our teachers their afternoons back.",
+    who: "Head of School · Partner institution",
+  },
+  {
+    text: "The two advisors we connected through the platform are exceptional. The package of support and value we receive is outstanding.",
+    who: "Principal · K–12 group",
+  },
+];
 
-function Impact() {
-  const metrics = [
-    { icon: TrendingUp, l: "Confidence", t: "up" },
-    { icon: TrendingDown, l: "Workload", t: "down" },
-    { icon: TrendingUp, l: "Engagement", t: "up" },
-    { icon: TrendingUp, l: "Outcomes", t: "up" },
-  ];
-  return (
-    <section className="mx-auto max-w-7xl px-6 py-24">
-      <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">The impact</p>
-      <h2 className="mt-4 font-display text-4xl font-semibold leading-tight md:text-5xl">
-        Real impact you can <em className="italic gold-underline">measure.</em>
-      </h2>
-      <div className="mt-14 grid gap-5 md:grid-cols-4">
-        {metrics.map((m) => (
-          <div key={m.l} className="card-ink rounded-2xl bg-card p-6">
-            <m.icon className={`h-7 w-7 ${m.t === "up" ? "text-accent-foreground" : "text-destructive"}`} />
-            <div className="mt-4 flex items-baseline gap-2">
-              <span className={`font-display text-2xl ${m.t === "up" ? "text-primary" : "text-destructive"}`}>
-                {m.t === "up" ? "↑" : "↓"}
-              </span>
-              <span className="font-display text-2xl">{m.l}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-      <figure className="mt-14 rounded-3xl border border-ink bg-primary p-10 text-primary-foreground card-ink">
-        <div className="text-accent">★★★★★</div>
-        <blockquote className="mt-5 max-w-3xl font-display text-2xl italic leading-snug md:text-3xl">
-          “Fluent gave our leadership team the first honest view of learning we've ever had — and it gave our teachers their afternoons back.”
-        </blockquote>
-        <figcaption className="mt-6 text-sm text-primary-foreground/70">
-          Head of School · Partner institution
-        </figcaption>
-      </figure>
-    </section>
-  );
-}
+const FAMILY_QUOTES = [
+  {
+    text: "We finally see what our daughter is actually learning — not just a grade on a report card. The Guardian Portal changed how we support her at home.",
+    who: "Parent · Scholar Studio",
+  },
+  {
+    text: "The AI tutor explains concepts the way her teacher would — hints, not answers. Her confidence in Maths has genuinely shifted.",
+    who: "Parent · Class 10 ICSE",
+  },
+];
 
-function TargetSchools() {
-  const types = [
-    { icon: BookOpen, t: "K–12" },
-    { icon: Building2, t: "International" },
-    { icon: Sparkles, t: "Premium" },
-    { icon: Brain, t: "Innovative" },
-  ];
+function Testimonials() {
+  const [tab, setTab] = useState<"schools" | "families">("schools");
+  const quotes = tab === "schools" ? SCHOOL_QUOTES : FAMILY_QUOTES;
+
   return (
-    <section className="bg-secondary py-24">
-      <div className="mx-auto max-w-7xl px-6">
-        <h2 className="font-display text-4xl font-semibold leading-tight md:text-5xl">
-          Built for forward-thinking <em className="italic">schools.</em>
-        </h2>
-        <div className="mt-12 grid gap-4 md:grid-cols-4">
-          {types.map((t) => (
-            <div key={t.t} className="flex items-center gap-4 rounded-2xl border border-ink/15 bg-card p-6">
-              <t.icon className="h-8 w-8 text-accent-foreground" />
-              <span className="font-display text-xl">{t.t}</span>
-            </div>
+    <section className="py-20 md:py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <h2 className="text-center text-3xl font-bold md:text-4xl">Hear from our community</h2>
+        <div className="mt-8 flex justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => setTab("schools")}
+            className={`tab-pill ${tab === "schools" ? "tab-pill-active" : "tab-pill-inactive"}`}
+          >
+            Schools
+          </button>
+          <button
+            type="button"
+            onClick={() => setTab("families")}
+            className={`tab-pill ${tab === "families" ? "tab-pill-active" : "tab-pill-inactive"}`}
+          >
+            Families
+          </button>
+        </div>
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          {quotes.map((q) => (
+            <blockquote key={q.who} className="quote-card">
+              <p className="text-lg leading-relaxed text-foreground">&ldquo;{q.text}&rdquo;</p>
+              <footer className="mt-5 text-sm font-medium text-muted-foreground">{q.who}</footer>
+            </blockquote>
           ))}
         </div>
       </div>
@@ -571,26 +488,32 @@ function TargetSchools() {
 
 function FinalCTA() {
   return (
-    <section id="cta" className="px-6 py-24">
-      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-ink bg-primary p-10 text-primary-foreground md:p-16 grain">
-        <div className="grid items-center gap-10 md:grid-cols-12">
-          <div className="md:col-span-8">
-            <p className="text-xs uppercase tracking-[0.25em] text-accent">Take the next step</p>
-            <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.05] md:text-6xl">
-              Start your school <em className="italic text-accent">transformation.</em>
-            </h2>
-            <p className="mt-6 max-w-xl text-primary-foreground/75">
-              Book a demo and see Fluent in action — tailored to your school's grade, context and goals.
-            </p>
-          </div>
-          <div className="md:col-span-4 flex flex-col gap-3">
-            <Link to="/book-demo" className="btn-gold rounded-full px-7 py-4 text-center text-sm font-semibold">
-              Book a Demo →
-            </Link>
-            <Link to="/contact" className="rounded-full border border-primary-foreground/40 px-7 py-4 text-center text-sm font-semibold hover:bg-primary-foreground/10 transition">
-              Talk to Us
-            </Link>
-          </div>
+    <section id="cta" className="px-6 pb-24">
+      <div className="cta-banner mx-auto max-w-6xl p-10 md:flex md:items-center md:justify-between md:gap-10 md:p-14">
+        <div className="max-w-xl">
+          <p className="text-xs font-semibold uppercase tracking-widest text-white/70">
+            Take the next step
+          </p>
+          <h2 className="mt-4 text-3xl font-bold leading-tight md:text-4xl">
+            Start your school transformation today.
+          </h2>
+          <p className="mt-4 text-white/80 leading-relaxed">
+            Book a demo and see Fluent tailored to your grade, curriculum, and goals.
+          </p>
+        </div>
+        <div className="mt-8 flex shrink-0 flex-col gap-3 md:mt-0">
+          <Link
+            to="/book-demo"
+            className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-primary shadow-lg hover:bg-white/95"
+          >
+            Book a demo
+          </Link>
+          <Link
+            to="/contact"
+            className="inline-flex items-center justify-center rounded-full border border-white/40 px-7 py-3.5 text-sm font-semibold text-white hover:bg-white/10"
+          >
+            Talk to us
+          </Link>
         </div>
       </div>
     </section>
@@ -599,40 +522,53 @@ function FinalCTA() {
 
 function Footer() {
   return (
-    <footer className="border-t border-ink/15 bg-background">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
+    <footer className="border-t border-border bg-background">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground font-display text-lg">
-              F
-            </div>
-            <div className="font-display text-2xl">Fluent</div>
+          <div className="text-xl font-bold">
+            Fluent<span className="text-primary">.</span>
           </div>
           <p className="mt-3 max-w-sm text-sm text-muted-foreground">
-            The Learning Intelligence Platform for forward-thinking schools.
+            The Learning Intelligence Platform for forward-thinking schools and families.
           </p>
         </div>
         <div>
-          <div className="text-xs uppercase tracking-widest text-muted-foreground">Company</div>
-          <ul className="mt-3 space-y-1.5 text-sm">
-            <li><a href="#" className="hover:text-accent-foreground">About</a></li>
-            <li><Link to="/contact" className="hover:text-accent-foreground">Contact</Link></li>
-            <li><a href="#" className="hover:text-accent-foreground">Careers</a></li>
-            <li><a href="#" className="hover:text-accent-foreground">Privacy</a></li>
+          <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Company
+          </div>
+          <ul className="mt-3 space-y-2 text-sm">
+            <li>
+              <Link to="/blog" className="hover:text-primary">
+                Resources
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-primary">
+                Contact
+              </Link>
+            </li>
+            <li>
+              <Link to="/login" className="hover:text-primary">
+                Sign in
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
-          <div className="text-xs uppercase tracking-widest text-muted-foreground">Offices</div>
+          <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Offices
+          </div>
           <p className="mt-3 text-sm">London · Bengaluru</p>
-          <p className="mt-2 text-sm">
-            <a href="mailto:info@fluent.academy" className="hover:text-accent-foreground">
-              info@fluent.academy
-            </a>
-          </p>
+          <a
+            href="mailto:info@fluent.academy"
+            className="mt-2 block text-sm hover:text-primary"
+          >
+            info@fluent.academy
+          </a>
         </div>
       </div>
-      <div className="border-t border-ink/10 px-6 py-5 text-center text-xs text-muted-foreground">
-        © 2026 Fluent · Learning Intelligence Platform. All rights reserved.
+      <div className="border-t border-border px-6 py-5 text-center text-xs text-muted-foreground">
+        © 2026 Fluent · Learning Intelligence Platform
       </div>
     </footer>
   );
