@@ -116,6 +116,129 @@ export type Database = {
         }
         Relationships: []
       }
+      classes: {
+        Row: {
+          created_at: string
+          grade: string | null
+          id: string
+          join_code: string
+          name: string
+          schedule: Json
+          school_id: string
+          subject: string | null
+          tutor_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          grade?: string | null
+          id?: string
+          join_code?: string
+          name: string
+          schedule?: Json
+          school_id: string
+          subject?: string | null
+          tutor_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          grade?: string | null
+          id?: string
+          join_code?: string
+          name?: string
+          schedule?: Json
+          school_id?: string
+          subject?: string | null
+          tutor_id?: string | null
+        }
+        Relationships: []
+      }
+      enrollments: {
+        Row: {
+          class_id: string
+          enrolled_at: string
+          id: string
+          status: string
+          student_id: string
+        }
+        Insert: {
+          class_id: string
+          enrolled_at?: string
+          id?: string
+          status?: string
+          student_id: string
+        }
+        Update: {
+          class_id?: string
+          enrolled_at?: string
+          id?: string
+          status?: string
+          student_id?: string
+        }
+        Relationships: []
+      }
+      guardian_invites: {
+        Row: {
+          code: string
+          created_at: string
+          expires_at: string
+          id: string
+          student_id: string
+          used_at: string | null
+          used_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          student_id: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          student_id?: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Relationships: []
+      }
+      guardian_links: {
+        Row: {
+          created_at: string
+          guardian_id: string
+          id: string
+          relationship: string
+          status: string
+          student_id: string
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          guardian_id: string
+          id?: string
+          relationship?: string
+          status?: string
+          student_id: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          guardian_id?: string
+          id?: string
+          relationship?: string
+          status?: string
+          student_id?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           availability: string | null
@@ -224,6 +347,57 @@ export type Database = {
         }
         Relationships: []
       }
+      schools: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          settings: Json
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          settings?: Json
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          settings?: Json
+          slug?: string
+        }
+        Relationships: []
+      }
+      school_members: {
+        Row: {
+          created_at: string
+          id: string
+          member_role: Database["public"]["Enums"]["app_role"]
+          school_id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          member_role: Database["public"]["Enums"]["app_role"]
+          school_id: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          member_role?: Database["public"]["Enums"]["app_role"]
+          school_id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -250,6 +424,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_guardian_invite: { Args: Record<string, never>; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -257,6 +432,8 @@ export type Database = {
         }
         Returns: boolean
       }
+      join_class: { Args: { p_join_code: string }; Returns: string }
+      link_guardian: { Args: { p_invite_code: string }; Returns: string }
     }
     Enums: {
       app_role: "admin" | "tutor" | "parent" | "student"

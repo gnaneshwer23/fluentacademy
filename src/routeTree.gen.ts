@@ -24,6 +24,7 @@ import { Route as AuthDashboardRouteImport } from './routes/_auth.dashboard'
 import { Route as AuthDashboardUsersRouteImport } from './routes/_auth.dashboard.users'
 import { Route as AuthDashboardTutorRouteImport } from './routes/_auth.dashboard.tutor'
 import { Route as AuthDashboardStudentRouteImport } from './routes/_auth.dashboard.student'
+import { Route as AuthDashboardSchoolRouteImport } from './routes/_auth.dashboard.school'
 import { Route as AuthDashboardParentRouteImport } from './routes/_auth.dashboard.parent'
 import { Route as AuthDashboardAdminRouteImport } from './routes/_auth.dashboard.admin'
 
@@ -101,6 +102,11 @@ const AuthDashboardStudentRoute = AuthDashboardStudentRouteImport.update({
   path: '/student',
   getParentRoute: () => AuthDashboardRoute,
 } as any)
+const AuthDashboardSchoolRoute = AuthDashboardSchoolRouteImport.update({
+  id: '/school',
+  path: '/school',
+  getParentRoute: () => AuthDashboardRoute,
+} as any)
 const AuthDashboardParentRoute = AuthDashboardParentRouteImport.update({
   id: '/parent',
   path: '/parent',
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/admin': typeof AuthDashboardAdminRoute
   '/dashboard/parent': typeof AuthDashboardParentRoute
+  '/dashboard/school': typeof AuthDashboardSchoolRoute
   '/dashboard/student': typeof AuthDashboardStudentRoute
   '/dashboard/tutor': typeof AuthDashboardTutorRoute
   '/dashboard/users': typeof AuthDashboardUsersRoute
@@ -144,6 +151,7 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/admin': typeof AuthDashboardAdminRoute
   '/dashboard/parent': typeof AuthDashboardParentRoute
+  '/dashboard/school': typeof AuthDashboardSchoolRoute
   '/dashboard/student': typeof AuthDashboardStudentRoute
   '/dashboard/tutor': typeof AuthDashboardTutorRoute
   '/dashboard/users': typeof AuthDashboardUsersRoute
@@ -164,6 +172,7 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/_auth/dashboard/admin': typeof AuthDashboardAdminRoute
   '/_auth/dashboard/parent': typeof AuthDashboardParentRoute
+  '/_auth/dashboard/school': typeof AuthDashboardSchoolRoute
   '/_auth/dashboard/student': typeof AuthDashboardStudentRoute
   '/_auth/dashboard/tutor': typeof AuthDashboardTutorRoute
   '/_auth/dashboard/users': typeof AuthDashboardUsersRoute
@@ -184,6 +193,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/dashboard/admin'
     | '/dashboard/parent'
+    | '/dashboard/school'
     | '/dashboard/student'
     | '/dashboard/tutor'
     | '/dashboard/users'
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/dashboard/admin'
     | '/dashboard/parent'
+    | '/dashboard/school'
     | '/dashboard/student'
     | '/dashboard/tutor'
     | '/dashboard/users'
@@ -221,6 +232,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/_auth/dashboard/admin'
     | '/_auth/dashboard/parent'
+    | '/_auth/dashboard/school'
     | '/_auth/dashboard/student'
     | '/_auth/dashboard/tutor'
     | '/_auth/dashboard/users'
@@ -345,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthDashboardStudentRouteImport
       parentRoute: typeof AuthDashboardRoute
     }
+    '/_auth/dashboard/school': {
+      id: '/_auth/dashboard/school'
+      path: '/school'
+      fullPath: '/dashboard/school'
+      preLoaderRoute: typeof AuthDashboardSchoolRouteImport
+      parentRoute: typeof AuthDashboardRoute
+    }
     '/_auth/dashboard/parent': {
       id: '/_auth/dashboard/parent'
       path: '/parent'
@@ -365,6 +384,7 @@ declare module '@tanstack/react-router' {
 interface AuthDashboardRouteChildren {
   AuthDashboardAdminRoute: typeof AuthDashboardAdminRoute
   AuthDashboardParentRoute: typeof AuthDashboardParentRoute
+  AuthDashboardSchoolRoute: typeof AuthDashboardSchoolRoute
   AuthDashboardStudentRoute: typeof AuthDashboardStudentRoute
   AuthDashboardTutorRoute: typeof AuthDashboardTutorRoute
   AuthDashboardUsersRoute: typeof AuthDashboardUsersRoute
@@ -373,6 +393,7 @@ interface AuthDashboardRouteChildren {
 const AuthDashboardRouteChildren: AuthDashboardRouteChildren = {
   AuthDashboardAdminRoute: AuthDashboardAdminRoute,
   AuthDashboardParentRoute: AuthDashboardParentRoute,
+  AuthDashboardSchoolRoute: AuthDashboardSchoolRoute,
   AuthDashboardStudentRoute: AuthDashboardStudentRoute,
   AuthDashboardTutorRoute: AuthDashboardTutorRoute,
   AuthDashboardUsersRoute: AuthDashboardUsersRoute,

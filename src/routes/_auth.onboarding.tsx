@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { toast } from "sonner";
+import { joinClass, linkGuardian } from "@/lib/school-api";
 import {
   ArrowRight,
   ArrowLeft,
@@ -62,6 +63,8 @@ function Onboarding() {
     experience_years: 0,
     bio: "",
     availability: "",
+    class_join_code: "",
+    guardian_invite_code: "",
   });
 
   const role: Exclude<Role, "admin"> = (roles.find((r) => r !== "admin") as any) ?? "parent";
@@ -120,8 +123,24 @@ function Onboarding() {
       payload.availability = form.availability || null;
     }
     const { error } = await supabase.from("profiles").update(payload).eq("id", user.id);
+    if (error) {
+      setSaving(false);
+      return toast.error(error.message);
+    }
+
+    try {
+      if (role === "student" && form.class_join_code.trim()) {
+        await joinClass(form.class_join_code);
+      }
+      if (role === "parent" && form.guardian_invite_code.trim()) {
+        await linkGuardian(form.guardian_invite_code);
+      }
+    } catch (err) {
+      setSaving(false);
+      return toast.error(err instanceof Error ? err.message : "Could not complete linking step");
+    }
+
     setSaving(false);
-    if (error) return toast.error(error.message);
     toast.success("You're all set!");
     navigate({ to: "/dashboard" });
   };
@@ -241,8 +260,8 @@ function Onboarding() {
 }
 
 function roleSteps(role: Exclude<Role, "admin">) {
-  if (role === "parent") return ["intro", "child", "goals"];
-  if (role === "student") return ["intro", "grade", "subjects", "style"];
+  if (role === "parent") return ["intro", "child", "invite", "goals"];
+  if (role === "student") return ["intro", "grade", "subjects", "style", "class"];
   return ["intro", "expertise", "availability"]; // tutor
 }
 
@@ -328,6 +347,23 @@ function ParentSteps({ step, form, setForm }: any) {
         </div>
       </div>
     );
+  if (step === 2)
+    return (
+      <div>
+        <h2 className="font-display text-2xl mb-1">Link to your scholar</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          Enter the invite code from your child&apos;s Scholar dashboard.
+        </p>
+        <Field label="Guardian invite code">
+          <input
+            className="input font-mono uppercase"
+            placeholder="e.g. A1B2C3D4"
+            value={form.guardian_invite_code}
+            onChange={(e) => setForm({ ...form, guardian_invite_code: e.target.value })}
+          />
+        </Field>
+      </div>
+    );
   return (
     <div>
       <h2 className="font-display text-2xl mb-1">What are your goals?</h2>
@@ -379,33 +415,53 @@ function StudentSteps({ step, form, setForm }: any) {
         />
       </div>
     );
+  if (step === 3)
+    return (
+      <div>
+        <h2 className="font-display text-2xl mb-1">How do you learn best?</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          We&apos;ll match your AI practice style accordingly.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {["Visual", "Listening", "Doing / hands-on", "Reading & writing"].map((s) => (
+            <button
+              key={s}
+              type="button"
+              className="chip"
+              data-active={form.learning_style === s}
+              onClick={() => setForm({ ...form, learning_style: s })}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+        <Field label="Anything else you'd like us to know?">
+          <textarea
+            rows={3}
+            className="input resize-none mt-4"
+            value={form.goals}
+            onChange={(e) => setForm({ ...form, goals: e.target.value })}
+          />
+        </Field>
+      </div>
+    );
   return (
     <div>
-      <h2 className="font-display text-2xl mb-1">How do you learn best?</h2>
+      <h2 className="font-display text-2xl mb-1">Join your class</h2>
       <p className="text-sm text-muted-foreground mb-6">
-        We'll match your AI practice style accordingly.
+        Enter the class code from your teacher or school admin.
       </p>
-      <div className="grid gap-3 sm:grid-cols-2">
-        {["Visual", "Listening", "Doing / hands-on", "Reading & writing"].map((s) => (
-          <button
-            key={s}
-            type="button"
-            className="chip"
-            data-active={form.learning_style === s}
-            onClick={() => setForm({ ...form, learning_style: s })}
-          >
-            {s}
-          </button>
-        ))}
-      </div>
-      <Field label="Anything else you'd like us to know?">
-        <textarea
-          rows={3}
-          className="input resize-none mt-4"
-          value={form.goals}
-          onChange={(e) => setForm({ ...form, goals: e.target.value })}
+      <Field label="Class join code">
+        <input
+          className="input font-mono uppercase"
+          placeholder="e.g. X7K9M2P1"
+          value={form.class_join_code}
+          onChange={(e) => setForm({ ...form, class_join_code: e.target.value })}
         />
       </Field>
+      <p className="mt-3 text-xs text-muted-foreground">
+        Optional — you can add this later from your dashboard.
+      </p>
     </div>
   );
 }
