@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SITE_URL } from "@/lib/site";
 import {
   GraduationCap,
   Users,
@@ -25,6 +26,8 @@ export const Route = createFileRoute("/")({
         content:
           "How can we help? Partner as a school or enrol as a family. One platform for teachers, scholars, parents, and leaders.",
       },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:type", content: "website" },
     ],
   }),
   component: Index,

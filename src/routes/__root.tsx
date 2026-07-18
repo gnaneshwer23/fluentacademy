@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { OG_IMAGE, SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/site";
 
 function NotFoundComponent() {
   return (
@@ -72,43 +73,35 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Fluent — Learning Intelligence Platform" },
+      { title: `${SITE_NAME} — ${SITE_TAGLINE}` },
       {
         name: "description",
         content:
           "Fluent connects schools and families with learning intelligence — measurable fluency, teacher CPD, parent visibility, and school-wide analytics.",
       },
       { name: "author", content: "Fluent Institute" },
-      { property: "og:title", content: "Fluent — Learning Intelligence Platform" },
+      { name: "theme-color", content: "#0d6e6e" },
+      { property: "og:title", content: `${SITE_NAME} — ${SITE_TAGLINE}` },
       {
         property: "og:description",
         content:
           "Transform your school with learning intelligence. AI teaching tools, scholar studio, guardian portal, and school dashboards.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Fluent — Learning Intelligence Platform" },
+      { name: "twitter:title", content: `${SITE_NAME} — ${SITE_TAGLINE}` },
       {
         name: "twitter:description",
         content:
           "Transform your school with learning intelligence. AI teaching tools, scholar studio, guardian portal, and school dashboards.",
       },
-      {
-        property: "og:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/016f3d3e-52f9-4850-a020-3e1525cf2081/id-preview-969398ec--314dfadf-b0a9-4c4b-a45f-efc95ba92eed.lovable.app-1778152627731.png",
-      },
-      {
-        name: "twitter:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/016f3d3e-52f9-4850-a020-3e1525cf2081/id-preview-969398ec--314dfadf-b0a9-4c4b-a45f-efc95ba92eed.lovable.app-1778152627731.png",
-      },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: SITE_URL },
     ],
   }),
   shellComponent: RootShell,
