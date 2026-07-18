@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForTeachersRouteImport } from './routes/for-teachers'
+import { Route as ForParentsRouteImport } from './routes/for-parents'
+import { Route as ForLeadersRouteImport } from './routes/for-leaders'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BookDemoRouteImport } from './routes/book-demo'
 import { Route as BlogRouteImport } from './routes/blog'
@@ -27,6 +30,21 @@ import { Route as AuthDashboardAdminRouteImport } from './routes/_auth.dashboard
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForTeachersRoute = ForTeachersRouteImport.update({
+  id: '/for-teachers',
+  path: '/for-teachers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForParentsRoute = ForParentsRouteImport.update({
+  id: '/for-parents',
+  path: '/for-parents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForLeadersRoute = ForLeadersRouteImport.update({
+  id: '/for-leaders',
+  path: '/for-leaders',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -99,6 +117,9 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRouteWithChildren
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/for-leaders': typeof ForLeadersRoute
+  '/for-parents': typeof ForParentsRoute
+  '/for-teachers': typeof ForTeachersRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRouteWithChildren
   '/onboarding': typeof AuthOnboardingRoute
@@ -114,6 +135,9 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRouteWithChildren
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/for-leaders': typeof ForLeadersRoute
+  '/for-parents': typeof ForParentsRoute
+  '/for-teachers': typeof ForTeachersRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthDashboardRouteWithChildren
   '/onboarding': typeof AuthOnboardingRoute
@@ -131,6 +155,9 @@ export interface FileRoutesById {
   '/blog': typeof BlogRouteWithChildren
   '/book-demo': typeof BookDemoRoute
   '/contact': typeof ContactRoute
+  '/for-leaders': typeof ForLeadersRoute
+  '/for-parents': typeof ForParentsRoute
+  '/for-teachers': typeof ForTeachersRoute
   '/login': typeof LoginRoute
   '/_auth/dashboard': typeof AuthDashboardRouteWithChildren
   '/_auth/onboarding': typeof AuthOnboardingRoute
@@ -148,6 +175,9 @@ export interface FileRouteTypes {
     | '/blog'
     | '/book-demo'
     | '/contact'
+    | '/for-leaders'
+    | '/for-parents'
+    | '/for-teachers'
     | '/login'
     | '/dashboard'
     | '/onboarding'
@@ -163,6 +193,9 @@ export interface FileRouteTypes {
     | '/blog'
     | '/book-demo'
     | '/contact'
+    | '/for-leaders'
+    | '/for-parents'
+    | '/for-teachers'
     | '/login'
     | '/dashboard'
     | '/onboarding'
@@ -179,6 +212,9 @@ export interface FileRouteTypes {
     | '/blog'
     | '/book-demo'
     | '/contact'
+    | '/for-leaders'
+    | '/for-parents'
+    | '/for-teachers'
     | '/login'
     | '/_auth/dashboard'
     | '/_auth/onboarding'
@@ -196,6 +232,9 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRouteWithChildren
   BookDemoRoute: typeof BookDemoRoute
   ContactRoute: typeof ContactRoute
+  ForLeadersRoute: typeof ForLeadersRoute
+  ForParentsRoute: typeof ForParentsRoute
+  ForTeachersRoute: typeof ForTeachersRoute
   LoginRoute: typeof LoginRoute
 }
 
@@ -206,6 +245,27 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-teachers': {
+      id: '/for-teachers'
+      path: '/for-teachers'
+      fullPath: '/for-teachers'
+      preLoaderRoute: typeof ForTeachersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-parents': {
+      id: '/for-parents'
+      path: '/for-parents'
+      fullPath: '/for-parents'
+      preLoaderRoute: typeof ForParentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-leaders': {
+      id: '/for-leaders'
+      path: '/for-leaders'
+      fullPath: '/for-leaders'
+      preLoaderRoute: typeof ForLeadersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -350,6 +410,9 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRouteWithChildren,
   BookDemoRoute: BookDemoRoute,
   ContactRoute: ContactRoute,
+  ForLeadersRoute: ForLeadersRoute,
+  ForParentsRoute: ForParentsRoute,
+  ForTeachersRoute: ForTeachersRoute,
   LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport

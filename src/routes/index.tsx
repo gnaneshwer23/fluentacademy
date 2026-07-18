@@ -28,7 +28,15 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:url", content: SITE_URL },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Fluent — School Transformation Platform" },
+      {
+        name: "twitter:description",
+        content:
+          "Improve teaching, build fluency, drive decisions. The unified learning intelligence platform for forward-thinking schools.",
+      },
     ],
+    links: [{ rel: "canonical", href: SITE_URL }],
   }),
   component: Index,
 });
