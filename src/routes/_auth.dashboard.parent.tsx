@@ -27,21 +27,35 @@ function ParentDash() {
 
   useEffect(() => {
     if (!user) return;
-    supabase
-      .from("progress_reports")
-      .select("*")
-      .eq("student_id", user.id)
-      .order("week_of", { ascending: false })
-      .then(({ data }) => {
+    (async () => {
+      const { data: links } = await supabase
+        .from("guardian_links")
+        .select("student_id")
+        .eq("guardian_id", user.id)
+        .eq("status", "verified");
+
+      const studentIds = links?.map((l) => l.student_id) ?? [];
+
+      if (studentIds.length === 0) {
+        setReports([]);
+        setLoading(false);
+      } else {
+        const { data } = await supabase
+          .from("progress_reports")
+          .select("*")
+          .in("student_id", studentIds)
+          .order("week_of", { ascending: false });
         setReports((data ?? []) as Report[]);
         setLoading(false);
-      });
-    supabase
-      .from("profiles")
-      .select("child_name,child_grade,goals")
-      .eq("id", user.id)
-      .maybeSingle()
-      .then(({ data }) => setProfile(data));
+      }
+
+      const { data: prof } = await supabase
+        .from("profiles")
+        .select("child_name,child_grade,goals")
+        .eq("id", user.id)
+        .maybeSingle();
+      setProfile(prof);
+    })();
   }, [user]);
 
   const childName = profile?.child_name || "your child";

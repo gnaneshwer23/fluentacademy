@@ -3,7 +3,8 @@ import { DashboardShell, StatCard, Section, Panel } from "@/components/Dashboard
 import { Flame, Sparkles, TrendingUp, Calendar, Play, CheckCircle2, Target, ArrowRight, Mic, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/lib/auth-context";
+import { createGuardianInvite } from "@/lib/school-api";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/_auth/dashboard/student")({
   component: StudentDash,
@@ -12,6 +13,10 @@ export const Route = createFileRoute("/_auth/dashboard/student")({
 function StudentDash() {
   const { user } = useAuth();
   const [profile, setProfile] = useState<{ full_name: string | null; grade: string | null; subjects: string[] | null; learning_style: string | null; goals: string | null } | null>(null);
+  const [classes, setClasses] = useState<
+    { name: string; subject: string | null; grade: string | null; join_code: string }[]
+  >([]);
+  const [inviteCode, setInviteCode] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -21,31 +26,35 @@ function StudentDash() {
       .eq("id", user.id)
       .maybeSingle()
       .then(({ data }) => setProfile(data));
+
+    supabase
+      .from("enrollments")
+      .select("classes(name, subject, grade, join_code)")
+      .eq("student_id", user.id)
+      .eq("status", "active")
+      .then(({ data }) => {
+        const rows =
+          data?.map((e) => e.classes).filter(Boolean) as {
+            name: string;
+            subject: string | null;
+            grade: string | null;
+            join_code: string;
+          }[] | undefined;
+        setClasses(rows ?? []);
+      });
   }, [user]);
+
+  const generateInvite = async () => {
+    try {
+      const code = await createGuardianInvite();
+      setInviteCode(code);
+      toast.success("Invite code created — share with your parent");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not create invite");
+    }
+  };
+
   const firstName = (profile?.full_name || user?.email?.split("@")[0] || "there").split(" ")[0];
-  const classes = [
-    {
-      day: "Mon",
-      time: "5:00 PM",
-      subject: "Maths",
-      topic: "Algebra · Linear equations",
-      status: "upcoming" as const,
-    },
-    {
-      day: "Wed",
-      time: "5:00 PM",
-      subject: "English",
-      topic: "Speaking Lab · Storytelling",
-      status: "upcoming" as const,
-    },
-    {
-      day: "Fri",
-      time: "5:00 PM",
-      subject: "Science",
-      topic: "Light · Reflection",
-      status: "completed" as const,
-    },
-  ];
 
   const practice = [
     { title: "Maths drills", count: "10 questions", time: "5 min", color: "bg-blue-100" },
@@ -130,35 +139,45 @@ function StudentDash() {
         </div>
       </Section>
 
-      <Section title="This week's classes" description="Your live sessions with tutors.">
+      <Section title="Your classes" description="Classes you've joined with a join code.">
         <div className="space-y-3">
-          {classes.map((c, i) => (
-            <Panel key={i} className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-4 min-w-0">
-                <div className="h-12 w-12 rounded-xl bg-accent/30 flex flex-col items-center justify-center shrink-0">
-                  <span className="text-[10px] uppercase tracking-wider font-semibold">
-                    {c.day}
-                  </span>
-                  <Calendar className="h-3 w-3" />
-                </div>
-                <div className="min-w-0">
-                  <div className="font-display text-lg truncate">{c.subject}</div>
-                  <div className="text-sm text-muted-foreground truncate">{c.topic}</div>
-                  <div className="text-xs text-muted-foreground mt-0.5">{c.time}</div>
+          {classes.length === 0 && (
+            <Panel>
+              <p className="text-sm text-muted-foreground">
+                No classes yet. Enter a join code in onboarding or ask your teacher for a code.
+              </p>
+            </Panel>
+          )}
+          {classes.map((c) => (
+            <Panel key={c.join_code} className="flex items-center justify-between gap-4">
+              <div className="min-w-0">
+                <div className="font-display text-lg truncate">{c.name}</div>
+                <div className="text-sm text-muted-foreground truncate">
+                  {[c.grade, c.subject].filter(Boolean).join(" · ") || "General"}
                 </div>
               </div>
-              {c.status === "completed" ? (
-                <span className="flex items-center gap-1.5 rounded-full bg-emerald-100 text-emerald-800 px-3 py-1.5 text-xs font-semibold">
-                  <CheckCircle2 className="h-3.5 w-3.5" /> Done
-                </span>
-              ) : (
-                <button className="flex items-center gap-1.5 rounded-full bg-primary text-primary-foreground px-4 py-1.5 text-xs font-semibold hover:opacity-90">
-                  Join <Play className="h-3 w-3" />
-                </button>
-              )}
+              <span className="rounded-full bg-[var(--teal-light)] px-3 py-1 text-xs font-mono font-semibold text-primary">
+                {c.join_code}
+              </span>
             </Panel>
           ))}
         </div>
+      </Section>
+
+      <Section title="Invite a parent" description="Share this code so they can see your progress.">
+        <Panel className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="text-sm text-muted-foreground">
+              Generate a one-time code for your parent or guardian.
+            </p>
+            {inviteCode && (
+              <p className="mt-2 font-mono text-lg font-bold text-primary">{inviteCode}</p>
+            )}
+          </div>
+          <button type="button" onClick={generateInvite} className="btn-connectd btn-connectd-sm">
+            {inviteCode ? "New code" : "Generate code"}
+          </button>
+        </Panel>
       </Section>
 
       <Section title="AI Practice" description="Quick warm-ups tailored to your level.">

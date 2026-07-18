@@ -1,16 +1,7 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useAuth } from "@/lib/auth-context";
 import type { ReactNode } from "react";
-import {
-  LayoutDashboard,
-  Users,
-  GraduationCap,
-  BookOpen,
-  Shield,
-  LogOut,
-  Menu,
-  X,
-} from "lucide-react";
+import { Building2, GraduationCap, BookOpen, Shield, LogOut, Menu, X, School } from "lucide-react";
 import { useState } from "react";
 
 type Role = "admin" | "tutor" | "parent" | "student";
@@ -20,7 +11,8 @@ const NAV: { to: string; label: string; icon: typeof LayoutDashboard; role?: Rol
   { to: "/dashboard/parent", label: "Guardian", icon: Users, role: "parent" },
   { to: "/dashboard/student", label: "Scholar", icon: GraduationCap, role: "student" },
   { to: "/dashboard/tutor", label: "Teacher", icon: BookOpen, role: "tutor" },
-  { to: "/dashboard/admin", label: "School", icon: Shield, role: "admin" },
+  { to: "/dashboard/admin", label: "Inbox", icon: Shield, role: "admin" },
+  { to: "/dashboard/school", label: "School setup", icon: School, role: "admin" },
   { to: "/dashboard/users", label: "Onboarding", icon: Users, role: "admin" },
 ];
 

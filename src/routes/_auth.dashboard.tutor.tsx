@@ -29,7 +29,30 @@ function TutorDash() {
     notes: "",
   });
   const [reports, setReports] = useState<MiniReport[]>([]);
+  const [students, setStudents] = useState<{ id: string; full_name: string | null }[]>([]);
   const [submitting, setSubmitting] = useState(false);
+
+  const loadStudents = async () => {
+    if (!user) return;
+    const { data: myClasses } = await supabase
+      .from("classes")
+      .select("id")
+      .eq("tutor_id", user.id);
+    const classIds = myClasses?.map((c) => c.id) ?? [];
+    if (!classIds.length) return setStudents([]);
+    const { data: enrollments } = await supabase
+      .from("enrollments")
+      .select("student_id")
+      .in("class_id", classIds)
+      .eq("status", "active");
+    const ids = [...new Set(enrollments?.map((e) => e.student_id) ?? [])];
+    if (!ids.length) return setStudents([]);
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("id, full_name")
+      .in("id", ids);
+    setStudents(profiles ?? []);
+  };
 
   const load = () => {
     if (!user) return;
@@ -43,7 +66,8 @@ function TutorDash() {
   };
 
   useEffect(() => {
-    load(); /* eslint-disable-next-line */
+    load();
+    loadStudents(); /* eslint-disable-next-line */
   }, [user]);
 
   const submit = async (e: React.FormEvent) => {
@@ -123,7 +147,7 @@ function TutorDash() {
         <StatCard label="Reports submitted" value={reports.length} icon={FileText} />
         <StatCard
           label="Active students"
-          value={new Set(reports.map((r) => r.student_id)).size}
+          value={students.length}
           icon={Users}
         />
         <StatCard label="Avg marks given" value={avgMarks} icon={Award} />
@@ -158,14 +182,26 @@ function TutorDash() {
       >
         <Panel>
           <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2">
-            <Field label="Student user ID" className="sm:col-span-2">
-              <input
-                required
-                placeholder="UUID from student's profile"
-                value={form.student_id}
-                onChange={(e) => setForm({ ...form, student_id: e.target.value })}
-                className="input"
-              />
+            <Field label="Student" className="sm:col-span-2">
+              {students.length === 0 ? (
+                <p className="text-sm text-muted-foreground py-2">
+                  No students in your classes yet. Ask an admin to assign you to a class.
+                </p>
+              ) : (
+                <select
+                  required
+                  value={form.student_id}
+                  onChange={(e) => setForm({ ...form, student_id: e.target.value })}
+                  className="input"
+                >
+                  <option value="">Select student…</option>
+                  {students.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.full_name ?? s.id.slice(0, 8)}
+                    </option>
+                  ))}
+                </select>
+              )}
             </Field>
             <Field label="Week of">
               <input
