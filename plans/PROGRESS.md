@@ -5,7 +5,7 @@ Track each phase: branch → PR → production deploy.
 | Phase | Branch | PR | Deploy | Status |
 |-------|--------|-----|--------|--------|
 | 0 — Foundation | `cursor/foundation-prod` | — | [fluentacademy.vercel.app](https://fluentacademy.vercel.app) | ✅ Complete |
-| 1 — Core schema | `cursor/schema-core-v1` | TBD | [fluentacademy.vercel.app](https://fluentacademy.vercel.app) | 🔄 In progress |
+| 1 — Core schema | `cursor/schema-core-v1` | [#4](https://github.com/gnaneshwer23/fluentacademy/pull/4) | [fluentacademy.vercel.app](https://fluentacademy.vercel.app) | ✅ Complete (migration pending) |
 | 2 — Dashboards | `cursor/dashboards-real-data` | — | — | ⏳ Pending |
 | 3 — Fluency | `cursor/fluency-v1` | — | — | ⏳ Pending |
 | 4 — School intel | `cursor/school-intelligence` | — | — | ⏳ Pending |
@@ -31,8 +31,8 @@ Track each phase: branch → PR → production deploy.
 - [x] Admin school setup route (`/dashboard/school`)
 - [x] Onboarding: class join code (student) + guardian invite (parent)
 - [x] Dashboards wired to enrollments, roster, guardian links
-- [ ] Apply migration to Supabase production
-- [ ] Merge to `main` + production deploy
+- [ ] Apply migration to Supabase production (`supabase db push` or SQL editor)
+- [x] Merge to `main` + production deploy
 
 ## Deploy URLs
 
