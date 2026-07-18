@@ -1,1 +1,4 @@
-project_id = "dbqsdyyabrbsuueiiiiz"
+# Canonical production Supabase — schema owned by fluentInstitute migrations.
+# Do NOT run fluentacademy Phase 1 migration (20260718160000_phase1_core_schema.sql) here.
+# Project: https://supabase.com/dashboard/project/bzefudyjvgwwtlalmrxk
+project_id = "bzefudyjvgwwtlalmrxk"
